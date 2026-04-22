@@ -1,0 +1,1304 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ธรรมตามมรรค — Dhammapath</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Ekkamai:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+/* ─── RESET & ROOT ─── */
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+:root{
+  --brown-deep:#2a1508;
+  --brown-dark:#3d1f0e;
+  --brown-mid:#7a3e1a;
+  --saffron:#c8762a;
+  --gold:#d4a855;
+  --gold-light:#e8c97a;
+  --cream:#f7f0e6;
+  --parchment:#faf6ef;
+  --white:#ffffff;
+  --glass-bg:rgba(255,255,255,0.04);
+  --glass-border:rgba(255,255,255,0.10);
+  --ease-out:cubic-bezier(0.22,1,0.36,1);
+}
+html{scroll-behavior:smooth;}
+body{font-family:'Ekkamai',sans-serif;background:var(--parchment);color:var(--brown-deep);overflow-x:hidden;}
+
+/* ─── SCROLL PROGRESS ─── */
+#progress-bar{position:fixed;top:0;left:0;height:2px;background:linear-gradient(90deg,var(--saffron),var(--gold-light));z-index:999;width:0%;transition:width 0.1s linear;}
+
+/* ─── NAV ─── */
+nav{
+  position:fixed;top:0;left:0;right:0;z-index:200;
+  display:flex;align-items:center;justify-content:space-between;
+  padding:0 3rem;height:64px;
+  background:rgba(20,10,4,0.92);
+  backdrop-filter:blur(20px);
+  border-bottom:0.5px solid rgba(255,255,255,0.07);
+  transition:all 0.3s var(--ease-out);
+}
+nav.scrolled{height:54px;background:rgba(14,6,2,0.97);}
+.nav-logo{display:flex;align-items:center;gap:10px;text-decoration:none;}
+.nav-logo-img{width:38px;height:38px;border-radius:4px;object-fit:cover;}
+.nav-brand{font-family:'Ekkamai',sans-serif;font-size:14px;font-weight:600;color:var(--white);}
+.nav-links{display:flex;align-items:center;gap:2rem;list-style:none;}
+.nav-links a{font-size:13px;color:rgba(255,255,255,0.45);text-decoration:none;transition:color 0.2s;position:relative;}
+.nav-links a::after{content:'';position:absolute;bottom:-4px;left:0;right:0;height:1px;background:var(--gold);transform:scaleX(0);transition:transform 0.25s var(--ease-out);}
+.nav-links a:hover{color:var(--white);}
+.nav-links a:hover::after{transform:scaleX(1);}
+.nav-seat-btn{background:transparent;border:1px solid rgba(255,255,255,0.18);color:var(--white);padding:6px 16px;border-radius:99px;font-family:'Ekkamai',sans-serif;font-size:13px;cursor:pointer;transition:all 0.2s;display:flex;align-items:center;gap:6px;}
+.nav-seat-btn:hover{background:rgba(255,255,255,0.07);border-color:var(--gold);}
+.seat-dot{width:7px;height:7px;border-radius:50%;background:#4caf50;flex-shrink:0;animation:pulse-dot 2s infinite;}
+@keyframes pulse-dot{0%,100%{box-shadow:0 0 0 0 rgba(76,175,80,0.5);}50%{box-shadow:0 0 0 5px rgba(76,175,80,0);}}
+
+/* hamburger */
+.hamburger{display:none;flex-direction:column;gap:5px;cursor:pointer;padding:6px;background:none;border:none;}
+.hamburger span{display:block;width:22px;height:1.5px;background:rgba(255,255,255,0.7);transition:all 0.3s var(--ease-out);}
+.hamburger.open span:nth-child(1){transform:translateY(6.5px) rotate(45deg);}
+.hamburger.open span:nth-child(2){opacity:0;transform:scaleX(0);}
+.hamburger.open span:nth-child(3){transform:translateY(-6.5px) rotate(-45deg);}
+.mobile-menu{display:none;position:fixed;top:0;left:0;right:0;bottom:0;z-index:150;background:rgba(10,5,2,0.98);backdrop-filter:blur(20px);padding:6rem 2.5rem 3rem;flex-direction:column;gap:0;transform:translateX(100%);transition:transform 0.4s var(--ease-out);}
+.mobile-menu.open{transform:translateX(0);}
+.mobile-menu a{display:block;font-family:'Ekkamai',sans-serif;font-size:22px;font-weight:300;color:rgba(255,255,255,0.7);text-decoration:none;padding:1.1rem 0;border-bottom:0.5px solid rgba(255,255,255,0.06);transition:color 0.2s;}
+.mobile-menu a:hover{color:var(--gold);}
+
+/* ─── HERO ─── */
+.hero{position:relative;min-height:100vh;display:flex;align-items:center;overflow:hidden;}
+.hero-bg{position:absolute;inset:0;background:#1e0d04;z-index:0;}
+.hero-monk-photo{position:absolute;right:0;top:0;bottom:0;width:52%;z-index:3;object-fit:cover;object-position:center top;}
+.hero-photo-fade{position:absolute;inset:0;z-index:4;background:linear-gradient(to right,#1e0d04 0%,#1e0d04 28%,rgba(30,13,4,0.75) 50%,rgba(30,13,4,0.0) 66%);}
+.hero-lotus{
+  position:absolute;inset:0;z-index:1;opacity:0.04;
+  background-image:url("data:image/svg+xml,%3Csvg width='300' height='300' viewBox='0 0 300 300' xmlns='http://www.w3.org/2000/svg'%3E%3Cellipse cx='150' cy='160' rx='80' ry='110' fill='none' stroke='%23d4a855' stroke-width='1.5'/%3E%3Cellipse cx='150' cy='160' rx='55' ry='85' fill='none' stroke='%23d4a855' stroke-width='1'/%3E%3Cellipse cx='110' cy='130' rx='45' ry='75' fill='none' stroke='%23d4a855' stroke-width='1' transform='rotate(-30 110 130)'/%3E%3Cellipse cx='190' cy='130' rx='45' ry='75' fill='none' stroke='%23d4a855' stroke-width='1' transform='rotate(30 190 130)'/%3E%3Ccircle cx='150' cy='90' r='18' fill='none' stroke='%23d4a855' stroke-width='1.5'/%3E%3Cline x1='150' y1='72' x2='150' y2='30' stroke='%23d4a855' stroke-width='1.5'/%3E%3Cellipse cx='140' cy='22' rx='12' ry='18' fill='none' stroke='%23d4a855' stroke-width='1' transform='rotate(-15 140 22)'/%3E%3Cellipse cx='162' cy='20' rx='12' ry='18' fill='none' stroke='%23d4a855' stroke-width='1' transform='rotate(15 162 20)'/%3E%3C/svg%3E");
+  background-repeat:repeat;background-size:300px 300px;
+}
+.hero-overlay{position:absolute;inset:0;z-index:2;background:linear-gradient(105deg,rgba(20,8,2,0.97) 0%,rgba(30,13,4,0.90) 35%,rgba(30,13,4,0.35) 55%,rgba(30,13,4,0.0) 65%);}
+.hero-content{position:relative;z-index:10;padding:8rem 5rem 5rem;max-width:640px;}
+.hero-eyebrow{font-family:'Ekkamai',sans-serif;font-style:italic;font-size:14px;color:var(--gold);letter-spacing:0.14em;margin-bottom:1.5rem;opacity:0;animation:fadeUp 1s 0.1s var(--ease-out) forwards;}
+.hero-quote{font-family:'Ekkamai',sans-serif;font-weight:300;font-size:clamp(22px,3.2vw,38px);color:var(--white);line-height:1.85;margin-bottom:1rem;opacity:0;animation:fadeUp 1s 0.25s var(--ease-out) forwards;}
+.hero-quote em{font-style:normal;color:var(--gold-light);}
+.hero-source{font-size:12px;color:rgba(212,168,85,0.55);font-family:'Ekkamai',sans-serif;font-weight:400;letter-spacing:0.18em;text-transform:uppercase;margin-bottom:0.4rem;opacity:0;animation:fadeUp 1s 0.4s var(--ease-out) forwards;}
+.hero-monk{font-size:14px;color:rgba(255,255,255,0.5);font-family:'Ekkamai',sans-serif;font-weight:300;margin-bottom:2.5rem;opacity:0;animation:fadeUp 1s 0.5s var(--ease-out) forwards;letter-spacing:0.02em;}
+.hero-ctas{display:flex;gap:1rem;flex-wrap:wrap;opacity:0;animation:fadeUp 1s 0.65s var(--ease-out) forwards;}
+@keyframes fadeUp{from{opacity:0;transform:translateY(24px);}to{opacity:1;transform:translateY(0);}}
+.btn-primary{background:var(--gold);color:var(--brown-deep);border:none;padding:14px 34px;border-radius:2px;font-family:'Ekkamai',sans-serif;font-size:14px;font-weight:600;cursor:pointer;text-decoration:none;display:inline-block;transition:all 0.25s var(--ease-out);}
+.btn-primary:hover{background:var(--gold-light);transform:translateY(-2px);box-shadow:0 8px 24px rgba(212,168,85,0.25);}
+.btn-ghost{background:transparent;color:var(--white);border:1px solid rgba(255,255,255,0.25);padding:13px 26px;border-radius:2px;font-family:'Ekkamai',sans-serif;font-size:13px;cursor:pointer;text-decoration:none;display:inline-block;transition:all 0.2s;}
+.btn-ghost:hover{background:rgba(255,255,255,0.07);border-color:rgba(255,255,255,0.5);}
+.hero-stats{display:flex;gap:3rem;margin-top:4rem;padding-top:2rem;border-top:0.5px solid rgba(255,255,255,0.08);opacity:0;animation:fadeUp 1s 0.8s var(--ease-out) forwards;}
+.hero-stat-num{font-family:'Ekkamai',sans-serif;font-size:28px;color:var(--gold);display:block;line-height:1;}
+.hero-stat-lbl{font-size:11px;color:rgba(255,255,255,0.35);letter-spacing:0.1em;text-transform:uppercase;margin-top:4px;display:block;}
+
+/* ─── COUNTDOWN ─── */
+.countdown-strip{background:#120803;padding:1.25rem 5rem;display:flex;align-items:center;gap:3rem;overflow-x:auto;border-top:0.5px solid rgba(255,255,255,0.04);border-bottom:0.5px solid rgba(255,255,255,0.04);}
+.cd-label{font-size:11px;color:rgba(255,255,255,0.25);letter-spacing:0.12em;text-transform:uppercase;white-space:nowrap;flex-shrink:0;}
+.cd-units{display:flex;gap:2rem;flex-shrink:0;}
+.cd-unit{text-align:center;}
+.cd-num{font-family:'Ekkamai',sans-serif;font-size:34px;font-weight:300;color:var(--white);display:block;line-height:1;}
+.cd-lbl{font-size:10px;color:rgba(255,255,255,0.25);letter-spacing:0.1em;text-transform:uppercase;margin-top:4px;display:block;}
+.cd-sep{font-size:26px;color:rgba(255,255,255,0.1);align-self:center;padding-bottom:8px;}
+.batch-pill{display:inline-flex;align-items:center;gap:8px;background:rgba(255,255,255,0.04);border:0.5px solid rgba(255,255,255,0.09);border-radius:99px;padding:5px 14px;font-size:12px;color:rgba(255,255,255,0.45);}
+
+/* ─── SECTIONS ─── */
+section{padding:5rem;}
+.eyebrow{font-family:'Ekkamai',sans-serif;font-style:italic;font-size:13px;color:var(--saffron);letter-spacing:0.14em;text-transform:uppercase;margin-bottom:0.5rem;}
+.sec-title{font-family:'Ekkamai',sans-serif;font-size:clamp(20px,2.5vw,30px);font-weight:600;color:var(--brown-dark);margin-bottom:0.5rem;}
+.sec-sub{font-size:14px;color:rgba(42,21,8,0.5);line-height:1.8;}
+.gold-rule{width:40px;height:1px;background:var(--gold);margin:1rem 0;}
+.dark .sec-title{color:var(--white);}
+.dark .sec-sub{color:rgba(255,255,255,0.38);}
+.dark .eyebrow{color:rgba(212,168,85,0.45);}
+
+/* ─── REVEAL ANIMATION ─── */
+.reveal{opacity:0;transform:translateY(32px);transition:opacity 0.7s var(--ease-out),transform 0.7s var(--ease-out);}
+.reveal.visible{opacity:1;transform:translateY(0);}
+.reveal-delay-1{transition-delay:0.1s;}
+.reveal-delay-2{transition-delay:0.2s;}
+.reveal-delay-3{transition-delay:0.3s;}
+
+/* ─── BATCHES ─── */
+.batches-section{background:#ede5d4;}
+.batches-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:2.5rem;}
+.batch-card{
+  background:var(--parchment);
+  padding:2rem;
+  position:relative;
+  border:0.5px solid rgba(122,62,26,0.12);
+  border-radius:8px;
+  transition:all 0.3s var(--ease-out);
+  overflow:hidden;
+}
+.batch-card::before{content:'';position:absolute;inset:0;background:linear-gradient(135deg,rgba(212,168,85,0.04) 0%,transparent 60%);pointer-events:none;}
+.batch-card:hover{transform:translateY(-4px);box-shadow:0 16px 48px rgba(61,31,14,0.12);border-color:rgba(212,168,85,0.3);}
+.batch-bg-num{font-family:'Ekkamai',sans-serif;font-size:72px;font-weight:300;color:rgba(122,62,26,0.06);position:absolute;top:0.5rem;right:1rem;line-height:1;}
+.b-tag{font-size:11px;color:var(--saffron);letter-spacing:0.12em;text-transform:uppercase;font-family:'Ekkamai',sans-serif;font-style:italic;margin-bottom:0.5rem;}
+.b-dates{font-family:'Ekkamai',sans-serif;font-size:16px;font-weight:600;color:var(--brown-dark);margin-bottom:1rem;line-height:1.5;}
+.b-status{display:inline-flex;align-items:center;gap:6px;padding:4px 12px;border-radius:99px;font-size:12px;margin-bottom:1.25rem;}
+.s-open{background:rgba(75,160,80,0.1);color:#2d7a30;border:1px solid rgba(75,160,80,0.28);}
+.s-soon{background:rgba(186,117,23,0.1);color:#7a4f0e;border:1px solid rgba(186,117,23,0.28);}
+.s-up{background:rgba(122,62,26,0.07);color:#7a5a3a;border:1px solid rgba(122,62,26,0.18);}
+.seat-btn{display:inline-flex;align-items:center;gap:6px;background:var(--brown-deep);color:var(--white);border:none;padding:7px 16px;border-radius:2px;font-size:12px;font-family:'Ekkamai',sans-serif;cursor:pointer;transition:all 0.2s;}
+.seat-btn:hover{background:var(--brown-mid);}
+.s-dot{width:6px;height:6px;border-radius:50%;background:#4caf50;}
+.b-seats-bar{margin-top:1.25rem;padding-top:1rem;border-top:0.5px solid rgba(122,62,26,0.1);}
+.b-seats-track{height:2px;background:rgba(122,62,26,0.1);border-radius:2px;overflow:hidden;margin-bottom:5px;}
+.b-seats-fill{height:100%;background:var(--gold);border-radius:2px;}
+.b-seats-txt{font-size:11px;color:rgba(122,62,26,0.45);display:flex;justify-content:space-between;}
+
+/* ─── SCHEDULE ─── */
+.schedule-sec{background:var(--brown-deep);}
+.sch-tabs{display:flex;gap:0;margin-top:2.5rem;border-bottom:0.5px solid rgba(255,255,255,0.07);}
+.sch-tab{padding:10px 24px;background:transparent;border:none;color:rgba(255,255,255,0.35);font-family:'Ekkamai',sans-serif;font-size:14px;cursor:pointer;border-bottom:2px solid transparent;margin-bottom:-1px;transition:all 0.2s;}
+.sch-tab.active{color:var(--white);border-bottom-color:var(--gold);}
+.sch-tab:hover:not(.active){color:rgba(255,255,255,0.6);}
+.sch-day{display:none;padding:2rem 0 0;}
+.sch-day.active{display:block;}
+.sch-item{display:flex;align-items:flex-start;gap:1.5rem;padding:1.1rem 0;border-bottom:0.5px solid rgba(255,255,255,0.04);}
+.sch-item:last-child{border-bottom:none;}
+.sch-time{font-family:'Ekkamai',sans-serif;font-size:15px;color:var(--gold);min-width:76px;flex-shrink:0;margin-top:2px;}
+.sch-dot-wrap{display:flex;flex-direction:column;align-items:center;flex-shrink:0;padding-top:7px;}
+.sch-dot{width:8px;height:8px;border-radius:50%;background:rgba(212,168,85,0.4);flex-shrink:0;}
+.sch-vline{width:1px;background:rgba(255,255,255,0.05);flex:1;min-height:18px;margin-top:4px;}
+.sch-name{font-family:'Ekkamai',sans-serif;font-size:15px;color:var(--white);font-weight:300;}
+.sch-name small{display:block;font-size:12px;color:rgba(255,255,255,0.3);margin-top:3px;font-family:'Ekkamai',sans-serif;}
+
+/* ─── CANDIDATES ─── */
+.candidates-sec{background:#100702;}
+.cand-list{margin-top:2.5rem;border-top:0.5px solid rgba(255,255,255,0.06);}
+.cand-row{display:flex;align-items:center;gap:1rem;padding:0.9rem 0;border-bottom:0.5px solid rgba(255,255,255,0.04);transition:background 0.15s;}
+.cand-row:hover{background:rgba(255,255,255,0.02);padding-left:8px;}
+.cand-row:last-child{border-bottom:none;}
+.cand-idx{font-family:'Ekkamai',sans-serif;font-size:13px;color:rgba(255,255,255,0.16);min-width:24px;}
+.cand-name{font-family:'Ekkamai',sans-serif;font-size:14px;color:var(--white);font-weight:300;flex:1;}
+.cand-name.empty{color:rgba(255,255,255,0.14);font-style:italic;font-size:13px;}
+.cand-badge{font-size:10px;padding:2px 9px;border-radius:99px;background:rgba(75,160,80,0.12);color:#7dc882;border:0.5px solid rgba(75,160,80,0.28);white-space:nowrap;}
+
+/* ─── REGISTRATION ─── */
+.reg-wrap{display:grid;grid-template-columns:1fr 1fr;}
+.reg-left{background:var(--brown-dark);padding:5rem;display:flex;flex-direction:column;justify-content:center;}
+.reg-right{padding:5rem;background:var(--parchment);}
+.reg-title{font-family:'Ekkamai',sans-serif;font-size:28px;font-weight:600;color:var(--white);margin-bottom:1rem;line-height:1.5;}
+.reg-row{display:flex;align-items:flex-start;gap:10px;margin-bottom:1.25rem;padding-bottom:1.25rem;border-bottom:0.5px solid rgba(255,255,255,0.06);}
+.reg-row:last-of-type{border-bottom:none;margin-bottom:2rem;}
+.reg-icon{width:30px;height:30px;border:0.5px solid rgba(255,255,255,0.1);border-radius:4px;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:2px;}
+.reg-lbl{font-size:11px;color:rgba(255,255,255,0.25);letter-spacing:0.1em;text-transform:uppercase;font-family:'Ekkamai',sans-serif;font-style:italic;margin-bottom:3px;}
+.reg-val{font-family:'Ekkamai',sans-serif;font-size:14px;color:var(--white);font-weight:300;}
+.reg-seats-box{padding:1.25rem;border:0.5px solid rgba(255,255,255,0.07);border-radius:4px;}
+.reg-seats-lbl{font-size:12px;color:rgba(255,255,255,0.25);margin-bottom:8px;font-style:italic;}
+.reg-seats-bar{display:flex;align-items:center;gap:10px;}
+.reg-seats-track{flex:1;height:3px;background:rgba(255,255,255,0.07);overflow:hidden;border-radius:2px;}
+.reg-seats-fill{height:100%;background:var(--gold);border-radius:2px;transition:width 0.6s var(--ease-out);}
+.reg-seats-num{font-family:'Ekkamai',sans-serif;font-size:22px;color:var(--white);}
+.reg-seats-note{font-size:11px;color:rgba(255,255,255,0.16);margin-top:5px;}
+.reg-live-indicator{display:inline-flex;align-items:center;gap:5px;font-size:11px;color:rgba(255,255,255,0.28);margin-top:0.75rem;}
+.reg-live-dot{width:5px;height:5px;border-radius:50%;background:#4caf50;animation:pulse-dot 2s infinite;}
+
+/* form */
+.f-tabs{display:flex;gap:8px;margin-bottom:2rem;flex-wrap:wrap;}
+.f-tab{padding:8px 18px;border:1px solid rgba(122,62,26,0.2);border-radius:99px;font-family:'Ekkamai',sans-serif;font-size:13px;color:var(--brown-mid);background:transparent;cursor:pointer;transition:all 0.2s;}
+.f-tab.active{background:var(--brown-dark);color:var(--white);border-color:var(--brown-dark);}
+.f-tab:hover:not(.active){border-color:var(--brown-mid);}
+.f-title{font-family:'Ekkamai',sans-serif;font-size:18px;font-weight:600;color:var(--brown-dark);margin-bottom:0.25rem;}
+.f-dates{font-size:13px;color:#7a5a3a;margin-bottom:1.5rem;}
+.f-group{margin-bottom:1.4rem;position:relative;}
+.f-label{display:block;font-size:11px;color:#5a3a20;letter-spacing:0.08em;text-transform:uppercase;font-family:'Ekkamai',sans-serif;font-style:italic;margin-bottom:6px;}
+.f-input{width:100%;border:none;border-bottom:1.5px solid rgba(122,62,26,0.2);background:transparent;padding:10px 0;font-family:'Ekkamai',sans-serif;font-size:15px;color:var(--brown-deep);outline:none;transition:border-color 0.2s;}
+.f-input:focus{border-color:var(--saffron);}
+.f-input::placeholder{color:rgba(122,62,26,0.22);font-size:13px;}
+.f-textarea{width:100%;border:1.5px solid rgba(122,62,26,0.15);background:transparent;padding:10px;font-family:'Ekkamai',sans-serif;font-size:13px;color:var(--brown-deep);outline:none;resize:vertical;min-height:80px;border-radius:2px;transition:border-color 0.2s;}
+.f-textarea:focus{border-color:var(--saffron);}
+.f-textarea::placeholder{color:rgba(122,62,26,0.22);font-size:12px;}
+.f-row2{display:grid;grid-template-columns:1fr 1fr;gap:1.5rem;}
+.f-row3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:1rem;}
+.f-seat-bar{display:flex;align-items:center;justify-content:space-between;padding:0.75rem 0;border-top:0.5px solid rgba(122,62,26,0.1);border-bottom:0.5px solid rgba(122,62,26,0.1);margin-bottom:1.5rem;}
+.f-seat-lbl{font-size:12px;color:#7a5a3a;}
+.f-seat-num{display:inline-flex;align-items:center;gap:6px;background:var(--brown-deep);color:var(--white);padding:4px 12px;border-radius:99px;font-size:12px;}
+.age-note{font-size:11px;color:rgba(122,62,26,0.38);margin-top:4px;font-style:italic;}
+.f-submit{width:100%;background:var(--brown-dark);color:var(--white);border:none;padding:16px;font-family:'Ekkamai',sans-serif;font-size:15px;font-weight:600;cursor:pointer;transition:all 0.25s var(--ease-out);border-radius:2px;margin-top:0.5rem;display:flex;align-items:center;justify-content:center;gap:8px;}
+.f-submit:hover{background:var(--brown-mid);transform:translateY(-1px);box-shadow:0 8px 24px rgba(61,31,14,0.2);}
+.f-submit:disabled{opacity:0.6;cursor:not-allowed;transform:none;}
+.f-note{font-size:11px;color:rgba(122,62,26,0.35);text-align:center;margin-top:0.75rem;line-height:1.7;}
+.f-spinner{width:16px;height:16px;border:2px solid rgba(255,255,255,0.3);border-top-color:white;border-radius:50%;animation:spin 0.7s linear infinite;display:none;}
+@keyframes spin{to{transform:rotate(360deg);}}
+
+/* success card */
+.success-card{display:none;background:rgba(42,21,8,0.05);border:0.5px solid rgba(122,62,26,0.18);border-radius:8px;padding:2.5rem;text-align:center;}
+.success-card.show{display:block;}
+.success-icon{width:52px;height:52px;border-radius:50%;background:rgba(75,160,80,0.12);border:1px solid rgba(75,160,80,0.28);display:flex;align-items:center;justify-content:center;margin:0 auto 1.25rem;}
+.success-ref{font-family:'Ekkamai',sans-serif;font-size:13px;color:rgba(122,62,26,0.45);margin-top:0.5rem;}
+
+/* ─── GALLERY ─── */
+.gallery-sec{background:#f0e8d8;}
+.gallery-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-top:2.5rem;}
+.gallery-item{aspect-ratio:1;background:rgba(122,62,26,0.08);border-radius:4px;overflow:hidden;position:relative;cursor:pointer;border:0.5px solid rgba(122,62,26,0.1);}
+.gallery-item:first-child{grid-column:span 2;grid-row:span 2;aspect-ratio:auto;}
+.gallery-item img{width:100%;height:100%;object-fit:cover;transition:transform 0.4s var(--ease-out);}
+.gallery-item:hover img{transform:scale(1.06);}
+.gallery-overlay{position:absolute;inset:0;background:rgba(30,13,4,0);transition:background 0.3s;}
+.gallery-item:hover .gallery-overlay{background:rgba(30,13,4,0.25);}
+.gallery-placeholder{width:100%;height:100%;min-height:160px;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:8px;color:rgba(122,62,26,0.3);}
+.gallery-placeholder svg{opacity:0.4;}
+.gallery-placeholder span{font-size:11px;letter-spacing:0.08em;text-transform:uppercase;font-family:'Ekkamai',sans-serif;font-style:italic;}
+
+/* lightbox */
+.lightbox{display:none;position:fixed;inset:0;z-index:500;background:rgba(10,4,1,0.95);backdrop-filter:blur(12px);align-items:center;justify-content:center;}
+.lightbox.open{display:flex;}
+.lightbox img{max-width:90vw;max-height:85vh;object-fit:contain;border-radius:4px;}
+.lb-close{position:absolute;top:1.5rem;right:1.5rem;background:none;border:none;color:rgba(255,255,255,0.5);font-size:28px;cursor:pointer;width:40px;height:40px;display:flex;align-items:center;justify-content:center;border-radius:50%;transition:all 0.2s;}
+.lb-close:hover{background:rgba(255,255,255,0.1);color:white;}
+.lb-nav{position:absolute;top:50%;transform:translateY(-50%);background:rgba(255,255,255,0.08);border:none;color:white;width:44px;height:44px;border-radius:50%;font-size:18px;cursor:pointer;transition:all 0.2s;display:flex;align-items:center;justify-content:center;}
+.lb-nav:hover{background:rgba(255,255,255,0.15);}
+.lb-prev{left:1.5rem;}
+.lb-next{right:1.5rem;}
+
+/* ─── FAQ ─── */
+.faq-sec{background:var(--parchment);}
+.faq-list{margin-top:2.5rem;max-width:720px;}
+.faq-item{border-bottom:0.5px solid rgba(122,62,26,0.12);}
+.faq-q{width:100%;background:none;border:none;text-align:left;padding:1.25rem 0;display:flex;align-items:center;justify-content:space-between;cursor:pointer;font-family:'Ekkamai',sans-serif;font-size:16px;color:var(--brown-dark);font-weight:400;gap:1rem;transition:color 0.2s;}
+.faq-q:hover{color:var(--saffron);}
+.faq-icon{width:22px;height:22px;border:0.5px solid rgba(122,62,26,0.2);border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:all 0.3s var(--ease-out);}
+.faq-icon::after{content:'';display:block;width:8px;height:8px;border-right:1px solid var(--brown-mid);border-bottom:1px solid var(--brown-mid);transform:rotate(45deg);margin-top:-3px;transition:transform 0.3s var(--ease-out);}
+.faq-item.open .faq-icon{background:var(--brown-dark);border-color:var(--brown-dark);}
+.faq-item.open .faq-icon::after{transform:rotate(225deg);margin-top:2px;border-color:white;}
+.faq-a{max-height:0;overflow:hidden;transition:max-height 0.4s var(--ease-out),padding 0.3s;}
+.faq-item.open .faq-a{max-height:400px;padding-bottom:1.25rem;}
+.faq-a p{font-size:14px;color:rgba(42,21,8,0.6);line-height:1.9;font-family:'Ekkamai',sans-serif;}
+
+/* ─── MAP / HOW TO GET THERE ─── */
+.map-sec{background:#1a0b04;}
+.map-grid{display:grid;grid-template-columns:1fr 1fr;gap:0;margin-top:2.5rem;border:0.5px solid rgba(255,255,255,0.06);border-radius:8px;overflow:hidden;}
+.map-embed{background:#0f0600;min-height:380px;position:relative;overflow:hidden;}
+.map-embed iframe{width:100%;height:100%;border:none;min-height:380px;filter:sepia(0.2) brightness(0.85) contrast(1.1);}
+.map-info{background:rgba(255,255,255,0.03);padding:3rem;display:flex;flex-direction:column;gap:1.5rem;}
+.map-info-row{display:flex;gap:12px;align-items:flex-start;}
+.map-info-icon{width:32px;height:32px;border:0.5px solid rgba(212,168,85,0.2);border-radius:4px;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:2px;}
+.map-info-lbl{font-size:11px;color:rgba(255,255,255,0.25);letter-spacing:0.1em;text-transform:uppercase;font-family:'Ekkamai',sans-serif;font-style:italic;margin-bottom:4px;}
+.map-info-val{font-family:'Ekkamai',sans-serif;font-size:14px;color:var(--white);font-weight:300;line-height:1.6;}
+.map-btn{display:inline-flex;align-items:center;gap:7px;background:var(--gold);color:var(--brown-deep);padding:11px 22px;border-radius:2px;font-size:13px;font-family:'Ekkamai',sans-serif;font-weight:600;text-decoration:none;transition:all 0.2s;border:none;cursor:pointer;}
+.map-btn:hover{background:var(--gold-light);transform:translateY(-1px);}
+
+/* ─── SPONSORS ─── */
+.sponsors-sec{background:var(--brown-deep);}
+.sp-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:12px;margin-top:2.5rem;}
+.sp-card{background:rgba(255,255,255,0.03);padding:2rem;border-radius:8px;border:0.5px solid rgba(255,255,255,0.07);transition:all 0.3s var(--ease-out);}
+.sp-card:hover{background:rgba(255,255,255,0.05);border-color:rgba(212,168,85,0.2);transform:translateY(-3px);}
+.sp-icon{width:38px;height:38px;border:0.5px solid rgba(212,168,85,0.2);border-radius:4px;display:flex;align-items:center;justify-content:center;margin-bottom:1rem;}
+.sp-cat{font-size:11px;color:var(--gold);letter-spacing:0.12em;text-transform:uppercase;font-family:'Ekkamai',sans-serif;font-style:italic;margin-bottom:0.5rem;}
+.sp-title{font-family:'Ekkamai',sans-serif;font-size:16px;font-weight:600;color:var(--white);margin-bottom:0.75rem;line-height:1.5;}
+.sp-desc{font-size:13px;color:rgba(255,255,255,0.38);line-height:1.8;margin-bottom:1.25rem;}
+.line-btn{display:inline-flex;align-items:center;gap:7px;background:rgba(0,185,0,0.08);border:0.5px solid rgba(0,185,0,0.25);color:var(--white);padding:8px 16px;border-radius:2px;font-size:13px;text-decoration:none;transition:all 0.2s;font-family:'Ekkamai',sans-serif;}
+.line-btn:hover{background:rgba(0,185,0,0.18);}
+.sp-cta{margin-top:3rem;border:0.5px solid rgba(255,255,255,0.07);border-radius:8px;padding:2.5rem;text-align:center;}
+.sp-cta h3{font-family:'Ekkamai',sans-serif;font-size:22px;font-weight:600;color:var(--white);margin-bottom:0.75rem;}
+.sp-cta p{font-size:14px;color:rgba(255,255,255,0.38);margin-bottom:1.5rem;line-height:1.8;}
+
+/* ─── FOOTER ─── */
+footer{background:#080400;padding:3rem 5rem;display:flex;align-items:center;justify-content:space-between;border-top:0.5px solid rgba(255,255,255,0.05);flex-wrap:wrap;gap:1.5rem;}
+.foot-logo{display:flex;align-items:center;gap:12px;}
+.foot-brand{font-family:'Ekkamai',sans-serif;font-size:13px;color:rgba(255,255,255,0.3);line-height:1.8;}
+.foot-brand strong{color:rgba(255,255,255,0.42);display:block;}
+.foot-right{font-size:12px;color:rgba(255,255,255,0.2);text-align:right;line-height:1.8;}
+.foot-links{display:flex;gap:1.5rem;list-style:none;margin-top:0.5rem;}
+.foot-links a{font-size:12px;color:rgba(255,255,255,0.22);text-decoration:none;transition:color 0.2s;}
+.foot-links a:hover{color:rgba(255,255,255,0.5);}
+
+/* ─── SOCIAL ICONS ─── */
+.social-links{display:flex;align-items:center;gap:8px;}
+.social-link{width:32px;height:32px;border-radius:50%;border:0.5px solid rgba(255,255,255,0.14);display:flex;align-items:center;justify-content:center;transition:all 0.25s var(--ease-out);color:rgba(255,255,255,0.4);text-decoration:none;flex-shrink:0;}
+.social-link:hover{border-color:var(--gold);background:rgba(212,168,85,0.1);color:var(--gold);transform:translateY(-2px);}
+.social-link svg{width:14px;height:14px;fill:currentColor;}
+.foot-social{display:flex;align-items:center;gap:10px;margin-top:1rem;}
+.foot-social-link{width:38px;height:38px;border-radius:50%;border:0.5px solid rgba(255,255,255,0.1);display:flex;align-items:center;justify-content:center;transition:all 0.25s var(--ease-out);color:rgba(255,255,255,0.35);text-decoration:none;}
+.foot-social-link:hover{border-color:var(--gold);background:rgba(212,168,85,0.1);color:var(--gold);}
+.foot-social-link svg{width:17px;height:17px;fill:currentColor;}
+
+/* ─── TOAST ─── */
+.toast{position:fixed;bottom:2rem;right:2rem;z-index:600;background:#1a0f06;border:0.5px solid rgba(212,168,85,0.3);border-radius:8px;padding:1rem 1.5rem;display:flex;align-items:center;gap:10px;box-shadow:0 20px 60px rgba(0,0,0,0.4);transform:translateY(80px);opacity:0;transition:all 0.4s var(--ease-out);pointer-events:none;}
+.toast.show{transform:translateY(0);opacity:1;}
+.toast-icon{width:24px;height:24px;border-radius:50%;background:rgba(75,160,80,0.15);display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+.toast-text{font-family:'Ekkamai',sans-serif;font-size:14px;color:var(--white);}
+.toast-sub{font-size:12px;color:rgba(255,255,255,0.38);margin-top:2px;}
+
+/* ─── RESPONSIVE: TABLET (≤900px) ─── */
+@media(max-width:900px){
+  nav{padding:0 1.25rem;}
+  .nav-links{display:none;}
+  .hamburger{display:flex;}
+  .mobile-menu{display:flex;}
+  section,.reg-left,.reg-right{padding:3rem 1.5rem;}
+  .hero-content{padding:6.5rem 1.5rem 3rem;}
+  .hero-stats{flex-wrap:wrap;gap:1.5rem;}
+  .hero-monk-photo{width:100%;opacity:0.25;}
+  .hero-photo-fade{background:linear-gradient(to right,#1e0d04 0%,rgba(30,13,4,0.9) 50%,rgba(30,13,4,0.85) 100%);}
+  .countdown-strip{padding:1rem 1.5rem;gap:1.5rem;}
+  .batches-grid,.reg-wrap,.map-grid{grid-template-columns:1fr;}
+  .gallery-grid{grid-template-columns:repeat(2,1fr);}
+  .gallery-item:first-child{grid-column:span 2;grid-row:span 1;}
+  .f-row2,.f-row3{grid-template-columns:1fr;}
+  footer{flex-direction:column;padding:2rem 1.5rem;}
+  .foot-right{text-align:left;}
+  .social-links{display:none;}
+}
+
+/* ─── RESPONSIVE: MOBILE (≤480px) ─── */
+@media(max-width:480px){
+  /* nav */
+  nav{height:56px;padding:0 1rem;}
+  nav.scrolled{height:50px;}
+  .nav-brand{font-size:13px;}
+  .nav-seat-btn{padding:5px 12px;font-size:12px;}
+  .seat-dot{width:6px;height:6px;}
+
+  /* hero */
+  .hero{min-height:100svh;}
+  .hero-content{padding:5.5rem 1.25rem 2.5rem;max-width:100%;}
+  .hero-eyebrow{font-size:12px;letter-spacing:0.1em;margin-bottom:1rem;}
+  .hero-quote{font-size:clamp(24px,7.5vw,32px);line-height:1.7;}
+  .hero-source{font-size:11px;letter-spacing:0.14em;}
+  .hero-monk{font-size:13px;margin-bottom:2rem;}
+  .hero-ctas{flex-direction:column;gap:0.75rem;}
+  .btn-primary,.btn-ghost{width:100%;text-align:center;padding:14px 20px;font-size:15px;}
+  .hero-stats{gap:1.25rem;margin-top:2.5rem;padding-top:1.5rem;}
+  .hero-stat-num{font-size:22px;}
+  .hero-stat-lbl{font-size:10px;}
+
+  /* countdown */
+  .countdown-strip{padding:0.9rem 1rem;gap:1rem;justify-content:space-between;}
+  .cd-label{display:none;}
+  .cd-num{font-size:26px;}
+  .cd-lbl{font-size:9px;}
+  .cd-sep{font-size:18px;}
+  .batch-pill{display:none;}
+
+  /* sections */
+  section,.reg-left,.reg-right,.map-sec{padding:2.5rem 1.25rem;}
+  .eyebrow{font-size:11px;}
+  .sec-title{font-size:clamp(18px,5.5vw,24px);}
+  .sec-sub{font-size:13px;}
+  .gold-rule{margin:0.75rem 0;}
+
+  /* batches */
+  .batch-card{padding:1.5rem;}
+  .batch-bg-num{font-size:52px;}
+  .b-dates{font-size:15px;}
+
+  /* schedule */
+  .sch-tabs{overflow-x:auto;-webkit-overflow-scrolling:touch;}
+  .sch-tab{padding:8px 16px;font-size:13px;white-space:nowrap;}
+  .sch-time{font-size:13px;min-width:62px;}
+  .sch-name{font-size:14px;}
+  .sch-item{gap:1rem;padding:1rem 0;}
+
+  /* gallery */
+  .gallery-grid{grid-template-columns:repeat(2,1fr);gap:6px;}
+  .gallery-item:first-child{grid-column:span 2;}
+
+  /* candidates */
+  .cand-name{font-size:13px;}
+  .cand-badge{font-size:9px;padding:2px 7px;}
+
+  /* registration */
+  .reg-title{font-size:22px;}
+  .f-tabs{gap:6px;}
+  .f-tab{padding:7px 14px;font-size:12px;}
+  .f-title{font-size:16px;}
+  .f-input{font-size:16px;} /* prevent iOS zoom */
+  .f-textarea{font-size:16px;}
+  .f-submit{padding:15px;font-size:14px;}
+
+  /* FAQ */
+  .faq-list{margin-top:1.5rem;}
+  .faq-q{font-size:15px;padding:1rem 0;}
+
+  /* map */
+  .map-info{padding:2rem 1.25rem;}
+  .map-embed{min-height:240px;}
+  .map-embed iframe{min-height:240px;}
+
+  /* sponsors */
+  .sp-grid{grid-template-columns:1fr;}
+  .sp-cta{padding:1.75rem 1.25rem;}
+  .sp-cta h3{font-size:18px;}
+
+  /* footer */
+  footer{padding:2rem 1.25rem;gap:1.25rem;}
+  .foot-brand{font-size:12px;}
+  .foot-links{gap:1rem;flex-wrap:wrap;}
+  .foot-right{font-size:11px;}
+
+  /* toast */
+  .toast{bottom:1rem;right:1rem;left:1rem;right:1rem;}
+
+  /* mobile menu */
+  .mobile-menu a{font-size:20px;padding:1rem 0;}
+
+  /* scroll progress */
+  #progress-bar{height:1.5px;}
+}
+
+/* ─── SETUP NOTICE (shown only if webhook not configured) ─── */
+.setup-notice{background:rgba(186,117,23,0.08);border:0.5px solid rgba(186,117,23,0.25);border-radius:4px;padding:0.75rem 1rem;margin-bottom:1.5rem;font-size:12px;color:#7a4f0e;line-height:1.6;display:none;}
+.setup-notice.show{display:block;}
+.setup-notice a{color:var(--saffron);text-decoration:underline;}
+</style>
+</head>
+<body>
+
+<!-- SCROLL PROGRESS -->
+<div id="progress-bar"></div>
+
+<!-- LIGHTBOX -->
+<div class="lightbox" id="lightbox" onclick="closeLightbox(event)">
+  <button class="lb-close" onclick="closeLightbox()">&times;</button>
+  <button class="lb-nav lb-prev" onclick="lbNav(-1,event)">&#8249;</button>
+  <img id="lb-img" src="" alt="">
+  <button class="lb-nav lb-next" onclick="lbNav(1,event)">&#8250;</button>
+</div>
+
+<!-- TOAST -->
+<div class="toast" id="toast">
+  <div class="toast-icon">
+    <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><polyline points="2,6 5,9 10,3" stroke="#4caf50" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+  </div>
+  <div>
+    <div class="toast-text" id="toast-text">ส่งใบสมัครเรียบร้อย</div>
+    <div class="toast-sub" id="toast-sub">ขอบคุณที่ลงทะเบียน ทีมงานจะติดต่อกลับ</div>
+  </div>
+</div>
+
+<!-- MOBILE MENU -->
+<div class="mobile-menu" id="mobileMenu">
+  <a href="#batches" onclick="closeMobileMenu()">กำหนดการ</a>
+  <a href="#schedule" onclick="closeMobileMenu()">ตารางกิจกรรม</a>
+  <a href="#gallery" onclick="closeMobileMenu()">ภาพบรรยากาศ</a>
+  <a href="#candidates" onclick="closeMobileMenu()">รายชื่อ</a>
+  <a href="#register" onclick="closeMobileMenu()">ลงทะเบียน</a>
+  <a href="#faq" onclick="closeMobileMenu()">คำถามที่พบบ่อย</a>
+  <a href="#map" onclick="closeMobileMenu()">การเดินทาง</a>
+  <a href="#sponsors" onclick="closeMobileMenu()">สนับสนุน</a>
+  <div style="display:flex;gap:14px;margin-top:2rem;padding-top:2rem;border-top:0.5px solid rgba(255,255,255,0.07);">
+    <a class="foot-social-link" href="https://www.facebook.com/profile.php?id=61571826655992" target="_blank" aria-label="Facebook" style="width:44px;height:44px;">
+      <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" style="width:18px;height:18px;fill:rgba(255,255,255,0.5);"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
+    </a>
+    <a class="foot-social-link" href="https://www.instagram.com/dhammapath.th/" target="_blank" aria-label="Instagram" style="width:44px;height:44px;">
+      <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" style="width:18px;height:18px;fill:rgba(255,255,255,0.5);"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg>
+    </a>
+    <a class="foot-social-link" href="https://line.me/ti/p/~@dhammapath" target="_blank" aria-label="LINE" style="width:44px;height:44px;background:rgba(0,185,0,0.08);border-color:rgba(0,185,0,0.2);">
+      <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" style="width:18px;height:18px;fill:rgba(255,255,255,0.5);"><path d="M19.952 12.375c0-4.358-4.37-7.9-9.74-7.9-5.372 0-9.74 3.542-9.74 7.9 0 3.906 3.465 7.178 8.145 7.797.317.068.748.21.857.48.099.246.065.63.032.879l-.138.831c-.042.247-.194.965.846.526 1.04-.44 5.617-3.308 7.664-5.662 1.413-1.55 2.074-3.124 2.074-4.851z"/></svg>
+    </a>
+  </div>
+</div>
+
+<!-- NAV -->
+<nav id="mainNav">
+  <a class="nav-logo" href="#">
+    <svg class="nav-logo-img" viewBox="0 0 40 40" xmlns="http://www.w3.org/2000/svg">
+      <rect width="40" height="40" rx="4" fill="#1a0f08"/>
+      <text x="4" y="28" font-family="Georgia,serif" font-size="20" fill="white" font-weight="300">ธรรม</text>
+      <line x1="33" y1="10" x2="35.5" y2="5.5" stroke="white" stroke-width="0.9"/>
+      <ellipse cx="34.5" cy="4.5" rx="2.8" ry="4" fill="none" stroke="white" stroke-width="0.75" transform="rotate(-12 34.5 4.5)"/>
+      <ellipse cx="37" cy="5" rx="2.2" ry="3.4" fill="none" stroke="white" stroke-width="0.65" transform="rotate(14 37 5)"/>
+      <circle cx="33.5" cy="9.5" r="1.2" fill="none" stroke="white" stroke-width="0.7"/>
+      <text x="7" y="36" font-family="Arial,sans-serif" font-size="7" fill="rgba(255,255,255,0.5)" letter-spacing="0.5">ตามมรรค</text>
+    </svg>
+    <span class="nav-brand">ธรรม ตามมรรค</span>
+  </a>
+  <ul class="nav-links">
+    <li><a href="#batches">กำหนดการ</a></li>
+    <li><a href="#schedule">ตารางกิจกรรม</a></li>
+    <li><a href="#gallery">ภาพบรรยากาศ</a></li>
+    <li><a href="#candidates">รายชื่อ</a></li>
+    <li><a href="#register">ลงทะเบียน</a></li>
+    <li><a href="#faq">FAQ</a></li>
+    <li><a href="#map">การเดินทาง</a></li>
+  </ul>
+  <div style="display:flex;align-items:center;gap:12px;">
+    <div class="social-links">
+      <a class="social-link" href="https://www.facebook.com/profile.php?id=61571826655992" target="_blank" aria-label="Facebook">
+        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
+      </a>
+      <a class="social-link" href="https://www.instagram.com/dhammapath.th/" target="_blank" aria-label="Instagram">
+        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg>
+      </a>
+    </div>
+    <button class="nav-seat-btn" onclick="document.getElementById('register').scrollIntoView({behavior:'smooth'})">
+      <span class="seat-dot"></span><span id="nav-seat-count">กำลังโหลด...</span>
+    </button>
+    <button class="hamburger" id="hamburger" onclick="toggleMobileMenu()" aria-label="เมนู">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-lotus"></div>
+  <div class="hero-overlay"></div>
+  <div class="hero-photo-fade"></div>
+  <div class="hero-content">
+    <p class="hero-eyebrow">ค่ายธรรมะสำหรับวัยรุ่น · ปี ๒๕๖๙</p>
+    <h1 class="hero-quote">
+      สิ่งที่ทำให้อาตมา<em>อยากอยู่</em><br>
+      บนโลกใบนี้ คือ<em>การได้สอนธรรม</em>
+    </h1>
+    <p class="hero-source">ธรรมตามมรรค</p>
+    <p class="hero-monk">พระมหาธัญพิสิษฐ์ โชติโก (พระอาจารย์มหาต้น)</p>
+    <div class="hero-ctas">
+      <a href="#register" class="btn-primary">สมัครเข้าร่วมค่าย →</a>
+      <a href="#schedule" class="btn-ghost">ดูตารางกิจกรรม</a>
+    </div>
+    <div class="hero-stats">
+      <div>
+        <span class="hero-stat-num">รุ่น 10</span>
+        <span class="hero-stat-lbl">ปีที่ 10 แล้ว</span>
+      </div>
+      <div>
+        <span class="hero-stat-num">15</span>
+        <span class="hero-stat-lbl">ที่นั่งต่อรุ่น</span>
+      </div>
+      <div>
+        <span class="hero-stat-num">3 วัน</span>
+        <span class="hero-stat-lbl">เข้มข้น</span>
+      </div>
+      <div>
+        <span class="hero-stat-num">ฟรี</span>
+        <span class="hero-stat-lbl">ไม่มีค่าใช้จ่าย</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- COUNTDOWN -->
+<div class="countdown-strip">
+  <span class="cd-label">เริ่มค่ายใน</span>
+  <div class="cd-units">
+    <div class="cd-unit"><span class="cd-num" id="cd-days">00</span><span class="cd-lbl">วัน</span></div>
+    <span class="cd-sep">·</span>
+    <div class="cd-unit"><span class="cd-num" id="cd-hours">00</span><span class="cd-lbl">ชม.</span></div>
+    <span class="cd-sep">·</span>
+    <div class="cd-unit"><span class="cd-num" id="cd-mins">00</span><span class="cd-lbl">นาที</span></div>
+    <span class="cd-sep">·</span>
+    <div class="cd-unit"><span class="cd-num" id="cd-secs">00</span><span class="cd-lbl">วินาที</span></div>
+  </div>
+  <span class="batch-pill">🪷 รุ่น 10 · 30 พ.ค. – 1 มิ.ย. 2569</span>
+</div>
+
+<!-- BATCHES -->
+<section class="batches-section" id="batches">
+  <p class="eyebrow reveal">Camp Schedule 2026</p>
+  <h2 class="sec-title reveal reveal-delay-1">กำหนดการค่าย ปี 2569</h2>
+  <div class="gold-rule reveal reveal-delay-2"></div>
+  <p class="sec-sub reveal reveal-delay-2">เปิดรับสมัครปีละ 3 รุ่น · อายุ 20–35 ปีเท่านั้น · ไม่มีค่าใช้จ่าย</p>
+  <div class="batches-grid">
+    <div class="batch-card reveal reveal-delay-1">
+      <div class="batch-bg-num">10</div>
+      <p class="b-tag">รุ่น 10</p>
+      <p class="b-dates">30 พฤษภาคม –<br>1 มิถุนายน 2569</p>
+      <span class="b-status s-open"><span class="s-dot"></span>เปิดรับสมัคร</span>
+      <br>
+      <button class="seat-btn" onclick="document.getElementById('register').scrollIntoView({behavior:'smooth'})">
+        <span class="s-dot"></span> <span id="batch10-seats">12/15 ที่นั่ง</span>
+      </button>
+      <div class="b-seats-bar">
+        <div class="b-seats-track"><div class="b-seats-fill" id="batch10-fill" style="width:80%"></div></div>
+        <div class="b-seats-txt"><span>ที่นั่งคงเหลือ</span><span id="batch10-remaining">3 ที่</span></div>
+      </div>
+    </div>
+    <div class="batch-card reveal reveal-delay-2">
+      <div class="batch-bg-num">11</div>
+      <p class="b-tag">รุ่น 11</p>
+      <p class="b-dates">12–14 มิถุนายน 2569</p>
+      <span class="b-status s-soon">เปิดรับเร็วๆ นี้</span>
+      <br><br>
+      <button class="seat-btn" style="opacity:0.5;cursor:default;">เปิดรับเร็วๆ นี้</button>
+      <div class="b-seats-bar">
+        <div class="b-seats-track"><div class="b-seats-fill" style="width:0%"></div></div>
+        <div class="b-seats-txt"><span>ยังไม่เปิดรับสมัคร</span><span>15 ที่</span></div>
+      </div>
+    </div>
+    <div class="batch-card reveal reveal-delay-3">
+      <div class="batch-bg-num">12</div>
+      <p class="b-tag">รุ่น 12</p>
+      <p class="b-dates">10–12 กรกฎาคม 2569</p>
+      <span class="b-status s-up">กำลังจะมา</span>
+      <br><br>
+      <button class="seat-btn" style="opacity:0.5;cursor:default;">กำลังจะมา</button>
+      <div class="b-seats-bar">
+        <div class="b-seats-track"><div class="b-seats-fill" style="width:0%"></div></div>
+        <div class="b-seats-txt"><span>ยังไม่เปิดรับสมัคร</span><span>15 ที่</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SCHEDULE -->
+<section class="schedule-sec dark" id="schedule">
+  <p class="eyebrow reveal">Daily Schedule</p>
+  <h2 class="sec-title reveal reveal-delay-1">ตารางกิจกรรมประจำวัน</h2>
+  <div class="gold-rule reveal reveal-delay-2"></div>
+  <p class="sec-sub reveal reveal-delay-2">ค่าย 3 วัน 2 คืน ณ วัดป่าศรีอุทุมพร จ.สระบุรี</p>
+  <div class="sch-tabs reveal">
+    <button class="sch-tab active" onclick="showDay('d1',this)">วันที่ 1</button>
+    <button class="sch-tab" onclick="showDay('d2',this)">วันที่ 2</button>
+    <button class="sch-tab" onclick="showDay('d3',this)">วันที่ 3</button>
+  </div>
+  <div class="sch-day active" id="d1">
+    <div class="sch-item"><span class="sch-time">09.00 น.</span><div class="sch-dot-wrap"><div class="sch-dot"></div><div class="sch-vline"></div></div><div class="sch-name">ลงทะเบียน · รับของ<small>ตรวจสอบรายชื่อ รับชุดผู้ปฏิบัติ</small></div></div>
+    <div class="sch-item"><span class="sch-time">10.30 น.</span><div class="sch-dot-wrap"><div class="sch-dot"></div><div class="sch-vline"></div></div><div class="sch-name">ปฐมนิเทศ<small>แนะนำค่าย กฎกติกา และผู้นำค่าย</small></div></div>
+    <div class="sch-item"><span class="sch-time">13.00 น.</span><div class="sch-dot-wrap"><div class="sch-dot"></div><div class="sch-vline"></div></div><div class="sch-name">ธรรมบรรยาย<small>บรรยายโดยพระวิทยากร</small></div></div>
+    <div class="sch-item"><span class="sch-time">15.30 น.</span><div class="sch-dot-wrap"><div class="sch-dot"></div><div class="sch-vline"></div></div><div class="sch-name">กิจกรรมกลุ่ม<small>กิจกรรมสร้างความสัมพันธ์ + ธรรมนิยาย</small></div></div>
+    <div class="sch-item"><span class="sch-time">18.00 น.</span><div class="sch-dot-wrap"><div class="sch-dot"></div><div class="sch-vline"></div></div><div class="sch-name">ทำวัตรเย็น<small>สวดมนต์ทำวัตรเย็น นั่งสมาธิ</small></div></div>
+    <div class="sch-item"><span class="sch-time">21.00 น.</span><div class="sch-dot-wrap"><div class="sch-dot"></div></div><div class="sch-name">เข้านอน<small>พักผ่อนเตรียมพร้อมสำหรับวันรุ่งขึ้น</small></div></div>
+  </div>
+  <div class="sch-day" id="d2">
+    <div class="sch-item"><span class="sch-time">05.30 น.</span><div class="sch-dot-wrap"><div class="sch-dot"></div><div class="sch-vline"></div></div><div class="sch-name">รอบิณฑบาตร<small>ร่วมออกบิณฑบาตรกับพระภิกษุ</small></div></div>
+    <div class="sch-item"><span class="sch-time">07.30 น.</span><div class="sch-dot-wrap"><div class="sch-dot"></div><div class="sch-vline"></div></div><div class="sch-name">ถวายอาหารเช้า<small>ร่วมถวายภัตตาหารเช้าแก่พระสงฆ์</small></div></div>
+    <div class="sch-item"><span class="sch-time">09.00 น.</span><div class="sch-dot-wrap"><div class="sch-dot"></div><div class="sch-vline"></div></div><div class="sch-name">กิจกรรมหลัก<small>กิจกรรมกลุ่ม / ธรรมบรรยาย / ปฏิบัติธรรม</small></div></div>
+    <div class="sch-item"><span class="sch-time">15.30 น.</span><div class="sch-dot-wrap"><div class="sch-dot"></div><div class="sch-vline"></div></div><div class="sch-name">ทำข้อวัตร<small>ปฏิบัติกิจวัตรประจำวันร่วมกัน</small></div></div>
+    <div class="sch-item"><span class="sch-time">18.00 น.</span><div class="sch-dot-wrap"><div class="sch-dot"></div><div class="sch-vline"></div></div><div class="sch-name">ทำวัตรเย็น<small>สวดมนต์ทำวัตรเย็น นั่งสมาธิ</small></div></div>
+    <div class="sch-item"><span class="sch-time">21.00 น.</span><div class="sch-dot-wrap"><div class="sch-dot"></div></div><div class="sch-name">เข้านอน<small>พักผ่อนเพื่อเตรียมพร้อมวันสุดท้าย</small></div></div>
+  </div>
+  <div class="sch-day" id="d3">
+    <div class="sch-item"><span class="sch-time">05.30 น.</span><div class="sch-dot-wrap"><div class="sch-dot"></div><div class="sch-vline"></div></div><div class="sch-name">รอบิณฑบาตร<small>ร่วมออกบิณฑบาตรกับพระภิกษุ</small></div></div>
+    <div class="sch-item"><span class="sch-time">07.30 น.</span><div class="sch-dot-wrap"><div class="sch-dot"></div><div class="sch-vline"></div></div><div class="sch-name">ถวายอาหารเช้า<small>ร่วมถวายภัตตาหารเช้าแก่พระสงฆ์</small></div></div>
+    <div class="sch-item"><span class="sch-time">09.00 น.</span><div class="sch-dot-wrap"><div class="sch-dot"></div><div class="sch-vline"></div></div><div class="sch-name">กิจกรรมวันสุดท้าย<small>กิจกรรมปิด / สรุป / ธรรมปิดท้าย</small></div></div>
+    <div class="sch-item">
+      <span class="sch-time" style="color:var(--gold-light);">16.30 น.</span>
+      <div class="sch-dot-wrap"><div class="sch-dot" style="background:var(--gold);width:10px;height:10px;"></div></div>
+      <div class="sch-name" style="color:var(--gold-light);">จบค่าย<small style="color:rgba(255,255,255,0.32);">พิธีปิดค่าย กล่าวอำลา เดินทางกลับ</small></div>
+    </div>
+  </div>
+</section>
+
+<!-- GALLERY -->
+<section class="gallery-sec" id="gallery">
+  <p class="eyebrow reveal">Camp Atmosphere</p>
+  <h2 class="sec-title reveal reveal-delay-1">ภาพบรรยากาศค่าย</h2>
+  <div class="gold-rule reveal reveal-delay-2"></div>
+  <p class="sec-sub reveal reveal-delay-2">บรรยากาศจากค่ายธรรมที่ผ่านมา · แทนที่รูปด้านล่างด้วยรูปจริงของคุณ</p>
+  <div class="gallery-grid reveal">
+    <div class="gallery-item" onclick="openLightbox(this)">
+      <div class="gallery-placeholder">
+        <svg width="32" height="32" viewBox="0 0 32 32" fill="none"><rect x="2" y="6" width="28" height="20" rx="2" stroke="rgba(122,62,26,0.4)" stroke-width="1.5"/><circle cx="11" cy="13" r="3" stroke="rgba(122,62,26,0.4)" stroke-width="1.5"/><path d="M2 22l7-6 5 5 4-4 12 8" stroke="rgba(122,62,26,0.4)" stroke-width="1.5" stroke-linejoin="round"/></svg>
+        <span>รูปหลัก · ใส่รูปค่ายที่นี่</span>
+      </div>
+      <div class="gallery-overlay"></div>
+    </div>
+    <div class="gallery-item" onclick="openLightbox(this)">
+      <div class="gallery-placeholder"><svg width="24" height="24" viewBox="0 0 32 32" fill="none"><rect x="2" y="6" width="28" height="20" rx="2" stroke="rgba(122,62,26,0.4)" stroke-width="1.5"/><circle cx="11" cy="13" r="3" stroke="rgba(122,62,26,0.4)" stroke-width="1.5"/><path d="M2 22l7-6 5 5 4-4 12 8" stroke="rgba(122,62,26,0.4)" stroke-width="1.5" stroke-linejoin="round"/></svg><span>รูปกิจกรรม</span></div>
+      <div class="gallery-overlay"></div>
+    </div>
+    <div class="gallery-item" onclick="openLightbox(this)">
+      <div class="gallery-placeholder"><svg width="24" height="24" viewBox="0 0 32 32" fill="none"><rect x="2" y="6" width="28" height="20" rx="2" stroke="rgba(122,62,26,0.4)" stroke-width="1.5"/><circle cx="11" cy="13" r="3" stroke="rgba(122,62,26,0.4)" stroke-width="1.5"/><path d="M2 22l7-6 5 5 4-4 12 8" stroke="rgba(122,62,26,0.4)" stroke-width="1.5" stroke-linejoin="round"/></svg><span>รูปบรรยากาศ</span></div>
+      <div class="gallery-overlay"></div>
+    </div>
+    <div class="gallery-item" onclick="openLightbox(this)">
+      <div class="gallery-placeholder"><svg width="24" height="24" viewBox="0 0 32 32" fill="none"><rect x="2" y="6" width="28" height="20" rx="2" stroke="rgba(122,62,26,0.4)" stroke-width="1.5"/><circle cx="11" cy="13" r="3" stroke="rgba(122,62,26,0.4)" stroke-width="1.5"/><path d="M2 22l7-6 5 5 4-4 12 8" stroke="rgba(122,62,26,0.4)" stroke-width="1.5" stroke-linejoin="round"/></svg><span>รูปพิธีกรรม</span></div>
+      <div class="gallery-overlay"></div>
+    </div>
+    <div class="gallery-item" onclick="openLightbox(this)">
+      <div class="gallery-placeholder"><svg width="24" height="24" viewBox="0 0 32 32" fill="none"><rect x="2" y="6" width="28" height="20" rx="2" stroke="rgba(122,62,26,0.4)" stroke-width="1.5"/><circle cx="11" cy="13" r="3" stroke="rgba(122,62,26,0.4)" stroke-width="1.5"/><path d="M2 22l7-6 5 5 4-4 12 8" stroke="rgba(122,62,26,0.4)" stroke-width="1.5" stroke-linejoin="round"/></svg><span>รูปกลุ่ม</span></div>
+      <div class="gallery-overlay"></div>
+    </div>
+  </div>
+</section>
+
+<!-- CANDIDATES -->
+<section class="candidates-sec dark" id="candidates">
+  <p class="eyebrow reveal">Selected Participants</p>
+  <h2 class="sec-title reveal reveal-delay-1">รายชื่อผู้เข้าร่วมค่าย</h2>
+  <div class="gold-rule reveal reveal-delay-2"></div>
+  <p class="sec-sub reveal reveal-delay-2">รุ่น 10 · 30 พฤษภาคม – 1 มิถุนายน 2569 · ประกาศผล 5 เม.ย. 2569</p>
+  <div class="cand-list" id="candidateList">
+    <div class="cand-row"><span class="cand-name empty" style="font-style:italic;padding:1rem 0;display:block;">กำลังโหลดรายชื่อ...</span></div>
+  </div>
+</section>
+
+<!-- REGISTRATION -->
+<div class="reg-wrap" id="register">
+  <div class="reg-left">
+    <p style="font-size:11px;color:rgba(255,255,255,0.2);letter-spacing:0.14em;text-transform:uppercase;font-style:italic;margin-bottom:0.5rem;font-family:'Ekkamai',sans-serif;">Registration</p>
+    <h2 class="reg-title">สมัครเข้าร่วม<br>ค่ายธรรม</h2>
+    <div class="gold-rule"></div>
+    <div class="reg-row">
+      <div class="reg-icon"><svg width="14" height="14" viewBox="0 0 14 14" fill="none"><rect x="1" y="2.5" width="12" height="10" rx="1" stroke="rgba(255,255,255,0.35)" stroke-width="0.8"/><line x1="5" y1="1" x2="5" y2="4" stroke="rgba(255,255,255,0.35)" stroke-width="0.8"/><line x1="9" y1="1" x2="9" y2="4" stroke="rgba(255,255,255,0.35)" stroke-width="0.8"/><line x1="1" y1="6" x2="13" y2="6" stroke="rgba(255,255,255,0.35)" stroke-width="0.8"/></svg></div>
+      <div><p class="reg-lbl">สถานที่</p><p class="reg-val">วัดป่าศรีอุทุมพร<br>จังหวัดสระบุรี</p></div>
+    </div>
+    <div class="reg-row">
+      <div class="reg-icon"><svg width="14" height="14" viewBox="0 0 14 14" fill="none"><circle cx="7" cy="7" r="5.5" stroke="rgba(255,255,255,0.35)" stroke-width="0.8"/><polyline points="7,4 7,7.5 9.5,7.5" stroke="rgba(255,255,255,0.35)" stroke-width="0.8" stroke-linecap="round"/></svg></div>
+      <div><p class="reg-lbl">เปิดรับสมัคร</p><p class="reg-val">2 สัปดาห์ก่อนวันค่าย<br>รับจำนวนจำกัด</p></div>
+    </div>
+    <div class="reg-row">
+      <div class="reg-icon"><svg width="14" height="14" viewBox="0 0 14 14" fill="none"><circle cx="7" cy="5" r="3" stroke="rgba(255,255,255,0.35)" stroke-width="0.8"/><path d="M2 12c0-2.8 2.2-5 5-5s5 2.2 5 5" stroke="rgba(255,255,255,0.35)" stroke-width="0.8"/></svg></div>
+      <div><p class="reg-lbl">ช่วงอายุ</p><p class="reg-val">20–35 ปีเท่านั้น</p></div>
+    </div>
+    <div class="reg-seats-box">
+      <p class="reg-seats-lbl">ค่าย รุ่น 10 — ที่นั่งคงเหลือ</p>
+      <div class="reg-seats-bar">
+        <div class="reg-seats-track"><div class="reg-seats-fill" id="reg-fill" style="width:80%"></div></div>
+        <span class="reg-seats-num" id="reg-seats-num">12/15</span>
+      </div>
+      <p class="reg-seats-note" id="reg-seats-note">เหลือ 3 ที่นั่ง</p>
+      <div class="reg-live-indicator"><span class="reg-live-dot"></span> ข้อมูลเรียลไทม์</div>
+    </div>
+  </div>
+  <div class="reg-right">
+    <div class="setup-notice" id="setupNotice">
+      ⚠️ ยังไม่ได้เชื่อมต่อ Google Sheet — <a href="#" onclick="alert('ดูคำแนะนำการตั้งค่าใน HTML comment หัวข้อ GOOGLE SHEETS SETUP')">ดูวิธีตั้งค่า</a>. ข้อมูลจะยังส่งได้แต่จะไม่บันทึกอัตโนมัติ
+    </div>
+    <div class="f-tabs">
+      <button class="f-tab active" onclick="selBatch(this,'10')">รุ่น 10</button>
+      <button class="f-tab" onclick="selBatch(this,'11')">รุ่น 11</button>
+      <button class="f-tab" onclick="selBatch(this,'12')">รุ่น 12</button>
+    </div>
+    <h3 class="f-title">ค่ายธรรมตามมรรค <span id="fb-num">รุ่น 10</span></h3>
+    <p class="f-dates" id="fb-dates">30 พฤษภาคม – 1 มิถุนายน 2569</p>
+    <div class="f-seat-bar">
+      <span class="f-seat-lbl">ที่นั่งคงเหลือ</span>
+      <span class="f-seat-num"><svg width="8" height="8" viewBox="0 0 8 8"><circle cx="4" cy="4" r="4" fill="#4caf50"/></svg><span id="fb-seats">12/15</span></span>
+    </div>
+    <form id="regForm" name="registration" data-netlify="true" data-netlify-honeypot="bot-field" onsubmit="doSubmit(event)">
+      <input type="hidden" name="form-name" value="registration">
+      <p style="display:none"><label>ไม่ต้องกรอก: <input name="bot-field"></label></p>
+      <div class="f-row3">
+        <div class="f-group">
+          <label class="f-label" for="fn">ชื่อ–นามสกุล *</label>
+          <input class="f-input" type="text" id="fn" name="name" placeholder="ชื่อ นามสกุล" required>
+        </div>
+        <div class="f-group">
+          <label class="f-label" for="fnick">ชื่อเล่น *</label>
+          <input class="f-input" type="text" id="fnick" name="nickname" placeholder="ชื่อเล่น" required>
+        </div>
+        <div class="f-group">
+          <label class="f-label" for="fp">เบอร์โทรศัพท์ *</label>
+          <input class="f-input" type="tel" id="fp" name="phone" placeholder="08XXXXXXXX" required>
+        </div>
+      </div>
+      <div class="f-row3">
+        <div class="f-group">
+          <label class="f-label" for="fa">อายุ *</label>
+          <input class="f-input" type="number" id="fa" name="age" placeholder="อายุ (ปี)" min="20" max="35" required>
+          <p class="age-note">รับเฉพาะ 20–35 ปี</p>
+        </div>
+        <div class="f-group">
+          <label class="f-label" for="fem">อีเมล *</label>
+          <input class="f-input" type="email" id="fem" name="email" placeholder="email@example.com" required>
+        </div>
+        <div class="f-group">
+          <label class="f-label" for="focc">อาชีพ</label>
+          <input class="f-input" type="text" id="focc" name="occupation" placeholder="นักศึกษา / พนักงาน">
+        </div>
+      </div>
+      <div class="f-group">
+        <label class="f-label" for="fprov">จังหวัดที่อยู่ปัจจุบัน</label>
+        <input class="f-input" type="text" id="fprov" name="province" placeholder="เช่น กรุงเทพฯ, เชียงใหม่">
+      </div>
+      <div class="f-group">
+        <label class="f-label" for="fmot">แรงบันดาลใจ — ทำไมถึงอยากเข้าร่วมค่าย?</label>
+        <textarea class="f-textarea" id="fmot" name="motivation" placeholder="เล่าให้ฟังสั้นๆ ค่ะ/ครับ..."></textarea>
+      </div>
+      <input type="hidden" id="fb-batch" name="batch" value="รุ่น 10 · 30 พ.ค. – 1 มิ.ย. 2569">
+      <input type="hidden" name="ref" id="f-ref" value="">
+      <button type="submit" class="f-submit" id="submitBtn">
+        <div class="f-spinner" id="f-spinner"></div>
+        <span id="submitText">ส่งใบสมัคร →</span>
+      </button>
+      <p class="f-note">ผลการคัดเลือกจะประกาศทางหน้าเว็บไซต์<br>ผู้มีสิทธิ์ต้องยืนยันสิทธิ์ภายในวันที่กำหนด</p>
+    </form>
+    <div class="success-card" id="successCard">
+      <div class="success-icon">
+        <svg width="22" height="22" viewBox="0 0 22 22" fill="none"><polyline points="4,11 9,16 18,7" stroke="#4caf50" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </div>
+      <h3 style="font-family:'Ekkamai',sans-serif;font-size:18px;font-weight:600;color:var(--brown-dark);margin-bottom:0.5rem;">ส่งใบสมัครเรียบร้อยแล้ว</h3>
+      <p style="font-size:13px;color:rgba(42,21,8,0.55);line-height:1.8;">ขอบคุณที่ลงทะเบียน<br>ทีมงานจะตรวจสอบและติดต่อกลับภายใน 3–5 วันทำการ</p>
+      <p class="success-ref" id="successRef">หมายเลขอ้างอิง: —</p>
+      <br>
+      <a href="https://line.me/ti/p/~@dhammapath" target="_blank" class="line-btn" style="margin:0 auto;">
+        <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><rect x="1" y="1" width="12" height="12" rx="3" stroke="rgba(255,255,255,0.45)" stroke-width="0.9"/><path d="M3.5 7.5c0-1.9 1.6-3.5 3.5-3.5s3.5 1.6 3.5 3.5c0 1.8-1.3 3.1-3 3.3l-.5 1.2-.9-1.2C4.8 10.5 3.5 9.2 3.5 7.5z" stroke="rgba(255,255,255,0.45)" stroke-width="0.7"/></svg>
+        ติดตามทาง LINE
+      </a>
+    </div>
+  </div>
+</div>
+
+<!-- FAQ -->
+<section class="faq-sec" id="faq">
+  <p class="eyebrow reveal">FAQ</p>
+  <h2 class="sec-title reveal reveal-delay-1">คำถามที่พบบ่อย</h2>
+  <div class="gold-rule reveal reveal-delay-2"></div>
+  <div class="faq-list reveal">
+    <div class="faq-item">
+      <button class="faq-q" onclick="toggleFaq(this)">
+        ค่ายนี้มีค่าใช้จ่ายไหม?
+        <div class="faq-icon"></div>
+      </button>
+      <div class="faq-a"><p>ค่ายธรรมตามมรรคไม่มีค่าใช้จ่ายใดๆ ทั้งสิ้น ทั้งค่าที่พัก ค่าอาหาร และค่ากิจกรรมตลอด 3 วัน 2 คืน เพียงเดินทางมาถึงวัดด้วยตัวเองเท่านั้น</p></div>
+    </div>
+    <div class="faq-item">
+      <button class="faq-q" onclick="toggleFaq(this)">
+        ต้องเตรียมอะไรบ้างสำหรับการเข้าค่าย?
+        <div class="faq-icon"></div>
+      </button>
+      <div class="faq-a"><p>ทางค่ายจะจัดเตรียมชุดผู้ปฏิบัติให้ ท่านเพียงนำของใช้ส่วนตัวที่จำเป็น เช่น ยาสีฟัน แปรงสีฟัน สบู่ ผ้าเช็ดตัว และเสื้อผ้าสำรอง 3 วัน รวมถึงยาส่วนตัวหากมี</p></div>
+    </div>
+    <div class="faq-item">
+      <button class="faq-q" onclick="toggleFaq(this)">
+        ต้องมีพื้นฐานการปฏิบัติธรรมมาก่อนไหม?
+        <div class="faq-icon"></div>
+      </button>
+      <div class="faq-a"><p>ไม่จำเป็นเลยค่ะ/ครับ ค่ายนี้ออกแบบมาสำหรับผู้เริ่มต้นโดยเฉพาะ ไม่ว่าจะเคยนั่งสมาธิมาบ้างหรือไม่เคยเลย ทุกคนสามารถเข้าร่วมได้ พระวิทยากรและทีมงานจะดูแลอย่างใกล้ชิด</p></div>
+    </div>
+    <div class="faq-item">
+      <button class="faq-q" onclick="toggleFaq(this)">
+        ทราบผลการคัดเลือกเมื่อไร?
+        <div class="faq-icon"></div>
+      </button>
+      <div class="faq-a"><p>ทีมงานจะตรวจสอบใบสมัครและประกาศรายชื่อผู้ผ่านการคัดเลือกภายใน 3–5 วันทำการหลังปิดรับสมัคร ผลจะประกาศที่หน้าเว็บไซต์นี้ และแจ้งทาง LINE หรืออีเมล</p></div>
+    </div>
+    <div class="faq-item">
+      <button class="faq-q" onclick="toggleFaq(this)">
+        หากสมัครแล้วไม่สามารถเข้าร่วมได้ ต้องทำอย่างไร?
+        <div class="faq-icon"></div>
+      </button>
+      <div class="faq-a"><p>กรุณาแจ้งทีมงานทาง LINE @dhammapath โดยเร็วที่สุด เพื่อเปิดโอกาสให้ผู้สมัครท่านอื่นที่อยู่ในรายชื่อสำรอง ขอขอบคุณสำหรับความเข้าใจ</p></div>
+    </div>
+    <div class="faq-item">
+      <button class="faq-q" onclick="toggleFaq(this)">
+        สามารถเดินทางมาเองหรือต้องนัดมารวมกัน?
+        <div class="faq-icon"></div>
+      </button>
+      <div class="faq-a"><p>สามารถเดินทางมาเองได้ตามสะดวก หรือจะประสานกับทีมงานเพื่อเดินทางมาพร้อมกันจากกรุงเทพฯ ก็ได้ วัดป่าศรีอุทุมพรอยู่ในจังหวัดสระบุรี ใช้เวลาประมาณ 1.5–2 ชั่วโมงจากกรุงเทพฯ</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- MAP -->
+<section class="map-sec dark" id="map" style="padding:5rem;">
+  <p class="eyebrow reveal">How to Get There</p>
+  <h2 class="sec-title reveal reveal-delay-1">การเดินทาง</h2>
+  <div class="gold-rule reveal reveal-delay-2"></div>
+  <p class="sec-sub reveal reveal-delay-2">วัดป่าศรีอุทุมพร · จังหวัดสระบุรี · ห่างจากกรุงเทพฯ ประมาณ 120 กม.</p>
+  <div class="map-grid reveal">
+    <div class="map-embed">
+      <iframe
+        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d122936.27!2d100.9070!3d14.5302!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x311e7b0000000001%3A0x1!2z4Lin4Li14LmA4Lij4LiX4LmC4Lib4LiUIFNhcmFidXJp!5e0!3m2!1sth!2sth!4v1"
+        allowfullscreen=""
+        loading="lazy"
+        referrerpolicy="no-referrer-when-downgrade"
+        title="แผนที่วัดป่าศรีอุทุมพร จ.สระบุรี">
+      </iframe>
+    </div>
+    <div class="map-info">
+      <div class="map-info-row">
+        <div class="map-info-icon"><svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M7 1C4.8 1 3 2.8 3 5c0 3 4 8 4 8s4-5 4-8c0-2.2-1.8-4-4-4z" stroke="rgba(212,168,85,0.6)" stroke-width="0.9"/><circle cx="7" cy="5" r="1.5" stroke="rgba(212,168,85,0.6)" stroke-width="0.9"/></svg></div>
+        <div>
+          <p class="map-info-lbl">ที่อยู่</p>
+          <p class="map-info-val">วัดป่าศรีอุทุมพร<br>อ.เมือง จ.สระบุรี 18000</p>
+        </div>
+      </div>
+      <div class="map-info-row">
+        <div class="map-info-icon"><svg width="14" height="14" viewBox="0 0 14 14" fill="none"><rect x="1" y="3" width="12" height="8" rx="1" stroke="rgba(212,168,85,0.6)" stroke-width="0.9"/><path d="M1 6h12" stroke="rgba(212,168,85,0.6)" stroke-width="0.9"/><path d="M5 3V1M9 3V1" stroke="rgba(212,168,85,0.6)" stroke-width="0.9" stroke-linecap="round"/></svg></div>
+        <div>
+          <p class="map-info-lbl">โดยรถยนต์ส่วนตัว</p>
+          <p class="map-info-val">ทางหลวงหมายเลข 1 (ถนนพหลโยธิน) ออกทางแยกสระบุรี ประมาณ 1.5–2 ชม. จากกรุงเทพฯ</p>
+        </div>
+      </div>
+      <div class="map-info-row">
+        <div class="map-info-icon"><svg width="14" height="14" viewBox="0 0 14 14" fill="none"><rect x="2" y="2" width="10" height="10" rx="1" stroke="rgba(212,168,85,0.6)" stroke-width="0.9"/><path d="M2 5h10M5 2v10M9 2v10" stroke="rgba(212,168,85,0.6)" stroke-width="0.9" opacity="0.5"/></svg></div>
+        <div>
+          <p class="map-info-lbl">โดยรถโดยสาร</p>
+          <p class="map-info-val">สถานีขนส่งหมอชิต → สระบุรี ออกทุกชั่วโมง ใช้เวลาประมาณ 2 ชม.</p>
+        </div>
+      </div>
+      <div class="map-info-row">
+        <div class="map-info-icon"><svg width="14" height="14" viewBox="0 0 14 14" fill="none"><circle cx="7" cy="7" r="5.5" stroke="rgba(212,168,85,0.6)" stroke-width="0.9"/><polyline points="7,4 7,7.5 9.5,7.5" stroke="rgba(212,168,85,0.6)" stroke-width="0.9" stroke-linecap="round"/></svg></div>
+        <div>
+          <p class="map-info-lbl">เวลานัดพบ</p>
+          <p class="map-info-val">วันที่ 1 เวลา 09.00 น.<br>วันสุดท้าย เลิก 16.30 น.</p>
+        </div>
+      </div>
+      <a href="https://maps.google.com/?q=วัดป่าศรีอุทุมพร+สระบุรี" target="_blank" class="map-btn">
+        <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M7 1C4.8 1 3 2.8 3 5c0 3 4 8 4 8s4-5 4-8c0-2.2-1.8-4-4-4z" stroke="var(--brown-deep)" stroke-width="1"/><circle cx="7" cy="5" r="1.5" stroke="var(--brown-deep)" stroke-width="1"/></svg>
+        เปิด Google Maps
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- SPONSORS -->
+<section class="sponsors-sec dark" id="sponsors">
+  <p class="eyebrow reveal">Support the Camp</p>
+  <h2 class="sec-title reveal reveal-delay-1">สนับสนุนค่ายธรรม</h2>
+  <div class="gold-rule reveal reveal-delay-2"></div>
+  <p class="sec-sub reveal reveal-delay-2">ขอบคุณทุกกำลังใจและการสนับสนุนที่ทำให้ค่ายธรรมเกิดขึ้นได้</p>
+  <div class="sp-grid">
+    <div class="sp-card reveal reveal-delay-1">
+      <div class="sp-icon"><svg width="18" height="18" viewBox="0 0 18 18" fill="none"><rect x="2" y="5" width="14" height="11" rx="1" stroke="rgba(212,168,85,0.55)" stroke-width="1"/><path d="M6 5V4a3 3 0 016 0v1" stroke="rgba(212,168,85,0.55)" stroke-width="1"/></svg></div>
+      <p class="sp-cat">Accommodation</p>
+      <h3 class="sp-title">สนับสนุนค่าที่พัก</h3>
+      <p class="sp-desc">ช่วยดูแลที่พักสำหรับผู้เข้าร่วมค่าย 3 วัน 2 คืน ณ วัดป่าศรีอุทุมพร</p>
+      <a href="https://line.me/ti/p/~@dhammapath" target="_blank" class="line-btn">ติดต่อผ่าน LINE</a>
+    </div>
+    <div class="sp-card reveal reveal-delay-2">
+      <div class="sp-icon"><svg width="18" height="18" viewBox="0 0 18 18" fill="none"><circle cx="9" cy="9" r="6.5" stroke="rgba(212,168,85,0.55)" stroke-width="1"/><path d="M6 9h6M9 6v6" stroke="rgba(212,168,85,0.55)" stroke-width="1" stroke-linecap="round"/></svg></div>
+      <p class="sp-cat">Snacks</p>
+      <h3 class="sp-title">สนับสนุนอาหารว่าง</h3>
+      <p class="sp-desc">สนับสนุนอาหารว่างและเครื่องดื่มสำหรับผู้เข้าร่วมและทีมงานตลอดค่าย</p>
+      <a href="https://line.me/ti/p/~@dhammapath" target="_blank" class="line-btn">ติดต่อผ่าน LINE</a>
+    </div>
+    <div class="sp-card reveal reveal-delay-3">
+      <div class="sp-icon"><svg width="18" height="18" viewBox="0 0 18 18" fill="none"><path d="M3 6h12M3 10h12M3 14h7" stroke="rgba(212,168,85,0.55)" stroke-width="1" stroke-linecap="round"/></svg></div>
+      <p class="sp-cat">Meals</p>
+      <h3 class="sp-title">สนับสนุนค่าอาหาร</h3>
+      <p class="sp-desc">ช่วยสนับสนุนภัตตาหารถวายพระสงฆ์และอาหารสำหรับผู้เข้าร่วมค่าย</p>
+      <a href="https://line.me/ti/p/~@dhammapath" target="_blank" class="line-btn">ติดต่อผ่าน LINE</a>
+    </div>
+    <div class="sp-card reveal reveal-delay-1">
+      <div class="sp-icon"><svg width="18" height="18" viewBox="0 0 18 18" fill="none"><circle cx="9" cy="9" r="6.5" stroke="rgba(212,168,85,0.55)" stroke-width="1"/><path d="M9 5v4l2.5 2.5" stroke="rgba(212,168,85,0.55)" stroke-width="1" stroke-linecap="round"/></svg></div>
+      <p class="sp-cat">General</p>
+      <h3 class="sp-title">สนับสนุนอื่นๆ</h3>
+      <p class="sp-desc">ค่าเดินทาง อุปกรณ์ค่าย สื่อการเรียนรู้ หรือสนับสนุนในรูปแบบอื่นๆ</p>
+      <a href="https://line.me/ti/p/~@dhammapath" target="_blank" class="line-btn">ติดต่อผ่าน LINE</a>
+    </div>
+  </div>
+  <div class="sp-cta reveal">
+    <h3>สนใจสนับสนุนค่ายธรรม?</h3>
+    <p>ทุกการสนับสนุนถือเป็นการร่วมทำบุญ<br>ช่วยให้วัยรุ่นได้เข้าถึงธรรมะและปฏิบัติจริง</p>
+    <a href="https://line.me/ti/p/~@dhammapath" target="_blank" class="line-btn" style="display:inline-flex;">
+      ติดต่อสนับสนุนผ่าน LINE
+    </a>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="foot-logo">
+    <svg viewBox="0 0 44 44" xmlns="http://www.w3.org/2000/svg" style="width:44px;height:44px;opacity:0.5;">
+      <rect width="44" height="44" rx="4" fill="#1a0f08"/>
+      <text x="4" y="30" font-family="Georgia,serif" font-size="22" fill="white" font-weight="300">ธรรม</text>
+      <line x1="36" y1="10" x2="38.5" y2="5.5" stroke="white" stroke-width="0.9"/>
+      <ellipse cx="37.5" cy="4.5" rx="2.8" ry="4" fill="none" stroke="white" stroke-width="0.75" transform="rotate(-12 37.5 4.5)"/>
+      <ellipse cx="40" cy="5" rx="2.2" ry="3.4" fill="none" stroke="white" stroke-width="0.65" transform="rotate(14 40 5)"/>
+      <circle cx="36.5" cy="9.5" r="1.2" fill="none" stroke="white" stroke-width="0.7"/>
+      <text x="7" y="40" font-family="Arial,sans-serif" font-size="8" fill="rgba(255,255,255,0.35)" letter-spacing="0.5">ตามมรรค</text>
+    </svg>
+    <div>
+      <div class="foot-brand">
+        <strong>ธรรม ตามมรรค</strong>
+        วัดป่าศรีอุทุมพร จังหวัดสระบุรี<br>
+        พระมหาธัญพิสิษฐ์ โชติโก
+      </div>
+      <ul class="foot-links">
+        <li><a href="#batches">กำหนดการ</a></li>
+        <li><a href="#register">ลงทะเบียน</a></li>
+        <li><a href="https://line.me/ti/p/~@dhammapath" target="_blank">LINE</a></li>
+      </ul>
+      <div class="foot-social">
+        <a class="foot-social-link" href="https://www.facebook.com/profile.php?id=61571826655992" target="_blank" aria-label="Facebook">
+          <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
+        </a>
+        <a class="foot-social-link" href="https://www.instagram.com/dhammapath.th/" target="_blank" aria-label="Instagram">
+          <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg>
+        </a>
+        <a class="foot-social-link" href="https://line.me/ti/p/~@dhammapath" target="_blank" aria-label="LINE" style="background:rgba(0,185,0,0.08);border-color:rgba(0,185,0,0.2);">
+          <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M19.952 12.375c0-4.358-4.37-7.9-9.74-7.9-5.372 0-9.74 3.542-9.74 7.9 0 3.906 3.465 7.178 8.145 7.797.317.068.748.21.857.48.099.246.065.63.032.879l-.138.831c-.042.247-.194.965.846.526 1.04-.44 5.617-3.308 7.664-5.662 1.413-1.55 2.074-3.124 2.074-4.851z"/></svg>
+        </a>
+      </div>
+    </div>
+  </div>
+  <div class="foot-right">
+    โครงการวัยรุ่น ประจำปี 2026<br>
+    สอบถาม: เพจ ธรรม ตามมรรค<br>
+    <div style="display:flex;gap:12px;justify-content:flex-end;margin-top:0.75rem;flex-wrap:wrap;">
+      <a href="https://www.facebook.com/profile.php?id=61571826655992" target="_blank" style="color:rgba(255,255,255,0.28);font-size:12px;text-decoration:none;transition:color 0.2s;" onmouseover="this.style.color='rgba(255,255,255,0.6)'" onmouseout="this.style.color='rgba(255,255,255,0.28)'">Facebook</a>
+      <a href="https://www.instagram.com/dhammapath.th/" target="_blank" style="color:rgba(255,255,255,0.28);font-size:12px;text-decoration:none;transition:color 0.2s;" onmouseover="this.style.color='rgba(255,255,255,0.6)'" onmouseout="this.style.color='rgba(255,255,255,0.28)'">Instagram</a>
+      <a href="https://line.me/ti/p/~@dhammapath" target="_blank" style="color:rgba(255,255,255,0.28);font-size:12px;text-decoration:none;transition:color 0.2s;" onmouseover="this.style.color='rgba(255,255,255,0.6)'" onmouseout="this.style.color='rgba(255,255,255,0.28)'">LINE</a>
+    </div>
+  </div>
+</footer>
+
+<!--
+╔══════════════════════════════════════════════════════════════════════╗
+║          GOOGLE SHEETS SETUP — อ่านก่อนใช้งาน                      ║
+╠══════════════════════════════════════════════════════════════════════╣
+║                                                                      ║
+║  STEP 1: สร้าง Google Sheet ใหม่                                    ║
+║  - ไปที่ sheets.google.com สร้าง sheet ชื่อ "Dhammapath Reg"        ║
+║  - Row 1 ใส่ headers:                                               ║
+║    A: Timestamp  B: Ref  C: Batch  D: Name  E: Age                  ║
+║    F: Phone  G: Email  H: Occupation  I: Province  J: Motivation    ║
+║    K: Status                                                         ║
+║                                                                      ║
+║  STEP 2: เปิด Apps Script                                           ║
+║  - ใน Sheet → Extensions → Apps Script                              ║
+║  - วางโค้ดต่อไปนี้:                                                 ║
+║                                                                      ║
+║  function doPost(e) {                                                ║
+║    const ss = SpreadsheetApp.getActiveSpreadsheet();                 ║
+║    const sheet = ss.getSheetByName('Registrations');                 ║
+║    const data = JSON.parse(e.postData.contents);                    ║
+║    sheet.appendRow([                                                 ║
+║      new Date(), data.ref, data.batch, data.name,                   ║
+║      data.age, data.phone, data.email, data.occupation,             ║
+║      data.province, data.motivation, 'รอตรวจสอบ'                   ║
+║    ]);                                                               ║
+║    return ContentService                                             ║
+║      .createTextOutput(JSON.stringify({status:'ok',ref:data.ref}))  ║
+║      .setMimeType(ContentService.MimeType.JSON);                     ║
+║  }                                                                   ║
+║                                                                      ║
+║  function doGet(e) {                                                 ║
+║    const ss = SpreadsheetApp.getActiveSpreadsheet();                 ║
+║    const sheet = ss.getSheetByName('Registrations');                 ║
+║    const data = sheet.getDataRange().getValues();                    ║
+║    const batch10 = data.filter(r=>r[2]&&r[2].includes('10'));       ║
+║    return ContentService                                             ║
+║      .createTextOutput(JSON.stringify({                             ║
+║        batch10_count: batch10.length,                               ║
+║        batch10_total: 15                                             ║
+║      }))                                                            ║
+║      .setMimeType(ContentService.MimeType.JSON);                    ║
+║  }                                                                   ║
+║                                                                      ║
+║  STEP 3: Deploy                                                      ║
+║  - Deploy → New deployment → Web app                                ║
+║  - Execute as: Me  |  Who has access: Anyone                        ║
+║  - คัดลอก URL ที่ได้                                                ║
+║                                                                      ║
+║  STEP 4: ใส่ URL ใน config ด้านล่าง                                 ║
+║                                                                      ║
+╚══════════════════════════════════════════════════════════════════════╝
+-->
+
+<script>
+/* ═══════════════════════════════════════════════════
+   CONFIG — ใส่ Google Apps Script URL ที่นี่
+   ═══════════════════════════════════════════════════ */
+const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxuxcyWbbH3uve2ED_yiZkm03eu5PAjL_sy7vejpDp08eg7sg60s7rWMK5WSCucn5WaeA/exec';
+
+const bData = {
+  '10':{ dates:'30 พฤษภาคม – 1 มิถุนายน 2569', val:'รุ่น 10 · 30 พ.ค. – 1 มิ.ย. 2569', open:true },
+  '11':{ dates:'12–14 มิถุนายน 2569', val:'รุ่น 11 · 12–14 มิ.ย. 2569', open:false },
+  '12':{ dates:'10–12 กรกฎาคม 2569', val:'รุ่น 12 · 10–12 ก.ค. 2569', open:false }
+};
+let currentBatch = '10';
+
+/* ─── SETUP NOTICE ─── (ใช้ Netlify Forms แล้ว ไม่ต้องแสดง) */
+
+/* ─── SCROLL PROGRESS ─── */
+window.addEventListener('scroll', ()=>{
+  const pct = (window.scrollY/(document.body.scrollHeight-window.innerHeight))*100;
+  document.getElementById('progress-bar').style.width = pct+'%';
+  const nav = document.getElementById('mainNav');
+  nav.classList.toggle('scrolled', window.scrollY > 60);
+});
+
+/* ─── COUNTDOWN ─── */
+const campDate = new Date('2026-05-30T06:00:00+07:00');
+function tick(){
+  const diff = campDate - new Date();
+  if(diff<=0){['cd-days','cd-hours','cd-mins','cd-secs'].forEach(id=>document.getElementById(id).textContent='00');return;}
+  document.getElementById('cd-days').textContent=String(Math.floor(diff/86400000)).padStart(2,'0');
+  document.getElementById('cd-hours').textContent=String(Math.floor((diff%86400000)/3600000)).padStart(2,'0');
+  document.getElementById('cd-mins').textContent=String(Math.floor((diff%3600000)/60000)).padStart(2,'0');
+  document.getElementById('cd-secs').textContent=String(Math.floor((diff%60000)/1000)).padStart(2,'0');
+}
+tick(); setInterval(tick,1000);
+
+/* ─── MOBILE MENU ─── */
+function toggleMobileMenu(){
+  const h = document.getElementById('hamburger');
+  const m = document.getElementById('mobileMenu');
+  h.classList.toggle('open');
+  m.classList.toggle('open');
+  document.body.style.overflow = m.classList.contains('open')?'hidden':'';
+}
+function closeMobileMenu(){
+  document.getElementById('hamburger').classList.remove('open');
+  document.getElementById('mobileMenu').classList.remove('open');
+  document.body.style.overflow='';
+}
+
+/* ─── SCROLL REVEAL ─── */
+const observer = new IntersectionObserver(entries=>{
+  entries.forEach(e=>{ if(e.isIntersecting) e.target.classList.add('visible'); });
+},{threshold:0.12});
+document.querySelectorAll('.reveal').forEach(el=>observer.observe(el));
+
+/* ─── LIVE SEAT COUNT + CANDIDATES from Google Sheet ─── */
+async function loadSeatCount(){
+  try{
+    const res = await fetch(APPS_SCRIPT_URL);
+    const data = await res.json();
+    const counts = data.counts||{};
+    const totals = data.totals||{'10':15,'11':15,'12':15};
+
+    const used10 = counts['10']||0;
+    const total10 = totals['10']||15;
+    const remaining10 = Math.max(total10-used10,0);
+    const pct10 = (used10/total10)*100;
+
+    document.getElementById('nav-seat-count').textContent = remaining10+' ที่นั่งเหลือ';
+    const b10seats = document.getElementById('batch10-seats');
+    if(b10seats) b10seats.textContent = used10+'/'+total10+' ที่นั่ง';
+    const b10fill = document.getElementById('batch10-fill');
+    if(b10fill) b10fill.style.width = pct10+'%';
+    const b10rem = document.getElementById('batch10-remaining');
+    if(b10rem) b10rem.textContent = remaining10+' ที่';
+    document.getElementById('reg-fill').style.width = pct10+'%';
+    document.getElementById('reg-seats-num').textContent = used10+'/'+total10;
+    document.getElementById('reg-seats-note').textContent = 'เหลือ '+remaining10+' ที่นั่ง';
+    document.getElementById('fb-seats').textContent = used10+'/'+total10;
+
+    // อัปเดตรายชื่อผู้ยืนยัน
+    const approved = data.approved_batch10||[];
+    const list = document.getElementById('candidateList');
+    const total = 15;
+    let html='';
+    for(let i=0;i<total;i++){
+      const num=String(i+1).padStart(2,'0');
+      if(i<approved.length){
+        const a=approved[i];
+        const display=a.nickname ? a.name+' ('+a.nickname+')' : a.name;
+        html+=`<div class="cand-row"><span class="cand-idx">${num}</span><span class="cand-name">${display}</span><span class="cand-badge">ยืนยันแล้ว</span></div>`;
+      } else {
+        html+=`<div class="cand-row"><span class="cand-idx">${num}</span><span class="cand-name empty">ว่าง</span></div>`;
+      }
+    }
+    list.innerHTML=html;
+  } catch(err){
+    document.getElementById('nav-seat-count').textContent = '— ที่นั่งเหลือ';
+  }
+}
+loadSeatCount();
+
+/* ─── SCHEDULE TABS ─── */
+function showDay(id,btn){
+  document.querySelectorAll('.sch-day').forEach(d=>d.classList.remove('active'));
+  document.querySelectorAll('.sch-tab').forEach(t=>t.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  btn.classList.add('active');
+}
+
+/* ─── BATCH SELECT ─── */
+function selBatch(el,num){
+  if(!bData[num].open){showToast('ยังไม่เปิดรับสมัครรุ่นนี้','จะเปิดรับเร็วๆ นี้ ติดตามทาง LINE');return;}
+  document.querySelectorAll('.f-tab').forEach(t=>t.classList.remove('active'));
+  el.classList.add('active');
+  currentBatch=num;
+  const d=bData[num];
+  document.getElementById('fb-num').textContent='รุ่น '+num;
+  document.getElementById('fb-dates').textContent=d.dates;
+  document.getElementById('fb-batch').value=d.val;
+}
+
+/* ─── TOAST ─── */
+function showToast(msg,sub){
+  const t=document.getElementById('toast');
+  document.getElementById('toast-text').textContent=msg;
+  document.getElementById('toast-sub').textContent=sub||'';
+  t.classList.add('show');
+  setTimeout(()=>t.classList.remove('show'),4000);
+}
+
+/* ─── FORM SUBMIT ─── */
+async function doSubmit(e){
+  e.preventDefault();
+  const age=parseInt(document.getElementById('fa').value);
+  if(age<20||age>35){alert('ขออภัย รับเฉพาะผู้ที่มีอายุ 20–35 ปีเท่านั้น');return;}
+  if(!bData[currentBatch].open){alert('รุ่นนี้ยังไม่เปิดรับสมัครค่ะ/ครับ');return;}
+
+  const btn=document.getElementById('submitBtn');
+  const spinner=document.getElementById('f-spinner');
+  const submitText=document.getElementById('submitText');
+  btn.disabled=true;
+  spinner.style.display='block';
+  submitText.textContent='กำลังส่ง...';
+
+  const ref='DP-'+Date.now().toString(36).toUpperCase().slice(-6);
+  document.getElementById('f-ref').value=ref;
+
+  const payload={
+    ref, timestamp: new Date().toISOString(),
+    batch: document.getElementById('fb-batch').value,
+    name: document.getElementById('fn').value,
+    nickname: document.getElementById('fnick').value,
+    age: document.getElementById('fa').value,
+    phone: document.getElementById('fp').value,
+    email: document.getElementById('fem').value,
+    occupation: document.getElementById('focc').value,
+    province: document.getElementById('fprov').value,
+    motivation: document.getElementById('fmot').value
+  };
+
+  // ส่งไป Google Sheets
+  try{
+    await fetch(APPS_SCRIPT_URL,{
+      method:'POST',
+      headers:{'Content-Type':'application/json'},
+      body:JSON.stringify(payload),
+      mode:'no-cors'
+    });
+  } catch(err){ console.warn('Sheets error',err); }
+
+  // ส่งไป Netlify Forms (backup)
+  try{
+    const form=document.getElementById('regForm');
+    const data=new FormData(form);
+    await fetch('/',{
+      method:'POST',
+      headers:{'Content-Type':'application/x-www-form-urlencoded'},
+      body:new URLSearchParams(data).toString()
+    });
+  } catch(err){ console.warn('Netlify form error',err); }
+
+  // Show success
+  document.getElementById('regForm').style.display='none';
+  const sc=document.getElementById('successCard');
+  sc.classList.add('show');
+  document.getElementById('successRef').textContent='หมายเลขอ้างอิง: '+ref;
+  showToast('ส่งใบสมัครเรียบร้อย 🙏','หมายเลขอ้างอิง: '+ref);
+}
+
+/* ─── FAQ ─── */
+function toggleFaq(btn){
+  const item=btn.closest('.faq-item');
+  const wasOpen=item.classList.contains('open');
+  document.querySelectorAll('.faq-item.open').forEach(i=>i.classList.remove('open'));
+  if(!wasOpen) item.classList.add('open');
+}
+
+/* ─── GALLERY LIGHTBOX ─── */
+let lbImages=[],lbIdx=0;
+function openLightbox(el){
+  const img=el.querySelector('img');
+  if(!img) return; // placeholder, no image yet
+  lbImages=Array.from(document.querySelectorAll('.gallery-item img'));
+  lbIdx=lbImages.indexOf(img);
+  document.getElementById('lb-img').src=img.src;
+  document.getElementById('lightbox').classList.add('open');
+  document.body.style.overflow='hidden';
+}
+function closeLightbox(e){
+  if(e&&e.target!==document.getElementById('lightbox')&&!e.target.classList.contains('lb-close')) return;
+  document.getElementById('lightbox').classList.remove('open');
+  document.body.style.overflow='';
+}
+function lbNav(dir,e){
+  if(e) e.stopPropagation();
+  if(!lbImages.length) return;
+  lbIdx=(lbIdx+dir+lbImages.length)%lbImages.length;
+  document.getElementById('lb-img').src=lbImages[lbIdx].src;
+}
+document.addEventListener('keydown',e=>{
+  if(e.key==='Escape') closeLightbox({target:document.getElementById('lightbox')});
+  if(e.key==='ArrowLeft') lbNav(-1,null);
+  if(e.key==='ArrowRight') lbNav(1,null);
+});
+</script>
+</body>
+</html>

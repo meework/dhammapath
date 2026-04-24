@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>รายชื่อผู้ผ่านการคัดเลือก — ธรรมตามมรรค</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Ekkamai:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+:root{
+  --brown-deep:#2a1508;
+  --brown-dark:#3d1f0e;
+  --brown-mid:#7a3e1a;
+  --saffron:#c8762a;
+  --gold:#d4a855;
+  --gold-light:#e8c97a;
+  --cream:#f7f0e6;
+  --parchment:#faf6ef;
+  --white:#ffffff;
+  --ease-out:cubic-bezier(0.22,1,0.36,1);
+}
+html{scroll-behavior:smooth;}
+body{font-family:'Ekkamai',sans-serif;background:#0d0601;color:var(--white);min-height:100vh;}
+
+/* NAV */
+nav{
+  position:fixed;top:0;left:0;right:0;z-index:200;
+  display:flex;align-items:center;justify-content:space-between;
+  padding:0 3rem;height:64px;
+  background:rgba(10,5,2,0.95);
+  backdrop-filter:blur(20px);
+  border-bottom:0.5px solid rgba(255,255,255,0.07);
+}
+.nav-back{display:flex;align-items:center;gap:8px;text-decoration:none;color:rgba(255,255,255,0.5);font-size:13px;font-family:'Ekkamai',sans-serif;transition:color 0.2s;}
+.nav-back:hover{color:var(--gold);}
+.nav-back svg{transition:transform 0.2s var(--ease-out);}
+.nav-back:hover svg{transform:translateX(-3px);}
+.nav-brand{font-family:'Ekkamai',sans-serif;font-size:14px;font-weight:600;color:var(--white);}
+.nav-live{display:flex;align-items:center;gap:6px;font-size:12px;color:rgba(255,255,255,0.3);}
+.live-dot{width:6px;height:6px;border-radius:50%;background:#4caf50;animation:pulse-dot 2s infinite;}
+@keyframes pulse-dot{0%,100%{box-shadow:0 0 0 0 rgba(76,175,80,0.5);}50%{box-shadow:0 0 0 5px rgba(76,175,80,0);}}
+
+/* PAGE HEADER */
+.page-header{
+  padding:8rem 5rem 4rem;
+  background:linear-gradient(180deg,#100702 0%,#0d0601 100%);
+  border-bottom:0.5px solid rgba(255,255,255,0.05);
+}
+.eyebrow{font-family:'Ekkamai',sans-serif;font-style:italic;font-size:13px;color:rgba(212,168,85,0.5);letter-spacing:0.14em;text-transform:uppercase;margin-bottom:0.5rem;}
+.page-title{font-family:'Ekkamai',sans-serif;font-size:clamp(22px,3vw,36px);font-weight:600;color:var(--white);margin-bottom:0.5rem;}
+.gold-rule{width:40px;height:1px;background:var(--gold);margin:1rem 0;}
+.page-sub{font-size:14px;color:rgba(255,255,255,0.35);line-height:1.8;}
+.page-meta{display:flex;align-items:center;gap:1.5rem;margin-top:1.5rem;flex-wrap:wrap;}
+.meta-badge{display:inline-flex;align-items:center;gap:6px;background:rgba(255,255,255,0.04);border:0.5px solid rgba(255,255,255,0.09);border-radius:99px;padding:5px 14px;font-size:12px;color:rgba(255,255,255,0.45);}
+.meta-badge.green{background:rgba(75,160,80,0.08);border-color:rgba(75,160,80,0.22);color:#7dc882;}
+
+/* BATCH TABS */
+.batch-section{padding:0 5rem 6rem;}
+.batch-tabs{display:flex;gap:0;border-bottom:0.5px solid rgba(255,255,255,0.07);margin-top:3rem;margin-bottom:0;}
+.batch-tab{padding:12px 28px;background:transparent;border:none;color:rgba(255,255,255,0.3);font-family:'Ekkamai',sans-serif;font-size:14px;cursor:pointer;border-bottom:2px solid transparent;margin-bottom:-1px;transition:all 0.2s;position:relative;}
+.batch-tab.active{color:var(--white);border-bottom-color:var(--gold);}
+.batch-tab:hover:not(.active){color:rgba(255,255,255,0.6);}
+.tab-count{font-size:11px;background:rgba(212,168,85,0.12);color:var(--gold);padding:2px 7px;border-radius:99px;margin-left:6px;font-family:'Ekkamai',sans-serif;}
+
+/* BATCH PANEL */
+.batch-panel{display:none;padding:2rem 0 0;}
+.batch-panel.active{display:block;}
+.batch-info{margin-bottom:2rem;padding-bottom:1.5rem;border-bottom:0.5px solid rgba(255,255,255,0.06);}
+.batch-info-title{font-family:'Ekkamai',sans-serif;font-size:16px;font-weight:500;color:var(--white);margin-bottom:0.35rem;}
+.batch-info-sub{font-size:13px;color:rgba(255,255,255,0.3);}
+.seats-progress{margin-top:1rem;display:flex;align-items:center;gap:12px;}
+.seats-track{flex:1;max-width:220px;height:2px;background:rgba(255,255,255,0.07);border-radius:2px;overflow:hidden;}
+.seats-fill{height:100%;background:var(--gold);border-radius:2px;transition:width 0.6s var(--ease-out);}
+.seats-label{font-size:12px;color:rgba(255,255,255,0.3);}
+
+/* CANDIDATE LIST */
+.cand-list-wrap{border-top:0.5px solid rgba(255,255,255,0.06);}
+.cand-row{display:flex;align-items:center;gap:1rem;padding:0.95rem 0;border-bottom:0.5px solid rgba(255,255,255,0.04);transition:all 0.15s;}
+.cand-row:hover{background:rgba(255,255,255,0.02);padding-left:10px;border-radius:4px;}
+.cand-row:last-child{border-bottom:none;}
+.cand-idx{font-family:'Ekkamai',sans-serif;font-size:13px;color:rgba(255,255,255,0.14);min-width:28px;}
+.cand-name{font-family:'Ekkamai',sans-serif;font-size:14px;color:var(--white);font-weight:300;flex:1;}
+.cand-name.empty{color:rgba(255,255,255,0.12);font-style:italic;font-size:13px;}
+.cand-badge{font-size:10px;padding:2px 9px;border-radius:99px;background:rgba(75,160,80,0.1);color:#7dc882;border:0.5px solid rgba(75,160,80,0.25);white-space:nowrap;}
+.cand-loading{padding:3rem 0;text-align:center;color:rgba(255,255,255,0.2);font-size:13px;font-style:italic;}
+
+/* COMING SOON PANEL */
+.coming-soon{padding:4rem 0;text-align:center;}
+.coming-soon-icon{font-size:32px;margin-bottom:1rem;opacity:0.4;}
+.coming-soon-title{font-family:'Ekkamai',sans-serif;font-size:16px;color:rgba(255,255,255,0.3);font-weight:300;}
+.coming-soon-sub{font-size:13px;color:rgba(255,255,255,0.15);margin-top:0.5rem;}
+
+/* FOOTER */
+footer{padding:2.5rem 5rem;border-top:0.5px solid rgba(255,255,255,0.06);display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:1rem;}
+.footer-note{font-size:12px;color:rgba(255,255,255,0.2);}
+.footer-link{font-size:12px;color:rgba(212,168,85,0.5);text-decoration:none;transition:color 0.2s;}
+.footer-link:hover{color:var(--gold);}
+
+/* MOBILE */
+@media(max-width:768px){
+  nav{padding:0 1.5rem;}
+  .nav-brand{display:none;}
+  .page-header{padding:6rem 1.5rem 3rem;}
+  .batch-section{padding:0 1.5rem 5rem;}
+  .batch-tabs{overflow-x:auto;}
+  .batch-tab{padding:10px 18px;white-space:nowrap;}
+  footer{padding:2rem 1.5rem;flex-direction:column;align-items:flex-start;}
+}
+
+/* REVEAL */
+.reveal{opacity:0;transform:translateY(24px);transition:opacity 0.6s var(--ease-out),transform 0.6s var(--ease-out);}
+.reveal.visible{opacity:1;transform:translateY(0);}
+.reveal-delay-1{transition-delay:0.1s;}
+.reveal-delay-2{transition-delay:0.2s;}
+.reveal-delay-3{transition-delay:0.3s;}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="index.html" class="nav-back">
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M10 3L5 8L10 13" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    กลับหน้าหลัก
+  </a>
+  <span class="nav-brand">ธรรมตามมรรค</span>
+  <div class="nav-live"><span class="live-dot"></span>เรียลไทม์</div>
+</nav>
+
+<!-- PAGE HEADER -->
+<section class="page-header">
+  <p class="eyebrow reveal">Selected Participants</p>
+  <h1 class="page-title reveal reveal-delay-1">รายชื่อผู้ผ่านการคัดเลือก</h1>
+  <div class="gold-rule reveal reveal-delay-2"></div>
+  <p class="page-sub reveal reveal-delay-2">รายชื่ออัปเดตอัตโนมัติทันทีเมื่อทีมงานยืนยันจาก Google Sheets<br>ผู้ผ่านการคัดเลือกจะได้รับอีเมลแจ้งยืนยันโดยอัตโนมัติ</p>
+  <div class="page-meta reveal reveal-delay-3">
+    <span class="meta-badge green"><span class="live-dot" style="width:5px;height:5px;"></span> ข้อมูลเรียลไทม์</span>
+    <span class="meta-badge">ค่ายธรรมตามมรรค ปี 2569</span>
+    <span class="meta-badge" id="header-total-count">โหลดข้อมูล...</span>
+  </div>
+</section>
+
+<!-- BATCH TABS + LISTS -->
+<section class="batch-section">
+  <div class="batch-tabs reveal">
+    <button class="batch-tab active" onclick="showBatch('10',this)">
+      รุ่น 10 <span class="tab-count" id="tab-count-10">—</span>
+    </button>
+    <button class="batch-tab" onclick="showBatch('11',this)">
+      รุ่น 11 <span class="tab-count" id="tab-count-11">—</span>
+    </button>
+    <button class="batch-tab" onclick="showBatch('12',this)">
+      รุ่น 12 <span class="tab-count" id="tab-count-12">—</span>
+    </button>
+  </div>
+
+  <!-- BATCH 10 -->
+  <div class="batch-panel active" id="panel-10">
+    <div class="batch-info reveal reveal-delay-1">
+      <p class="batch-info-title">รุ่น 10 · 30 พฤษภาคม – 1 มิถุนายน 2569</p>
+      <p class="batch-info-sub">วัดป่าศรีอุทุมพร จังหวัดสระบุรี</p>
+      <div class="seats-progress">
+        <div class="seats-track"><div class="seats-fill" id="fill-10" style="width:0%"></div></div>
+        <span class="seats-label" id="seats-label-10">โหลดข้อมูล...</span>
+      </div>
+    </div>
+    <div class="cand-list-wrap reveal reveal-delay-2" id="list-10">
+      <div class="cand-loading">กำลังโหลดรายชื่อ...</div>
+    </div>
+  </div>
+
+  <!-- BATCH 11 -->
+  <div class="batch-panel" id="panel-11">
+    <div class="batch-info reveal reveal-delay-1">
+      <p class="batch-info-title">รุ่น 11 · 12–14 มิถุนายน 2569</p>
+      <p class="batch-info-sub">วัดป่าศรีอุทุมพร จังหวัดสระบุรี</p>
+      <div class="seats-progress">
+        <div class="seats-track"><div class="seats-fill" id="fill-11" style="width:0%"></div></div>
+        <span class="seats-label" id="seats-label-11">โหลดข้อมูล...</span>
+      </div>
+    </div>
+    <div class="cand-list-wrap reveal reveal-delay-2" id="list-11">
+      <div class="cand-loading">กำลังโหลดรายชื่อ...</div>
+    </div>
+  </div>
+
+  <!-- BATCH 12 -->
+  <div class="batch-panel" id="panel-12">
+    <div class="batch-info reveal reveal-delay-1">
+      <p class="batch-info-title">รุ่น 12 · 10–12 กรกฎาคม 2569</p>
+      <p class="batch-info-sub">วัดป่าศรีอุทุมพร จังหวัดสระบุรี</p>
+      <div class="seats-progress">
+        <div class="seats-track"><div class="seats-fill" id="fill-12" style="width:0%"></div></div>
+        <span class="seats-label" id="seats-label-12">โหลดข้อมูล...</span>
+      </div>
+    </div>
+    <div class="cand-list-wrap reveal reveal-delay-2" id="list-12">
+      <div class="cand-loading">กำลังโหลดรายชื่อ...</div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <span class="footer-note">© ค่ายธรรมตามมรรค · ข้อมูลอัปเดตเรียลไทม์</span>
+  <a href="index.html" class="footer-link">← กลับหน้าหลัก</a>
+</footer>
+
+<script>
+const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbzkA21JdqFSybOQ4Q2_4bjtMLVuebZtMEyfaEZCvOku2OHrmukYaTUhgIeHWJCgBalR7A/exec';
+const TOTALS = { '10': 15, '11': 15, '12': 15 };
+
+/* ─── SCROLL REVEAL ─── */
+const observer = new IntersectionObserver(entries => {
+  entries.forEach(e => { if(e.isIntersecting) e.target.classList.add('visible'); });
+}, { threshold: 0.1 });
+document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+/* ─── BATCH TABS ─── */
+function showBatch(num, btn) {
+  document.querySelectorAll('.batch-panel').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.batch-tab').forEach(t => t.classList.remove('active'));
+  document.getElementById('panel-' + num).classList.add('active');
+  btn.classList.add('active');
+}
+
+/* ─── RENDER LIST ─── */
+function renderList(listEl, approved, total) {
+  let html = '';
+  for (let i = 0; i < total; i++) {
+    const num = String(i + 1).padStart(2, '0');
+    if (i < approved.length) {
+      const a = approved[i];
+      const display = a.nickname ? a.name + ' (' + a.nickname + ')' : a.name;
+      html += `<div class="cand-row">
+        <span class="cand-idx">${num}</span>
+        <span class="cand-name">${display}</span>
+        <span class="cand-badge">ยืนยันแล้ว</span>
+      </div>`;
+    } else {
+      html += `<div class="cand-row">
+        <span class="cand-idx">${num}</span>
+        <span class="cand-name empty">ว่าง</span>
+      </div>`;
+    }
+  }
+  listEl.innerHTML = html;
+}
+
+/* ─── LOAD DATA ─── */
+async function loadData() {
+  try {
+    const res = await fetch(APPS_SCRIPT_URL);
+    const data = await res.json();
+
+    let totalApproved = 0;
+
+    ['10', '11', '12'].forEach(b => {
+      const approved = data['approved_batch' + b] || [];
+      const total = TOTALS[b];
+      const used = data.counts?.[b] || 0;
+      const pct = total > 0 ? (used / total) * 100 : 0;
+
+      totalApproved += approved.length;
+
+      // Update tab count badge
+      const tabCount = document.getElementById('tab-count-' + b);
+      if (tabCount) tabCount.textContent = approved.length + '/' + total;
+
+      // Update progress bar
+      const fill = document.getElementById('fill-' + b);
+      if (fill) fill.style.width = pct + '%';
+
+      const label = document.getElementById('seats-label-' + b);
+      if (label) label.textContent = used + '/' + total + ' ที่นั่ง · เหลือ ' + Math.max(total - used, 0) + ' ที่';
+
+      // Render list
+      const listEl = document.getElementById('list-' + b);
+      if (listEl) {
+        if (approved.length === 0 && used === 0) {
+          // Batch not open yet
+          listEl.innerHTML = `<div class="coming-soon">
+            <div class="coming-soon-icon">🪷</div>
+            <p class="coming-soon-title">ยังไม่เปิดรับสมัครรุ่นนี้</p>
+            <p class="coming-soon-sub">จะประกาศรายชื่อหลังปิดรับสมัคร</p>
+          </div>`;
+        } else {
+          renderList(listEl, approved, total);
+        }
+      }
+    });
+
+    // Update header badge
+    const headerCount = document.getElementById('header-total-count');
+    if (headerCount) headerCount.textContent = 'ยืนยันแล้ว ' + totalApproved + ' คน';
+
+  } catch (err) {
+    console.error('Failed to load data:', err);
+    ['10', '11', '12'].forEach(b => {
+      const el = document.getElementById('list-' + b);
+      if (el) el.innerHTML = '<div class="cand-loading">ไม่สามารถโหลดข้อมูลได้</div>';
+    });
+  }
+}
+
+loadData();
+// Refresh every 60 seconds
+setInterval(loadData, 60000);
+</script>
+</body>
+</html>

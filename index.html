@@ -164,16 +164,20 @@ section{padding:5rem;}
 .sch-name{font-family:'Ekkamai',sans-serif;font-size:15px;color:var(--white);font-weight:300;}
 .sch-name small{display:block;font-size:12px;color:rgba(255,255,255,0.3);margin-top:3px;font-family:'Ekkamai',sans-serif;}
 
-/* ─── CANDIDATES ─── */
+/* ─── CANDIDATES CTA ─── */
 .candidates-sec{background:#100702;}
-.cand-list{margin-top:2.5rem;border-top:0.5px solid rgba(255,255,255,0.06);}
-.cand-row{display:flex;align-items:center;gap:1rem;padding:0.9rem 0;border-bottom:0.5px solid rgba(255,255,255,0.04);transition:background 0.15s;}
-.cand-row:hover{background:rgba(255,255,255,0.02);padding-left:8px;}
-.cand-row:last-child{border-bottom:none;}
-.cand-idx{font-family:'Ekkamai',sans-serif;font-size:13px;color:rgba(255,255,255,0.16);min-width:24px;}
-.cand-name{font-family:'Ekkamai',sans-serif;font-size:14px;color:var(--white);font-weight:300;flex:1;}
-.cand-name.empty{color:rgba(255,255,255,0.14);font-style:italic;font-size:13px;}
-.cand-badge{font-size:10px;padding:2px 9px;border-radius:99px;background:rgba(75,160,80,0.12);color:#7dc882;border:0.5px solid rgba(75,160,80,0.28);white-space:nowrap;}
+.cand-cta-wrap{margin-top:2.5rem;display:flex;flex-direction:column;align-items:flex-start;gap:1.75rem;}
+.cand-cta-card{background:rgba(255,255,255,0.025);border:0.5px solid rgba(255,255,255,0.07);border-radius:8px;padding:2.25rem 2.75rem;display:flex;align-items:center;gap:2.5rem;transition:border-color 0.3s var(--ease-out);}
+.cand-cta-card:hover{border-color:rgba(212,168,85,0.22);}
+.cand-cta-stats{display:flex;flex-direction:column;align-items:flex-start;min-width:72px;}
+.cand-cta-num{font-family:'Ekkamai',sans-serif;font-size:48px;font-weight:300;color:var(--gold);line-height:1;}
+.cand-cta-unit{font-size:11px;color:rgba(255,255,255,0.28);letter-spacing:0.12em;text-transform:uppercase;margin-top:5px;}
+.cand-cta-sep{width:0.5px;height:52px;background:rgba(255,255,255,0.07);flex-shrink:0;}
+.cand-cta-info{flex:1;}
+.cand-cta-title{font-family:'Ekkamai',sans-serif;font-size:15px;color:var(--white);font-weight:400;margin-bottom:0.35rem;}
+.cand-cta-desc{font-size:12px;color:rgba(255,255,255,0.25);line-height:1.75;margin-bottom:0.75rem;}
+.cand-cta-live{display:inline-flex;align-items:center;gap:5px;font-size:11px;color:rgba(255,255,255,0.3);}
+.cand-cta-live-dot{width:5px;height:5px;border-radius:50%;background:#4caf50;animation:pulse-dot 2s infinite;}
 
 /* ─── REGISTRATION ─── */
 .reg-wrap{display:grid;grid-template-columns:1fr 1fr;}
@@ -708,14 +712,26 @@ footer{background:#080400;padding:3rem 5rem;display:flex;align-items:center;just
   </div>
 </section>
 
-<!-- CANDIDATES -->
+<!-- CANDIDATES CTA -->
 <section class="candidates-sec dark" id="candidates">
   <p class="eyebrow reveal">Selected Participants</p>
   <h2 class="sec-title reveal reveal-delay-1">รายชื่อผู้เข้าร่วมค่าย</h2>
   <div class="gold-rule reveal reveal-delay-2"></div>
   <p class="sec-sub reveal reveal-delay-2">รุ่น 10 · 30 พฤษภาคม – 1 มิถุนายน 2569 · ประกาศผล 5 เม.ย. 2569</p>
-  <div class="cand-list" id="candidateList">
-    <div class="cand-row"><span class="cand-name empty" style="font-style:italic;padding:1rem 0;display:block;">กำลังโหลดรายชื่อ...</span></div>
+  <div class="cand-cta-wrap reveal reveal-delay-3">
+    <div class="cand-cta-card">
+      <div class="cand-cta-stats">
+        <span class="cand-cta-num" id="cand-approved-count">—</span>
+        <span class="cand-cta-unit">ยืนยันแล้ว</span>
+      </div>
+      <div class="cand-cta-sep"></div>
+      <div class="cand-cta-info">
+        <p class="cand-cta-title">รายชื่อผู้ผ่านการคัดเลือก</p>
+        <p class="cand-cta-desc">รายชื่อจะอัปเดตทันทีเมื่อทีมงาน<br>ทำการยืนยันผู้เข้าร่วมค่าย</p>
+        <div class="cand-cta-live"><span class="cand-cta-live-dot"></span> ข้อมูลเรียลไทม์จาก Google Sheets</div>
+      </div>
+    </div>
+    <a href="participants.html" class="btn-primary" style="font-size:14px;padding:14px 36px;">ดูรายชื่อผู้ผ่านการคัดเลือก →</a>
   </div>
 </section>
 
@@ -1079,7 +1095,7 @@ footer{background:#080400;padding:3rem 5rem;display:flex;align-items:center;just
 /* ═══════════════════════════════════════════════════
    CONFIG — ใส่ Google Apps Script URL ที่นี่
    ═══════════════════════════════════════════════════ */
-const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbyMT4XB2yQAdIw2c_xxvwpl1MvnuVJGp8Jqs6Ep3biSFTbV4NstVFJzt_Y737B14Q5ThA/exec';
+const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbzkA21JdqFSybOQ4Q2_4bjtMLVuebZtMEyfaEZCvOku2OHrmukYaTUhgIeHWJCgBalR7A/exec';
 
 const bData = {
   '10':{ dates:'30 พฤษภาคม – 1 มิถุนายน 2569', val:'รุ่น 10 · 30 พ.ค. – 1 มิ.ย. 2569', open:true },
@@ -1155,22 +1171,10 @@ async function loadSeatCount(){
     document.getElementById('reg-seats-note').textContent = 'เหลือ '+remaining10+' ที่นั่ง';
     document.getElementById('fb-seats').textContent = used10+'/'+total10;
 
-    // อัปเดตรายชื่อผู้ยืนยัน
-    const approved = data.approved_batch10||[];
-    const list = document.getElementById('candidateList');
-    const total = 15;
-    let html='';
-    for(let i=0;i<total;i++){
-      const num=String(i+1).padStart(2,'0');
-      if(i<approved.length){
-        const a=approved[i];
-        const display=a.nickname ? a.name+' ('+a.nickname+')' : a.name;
-        html+=`<div class="cand-row"><span class="cand-idx">${num}</span><span class="cand-name">${display}</span><span class="cand-badge">ยืนยันแล้ว</span></div>`;
-      } else {
-        html+=`<div class="cand-row"><span class="cand-idx">${num}</span><span class="cand-name empty">ว่าง</span></div>`;
-      }
-    }
-    list.innerHTML=html;
+    // อัปเดตจำนวนผู้ยืนยัน (แสดงที่ CTA หน้าหลัก)
+    const approved10 = data.approved_batch10||[];
+    const countEl = document.getElementById('cand-approved-count');
+    if(countEl) countEl.textContent = approved10.length;
   } catch(err){
     document.getElementById('nav-seat-count').textContent = '— ที่นั่งเหลือ';
   }

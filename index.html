@@ -458,6 +458,70 @@ footer{background:#080400;padding:3rem 5rem;display:flex;align-items:center;just
   footer{padding-bottom:max(1.25rem,env(safe-area-inset-bottom));}
 }
 
+/* ─── MOBILE REFINEMENTS (≤480px additions) ─── */
+@media(max-width:480px){
+  /* Hero quote — remove forced line break, tighten size for better flow */
+  .hero-quote br{display:none;}
+  .hero-quote{font-size:clamp(19px,5.5vw,25px);}
+
+  /* Reduce gap between section heading and content */
+  .batches-grid,.gallery-grid,.sp-grid{margin-top:1.5rem;}
+  .faq-list,.map-grid{margin-top:1.5rem;}
+  .sch-tabs{margin-top:1.5rem;}
+  .sch-day{padding:1.25rem 0 0;}
+
+  /* Candidates — stretch card full width, fix CTA alignment */
+  .cand-cta-wrap{margin-top:1.5rem;align-items:stretch;}
+  .cand-cta-card{width:100%;box-sizing:border-box;}
+  .cand-cta-wrap>.btn-primary{width:100%;text-align:center;box-sizing:border-box;}
+  .cand-cta-desc br{display:none;}
+
+  /* Batch cards — hide raw <br> spacers; make status block so button stays below */
+  .batch-card br{display:none;}
+  .batch-card .b-status{display:block;margin-bottom:0.875rem;width:fit-content;}
+
+  /* Registration info panel — slightly tighter title */
+  .reg-title{font-size:20px;}
+
+  /* Sponsor cards — tighter padding */
+  .sp-card{padding:1.5rem 1.25rem;}
+  .sp-cta{padding:1.5rem 1.25rem;}
+
+  /* Countdown — center items nicely */
+  .countdown-strip{justify-content:center;gap:1.25rem;}
+
+  /* Mobile menu social links — larger tap targets */
+  .mobile-menu .foot-social-link{width:48px!important;height:48px!important;}
+
+  /* Gallery — all photos full width, single column */
+  .gallery-grid{grid-template-columns:1fr;gap:8px;}
+  .gallery-item:nth-child(n){grid-column:auto;grid-row:auto;aspect-ratio:4/3;}
+  .gallery-item:nth-child(1){grid-column:auto;aspect-ratio:16/9;}
+}
+
+/* ─── TOUCH / BUTTON FEEDBACK (all breakpoints) ─── */
+.btn-primary,.btn-ghost,.seat-btn,.nav-seat-btn,.f-submit,.map-btn,.line-btn,
+.f-tab,.sch-tab,.faq-q,.hamburger,.social-link,.foot-social-link,.lb-nav,.lb-close{
+  touch-action:manipulation;
+  -webkit-tap-highlight-color:transparent;
+}
+
+@media(hover:none){
+  /* Active press states for touch devices */
+  .btn-primary:active{transform:scale(0.96) translateY(0)!important;box-shadow:none!important;background:var(--gold-light);}
+  .btn-ghost:active{background:rgba(255,255,255,0.14)!important;border-color:rgba(255,255,255,0.6)!important;}
+  .seat-btn:active{transform:scale(0.96);background:var(--brown-mid);}
+  .nav-seat-btn:active{background:rgba(255,255,255,0.12);}
+  .f-submit:active{transform:scale(0.98)!important;box-shadow:none!important;background:var(--brown-mid);}
+  .map-btn:active{transform:scale(0.97)!important;background:var(--gold-light);}
+  .line-btn:active{background:rgba(0,185,0,0.22);}
+  .f-tab:active{background:rgba(122,62,26,0.15);border-color:var(--brown-mid);}
+  .sch-tab:active{color:rgba(255,255,255,0.85);}
+  .faq-q:active{color:var(--saffron);}
+  .hamburger:active{opacity:0.7;}
+  .gallery-item:active img{transform:scale(1.03);}
+}
+
 /* ─── SCROLL OFFSET FOR FIXED NAV ─── */
 html{scroll-padding-top:64px;}
 
@@ -556,7 +620,7 @@ html{scroll-padding-top:64px;}
 <!-- HERO -->
 <section class="hero">
   <div class="hero-bg"></div>
-  <video class="hero-video" autoplay muted loop playsinline>
+  <video class="hero-video" autoplay muted loop playsinline webkit-playsinline>
     <source src="Dhammaphoto/VDO.mp4" type="video/mp4">
   </video>
   <div class="hero-lotus"></div>
@@ -1324,6 +1388,19 @@ document.addEventListener('keydown',e=>{
   if(e.key==='ArrowLeft') lbNav(-1,null);
   if(e.key==='ArrowRight') lbNav(1,null);
 });
+
+/* ─── VIDEO AUTOPLAY FALLBACK (mobile) ─── */
+(function(){
+  const v=document.querySelector('.hero-video');
+  if(!v) return;
+  const tryPlay=()=>{ v.play().catch(()=>{}); };
+  tryPlay();
+  const once={once:true};
+  document.addEventListener('touchstart',tryPlay,once);
+  document.addEventListener('touchend',tryPlay,once);
+  document.addEventListener('click',tryPlay,once);
+  document.addEventListener('visibilitychange',()=>{ if(!document.hidden) tryPlay(); });
+})();
 </script>
 </body>
 </html>

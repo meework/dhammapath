@@ -67,17 +67,18 @@ nav.scrolled{height:54px;background:rgba(14,6,2,0.97);}
 /* ─── HERO ─── */
 .hero{position:relative;min-height:100vh;display:flex;align-items:center;overflow:hidden;}
 .hero-bg{position:absolute;inset:0;background:#1e0d04;z-index:0;}
-.hero-monk-photo{position:absolute;right:0;top:0;bottom:0;width:52%;z-index:3;object-fit:cover;object-position:center top;}
-.hero-photo-fade{position:absolute;inset:0;z-index:4;background:linear-gradient(to right,#1e0d04 0%,#1e0d04 28%,rgba(30,13,4,0.75) 50%,rgba(30,13,4,0.0) 66%);}
+.hero-video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:1;}
+.hero-monk-photo{position:absolute;right:0;top:0;bottom:0;width:52%;z-index:4;object-fit:cover;object-position:center top;}
+.hero-photo-fade{position:absolute;inset:0;z-index:5;background:linear-gradient(to right,#1e0d04 0%,#1e0d04 28%,rgba(30,13,4,0.75) 50%,rgba(30,13,4,0.0) 66%);}
 .hero-lotus{
-  position:absolute;inset:0;z-index:1;opacity:0.04;
+  position:absolute;inset:0;z-index:2;opacity:0.04;
   background-image:url("data:image/svg+xml,%3Csvg width='300' height='300' viewBox='0 0 300 300' xmlns='http://www.w3.org/2000/svg'%3E%3Cellipse cx='150' cy='160' rx='80' ry='110' fill='none' stroke='%23d4a855' stroke-width='1.5'/%3E%3Cellipse cx='150' cy='160' rx='55' ry='85' fill='none' stroke='%23d4a855' stroke-width='1'/%3E%3Cellipse cx='110' cy='130' rx='45' ry='75' fill='none' stroke='%23d4a855' stroke-width='1' transform='rotate(-30 110 130)'/%3E%3Cellipse cx='190' cy='130' rx='45' ry='75' fill='none' stroke='%23d4a855' stroke-width='1' transform='rotate(30 190 130)'/%3E%3Ccircle cx='150' cy='90' r='18' fill='none' stroke='%23d4a855' stroke-width='1.5'/%3E%3Cline x1='150' y1='72' x2='150' y2='30' stroke='%23d4a855' stroke-width='1.5'/%3E%3Cellipse cx='140' cy='22' rx='12' ry='18' fill='none' stroke='%23d4a855' stroke-width='1' transform='rotate(-15 140 22)'/%3E%3Cellipse cx='162' cy='20' rx='12' ry='18' fill='none' stroke='%23d4a855' stroke-width='1' transform='rotate(15 162 20)'/%3E%3C/svg%3E");
   background-repeat:repeat;background-size:300px 300px;
 }
-.hero-overlay{position:absolute;inset:0;z-index:2;background:linear-gradient(105deg,rgba(20,8,2,0.97) 0%,rgba(30,13,4,0.90) 35%,rgba(30,13,4,0.35) 55%,rgba(30,13,4,0.0) 65%);}
+.hero-overlay{position:absolute;inset:0;z-index:3;background:linear-gradient(105deg,rgba(20,8,2,0.97) 0%,rgba(30,13,4,0.90) 35%,rgba(30,13,4,0.35) 55%,rgba(30,13,4,0.0) 65%);}
 .hero-content{position:relative;z-index:10;padding:8rem 5rem 5rem;max-width:860px;}
 .hero-eyebrow{font-family:'Ekkamai',sans-serif;font-style:italic;font-size:14px;color:var(--gold);letter-spacing:0.14em;margin-bottom:1.5rem;opacity:0;animation:fadeUp 1s 0.1s var(--ease-out) forwards;}
-.hero-quote{font-family:'Ekkamai',sans-serif;font-weight:300;font-size:clamp(18px,2.4vw,30px);color:var(--white);line-height:1.85;margin-bottom:1rem;opacity:0;animation:fadeUp 1s 0.25s var(--ease-out) forwards;white-space:nowrap;}
+.hero-quote{font-family:'Ekkamai',sans-serif;font-weight:300;font-size:clamp(18px,2.4vw,30px);color:var(--white);line-height:1.85;margin-bottom:1rem;opacity:0;animation:fadeUp 1s 0.25s var(--ease-out) forwards;}
 .hero-quote em{font-style:normal;color:var(--gold-light);}
 .hero-source{font-size:12px;color:rgba(212,168,85,0.55);font-family:'Ekkamai',sans-serif;font-weight:400;letter-spacing:0.18em;text-transform:uppercase;margin-bottom:0.4rem;opacity:0;animation:fadeUp 1s 0.4s var(--ease-out) forwards;}
 .hero-monk{font-size:14px;color:rgba(255,255,255,0.5);font-family:'Ekkamai',sans-serif;font-weight:300;margin-bottom:2.5rem;opacity:0;animation:fadeUp 1s 0.5s var(--ease-out) forwards;letter-spacing:0.02em;}
@@ -346,6 +347,8 @@ footer{background:#080400;padding:3rem 5rem;display:flex;align-items:center;just
   footer{flex-direction:column;padding:2rem 1.5rem;}
   .foot-right{text-align:left;}
   .social-links{display:none;}
+  .cand-cta-card{flex-wrap:wrap;gap:1.5rem;padding:1.75rem;}
+  .map-grid{border-radius:4px;}
 }
 
 /* ─── RESPONSIVE: MOBILE (≤480px) ─── */
@@ -402,7 +405,12 @@ footer{background:#080400;padding:3rem 5rem;display:flex;align-items:center;just
   .gallery-item:nth-child(n){grid-column:auto;grid-row:auto;aspect-ratio:1;}
   .gallery-item:nth-child(1){grid-column:span 2;aspect-ratio:16/9;}
 
-  /* candidates */
+  /* candidates cta */
+  .cand-cta-card{flex-direction:column;padding:1.5rem 1.25rem;gap:1rem;}
+  .cand-cta-sep{display:none;}
+  .cand-cta-num{font-size:36px;}
+  .cand-cta-stats{flex-direction:row;align-items:baseline;gap:8px;}
+  .cand-cta-unit{margin-top:0;}
   .cand-name{font-size:13px;}
   .cand-badge{font-size:9px;padding:2px 7px;}
 
@@ -443,6 +451,20 @@ footer{background:#080400;padding:3rem 5rem;display:flex;align-items:center;just
 
   /* scroll progress */
   #progress-bar{height:1.5px;}
+
+  /* safe-area insets for notched phones */
+  nav{padding-top:max(0px,env(safe-area-inset-top));}
+  .mobile-menu{padding-top:max(6rem,calc(5rem + env(safe-area-inset-top)));padding-bottom:max(3rem,calc(2rem + env(safe-area-inset-bottom)));}
+  footer{padding-bottom:max(1.25rem,env(safe-area-inset-bottom));}
+}
+
+/* ─── SCROLL OFFSET FOR FIXED NAV ─── */
+html{scroll-padding-top:64px;}
+
+/* ─── REDUCED MOTION ─── */
+@media(prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation-duration:0.01ms!important;transition-duration:0.01ms!important;}
+  html{scroll-behavior:auto;}
 }
 
 /* ─── SETUP NOTICE (shown only if webhook not configured) ─── */
@@ -534,6 +556,9 @@ footer{background:#080400;padding:3rem 5rem;display:flex;align-items:center;just
 <!-- HERO -->
 <section class="hero">
   <div class="hero-bg"></div>
+  <video class="hero-video" autoplay muted loop playsinline>
+    <source src="Dhammaphoto/VDO.mp4" type="video/mp4">
+  </video>
   <div class="hero-lotus"></div>
   <div class="hero-overlay"></div>
   <div class="hero-photo-fade"></div>
@@ -889,7 +914,7 @@ footer{background:#080400;padding:3rem 5rem;display:flex;align-items:center;just
 </section>
 
 <!-- MAP -->
-<section class="map-sec dark" id="map" style="padding:5rem;">
+<section class="map-sec dark" id="map">
   <p class="eyebrow reveal">How to Get There</p>
   <h2 class="sec-title reveal reveal-delay-1">การเดินทาง</h2>
   <div class="gold-rule reveal reveal-delay-2"></div>

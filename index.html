@@ -294,8 +294,9 @@ section{padding:5rem;}
 .sp-cat{font-size:11px;color:var(--gold);letter-spacing:0.12em;text-transform:uppercase;font-family:'Ekkamai',sans-serif;font-style:italic;margin-bottom:0.5rem;}
 .sp-title{font-family:'Ekkamai',sans-serif;font-size:16px;font-weight:600;color:var(--white);margin-bottom:0.75rem;line-height:1.5;}
 .sp-desc{font-size:13px;color:rgba(255,255,255,0.38);line-height:1.8;margin-bottom:1.25rem;}
-.line-btn{display:inline-flex;align-items:center;gap:7px;background:rgba(0,185,0,0.08);border:0.5px solid rgba(0,185,0,0.25);color:var(--white);padding:8px 16px;border-radius:2px;font-size:13px;text-decoration:none;transition:all 0.2s;font-family:'Ekkamai',sans-serif;}
-.line-btn:hover{background:rgba(0,185,0,0.18);}
+.line-btn{display:inline-block;padding:0;background:none;border:none;text-decoration:none;border-radius:6px;overflow:hidden;transition:opacity 0.2s,transform 0.2s var(--ease-out);vertical-align:middle;}
+.line-btn img{display:block;height:44px;width:auto;}
+.line-btn:hover{opacity:0.88;transform:translateY(-2px);}
 .sp-cta{margin-top:3rem;border:0.5px solid rgba(255,255,255,0.07);border-radius:8px;padding:2.5rem;text-align:center;}
 .sp-cta h3{font-family:'Ekkamai',sans-serif;font-size:22px;font-weight:600;color:var(--white);margin-bottom:0.75rem;}
 .sp-cta p{font-size:14px;color:rgba(255,255,255,0.38);margin-bottom:1.5rem;line-height:1.8;}
@@ -514,7 +515,7 @@ footer{background:#080400;padding:3rem 5rem;display:flex;align-items:center;just
   .nav-seat-btn:active{background:rgba(255,255,255,0.12);}
   .f-submit:active{transform:scale(0.98)!important;box-shadow:none!important;background:var(--brown-mid);}
   .map-btn:active{transform:scale(0.97)!important;background:var(--gold-light);}
-  .line-btn:active{background:rgba(0,185,0,0.22);}
+  .line-btn:active{opacity:0.75;transform:scale(0.97);}
   .f-tab:active{background:rgba(122,62,26,0.15);border-color:var(--brown-mid);}
   .sch-tab:active{color:rgba(255,255,255,0.85);}
   .faq-q:active{color:var(--saffron);}
@@ -620,7 +621,7 @@ html{scroll-padding-top:64px;}
 <!-- HERO -->
 <section class="hero">
   <div class="hero-bg"></div>
-  <video class="hero-video" autoplay muted loop playsinline webkit-playsinline>
+  <video class="hero-video" autoplay muted loop playsinline webkit-playsinline preload="auto" x5-playsinline x5-video-player-type="h5" x5-video-player-fullscreen="false">
     <source src="Dhammaphoto/VDO.mp4" type="video/mp4">
   </video>
   <div class="hero-lotus"></div>
@@ -1389,17 +1390,39 @@ document.addEventListener('keydown',e=>{
   if(e.key==='ArrowRight') lbNav(1,null);
 });
 
-/* ─── VIDEO AUTOPLAY FALLBACK (mobile) ─── */
+/* ─── VIDEO AUTOPLAY — aggressive mobile fix ─── */
 (function(){
-  const v=document.querySelector('.hero-video');
-  if(!v) return;
-  const tryPlay=()=>{ v.play().catch(()=>{}); };
-  tryPlay();
-  const once={once:true};
-  document.addEventListener('touchstart',tryPlay,once);
-  document.addEventListener('touchend',tryPlay,once);
-  document.addEventListener('click',tryPlay,once);
-  document.addEventListener('visibilitychange',()=>{ if(!document.hidden) tryPlay(); });
+  const v = document.querySelector('.hero-video');
+  if (!v) return;
+
+  // Force muted via JS property (not just HTML attribute) — required for iOS autoplay
+  v.muted = true;
+  v.volume = 0;
+
+  const play = () => {
+    if (!v.paused) return;
+    v.muted = true;
+    const p = v.play();
+    if (p && p.catch) p.catch(() => {});
+  };
+
+  // Attempt 1: immediate (works if video already buffered)
+  play();
+
+  // Attempt 2: once metadata/data is ready
+  v.addEventListener('loadedmetadata', play, { once: true });
+  v.addEventListener('loadeddata', play, { once: true });
+  v.addEventListener('canplay', play, { once: true });
+
+  // Attempt 3: first user interaction (catches remaining blocked browsers)
+  ['touchstart', 'touchend', 'pointerdown', 'scroll'].forEach(evt =>
+    document.addEventListener(evt, play, { once: true, passive: true })
+  );
+
+  // Attempt 4: resume after tab switch / lock screen / iOS bfcache
+  document.addEventListener('visibilitychange', () => { if (!document.hidden) play(); });
+  window.addEventListener('pageshow', play);
+  window.addEventListener('focus', play);
 })();
 </script>
 </body>

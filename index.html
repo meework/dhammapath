@@ -48,6 +48,7 @@ nav.scrolled{height:54px;background:rgba(14,6,2,0.97);}
 .nav-links a::after{content:'';position:absolute;bottom:-4px;left:0;right:0;height:1px;background:var(--gold);transform:scaleX(0);transition:transform 0.25s var(--ease-out);}
 .nav-links a:hover{color:var(--white);}
 .nav-links a:hover::after{transform:scaleX(1);}
+.nav-contact-btn{padding:9px 18px;font-size:12px;white-space:nowrap;}
 .nav-seat-btn{background:transparent;border:1px solid rgba(255,255,255,0.18);color:var(--white);padding:6px 16px;border-radius:99px;font-family:'Ekkamai',sans-serif;font-size:13px;cursor:pointer;transition:all 0.2s;display:flex;align-items:center;gap:6px;}
 .nav-seat-btn:hover{background:rgba(255,255,255,0.07);border-color:var(--gold);}
 .seat-dot{width:7px;height:7px;border-radius:50%;background:#4caf50;flex-shrink:0;animation:pulse-dot 2s infinite;}
@@ -285,21 +286,19 @@ section{padding:5rem;}
 .map-btn{display:inline-flex;align-items:center;gap:7px;background:var(--gold);color:var(--brown-deep);padding:11px 22px;border-radius:2px;font-size:13px;font-family:'Ekkamai',sans-serif;font-weight:600;text-decoration:none;transition:all 0.2s;border:none;cursor:pointer;}
 .map-btn:hover{background:var(--gold-light);transform:translateY(-1px);}
 
-/* ─── SPONSORS ─── */
-.sponsors-sec{background:var(--brown-deep);}
-.sp-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:12px;margin-top:2.5rem;}
-.sp-card{background:rgba(255,255,255,0.03);padding:2rem;border-radius:8px;border:0.5px solid rgba(255,255,255,0.07);transition:all 0.3s var(--ease-out);}
-.sp-card:hover{background:rgba(255,255,255,0.05);border-color:rgba(212,168,85,0.2);transform:translateY(-3px);}
-.sp-icon{width:38px;height:38px;border:0.5px solid rgba(212,168,85,0.2);border-radius:4px;display:flex;align-items:center;justify-content:center;margin-bottom:1rem;}
-.sp-cat{font-size:11px;color:var(--gold);letter-spacing:0.12em;text-transform:uppercase;font-family:'Ekkamai',sans-serif;font-style:italic;margin-bottom:0.5rem;}
-.sp-title{font-family:'Ekkamai',sans-serif;font-size:16px;font-weight:600;color:var(--white);margin-bottom:0.75rem;line-height:1.5;}
-.sp-desc{font-size:13px;color:rgba(255,255,255,0.38);line-height:1.8;margin-bottom:1.25rem;}
+/* ─── STAFF ─── */
+.staff-sec{background:var(--brown-deep);}
+.staff-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:12px;margin-top:2.5rem;}
+.staff-card{background:rgba(255,255,255,0.03);padding:2rem;border-radius:8px;border:0.5px solid rgba(255,255,255,0.07);transition:all 0.3s var(--ease-out);text-align:center;}
+.staff-card:hover{background:rgba(255,255,255,0.05);border-color:rgba(212,168,85,0.2);transform:translateY(-3px);}
+.staff-avatar{width:84px;height:84px;border-radius:50%;border:0.5px solid rgba(212,168,85,0.25);background:rgba(212,168,85,0.06);display:flex;align-items:center;justify-content:center;margin:0 auto 1.1rem;overflow:hidden;color:rgba(212,168,85,0.55);}
+.staff-avatar img{width:100%;height:100%;object-fit:cover;display:block;}
+.staff-role{font-size:11px;color:var(--gold);letter-spacing:0.12em;text-transform:uppercase;font-family:'Ekkamai',sans-serif;font-style:italic;margin-bottom:0.5rem;}
+.staff-name{font-family:'Ekkamai',sans-serif;font-size:16px;font-weight:600;color:var(--white);margin-bottom:0.75rem;line-height:1.5;}
+.staff-bio{font-size:13px;color:rgba(255,255,255,0.38);line-height:1.8;}
 .line-btn{display:inline-block;padding:0;background:none;border:none;text-decoration:none;border-radius:6px;overflow:hidden;transition:opacity 0.2s,transform 0.2s var(--ease-out);vertical-align:middle;}
 .line-btn img{display:block;height:44px;width:auto;}
 .line-btn:hover{opacity:0.88;transform:translateY(-2px);}
-.sp-cta{margin-top:3rem;border:0.5px solid rgba(255,255,255,0.07);border-radius:8px;padding:2.5rem;text-align:center;}
-.sp-cta h3{font-family:'Ekkamai',sans-serif;font-size:22px;font-weight:600;color:var(--white);margin-bottom:0.75rem;}
-.sp-cta p{font-size:14px;color:rgba(255,255,255,0.38);margin-bottom:1.5rem;line-height:1.8;}
 
 /* ─── FOOTER ─── */
 footer{background:#080400;padding:3rem 5rem;display:flex;align-items:center;justify-content:space-between;border-top:0.5px solid rgba(255,255,255,0.05);flex-wrap:wrap;gap:1.5rem;}
@@ -332,6 +331,7 @@ footer{background:#080400;padding:3rem 5rem;display:flex;align-items:center;just
 @media(max-width:900px){
   nav{padding:0 1.25rem;}
   .nav-links{display:none;}
+  .nav-contact-btn{display:none;}
   .hamburger{display:flex;}
   .mobile-menu{display:flex;}
   section,.reg-left,.reg-right{padding:3rem 1.5rem;}
@@ -433,10 +433,8 @@ footer{background:#080400;padding:3rem 5rem;display:flex;align-items:center;just
   .map-embed{min-height:240px;}
   .map-embed iframe{min-height:240px;}
 
-  /* sponsors */
-  .sp-grid{grid-template-columns:1fr;}
-  .sp-cta{padding:1.75rem 1.25rem;}
-  .sp-cta h3{font-size:18px;}
+  /* staff */
+  .staff-grid{grid-template-columns:1fr;}
 
   /* footer */
   footer{padding:2rem 1.25rem;gap:1.25rem;}
@@ -466,7 +464,7 @@ footer{background:#080400;padding:3rem 5rem;display:flex;align-items:center;just
   .hero-quote{font-size:clamp(19px,5.5vw,25px);}
 
   /* Reduce gap between section heading and content */
-  .batches-grid,.gallery-grid,.sp-grid{margin-top:1.5rem;}
+  .batches-grid,.gallery-grid,.staff-grid{margin-top:1.5rem;}
   .faq-list,.map-grid{margin-top:1.5rem;}
   .sch-tabs{margin-top:1.5rem;}
   .sch-day{padding:1.25rem 0 0;}
@@ -484,9 +482,8 @@ footer{background:#080400;padding:3rem 5rem;display:flex;align-items:center;just
   /* Registration info panel — slightly tighter title */
   .reg-title{font-size:20px;}
 
-  /* Sponsor cards — tighter padding */
-  .sp-card{padding:1.5rem 1.25rem;}
-  .sp-cta{padding:1.5rem 1.25rem;}
+  /* Staff cards — tighter padding */
+  .staff-card{padding:1.5rem 1.25rem;}
 
   /* Countdown — center items nicely */
   .countdown-strip{justify-content:center;gap:1.25rem;}
@@ -571,7 +568,9 @@ html{scroll-padding-top:64px;}
   <a href="#register" onclick="closeMobileMenu()">ลงทะเบียน</a>
   <a href="#faq" onclick="closeMobileMenu()">คำถามที่พบบ่อย</a>
   <a href="#map" onclick="closeMobileMenu()">การเดินทาง</a>
-  <a href="#sponsors" onclick="closeMobileMenu()">สนับสนุน</a>
+  <a href="#layout" onclick="closeMobileMenu()">ผังบริเวณค่าย</a>
+  <a href="#staff" onclick="closeMobileMenu()">ทีมงาน</a>
+  <a href="https://lin.ee/O6AtN2gj" target="_blank" onclick="closeMobileMenu()">ติดต่อข้อมูลเพิ่มเติม</a>
   <div style="display:flex;gap:14px;margin-top:2rem;padding-top:2rem;border-top:0.5px solid rgba(255,255,255,0.07);">
     <a class="foot-social-link" href="https://www.facebook.com/profile.php?id=61571826655992" target="_blank" aria-label="Facebook" style="width:44px;height:44px;">
       <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" style="width:18px;height:18px;fill:rgba(255,255,255,0.5);"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
@@ -612,6 +611,7 @@ html{scroll-padding-top:64px;}
     <button class="nav-seat-btn" onclick="document.getElementById('register').scrollIntoView({behavior:'smooth'})">
       <span class="seat-dot"></span><span id="nav-seat-count">กำลังโหลด...</span>
     </button>
+    <a class="btn-ghost nav-contact-btn" href="https://lin.ee/O6AtN2gj" target="_blank">ติดต่อข้อมูลเพิ่มเติม</a>
     <button class="hamburger" id="hamburger" onclick="toggleMobileMenu()" aria-label="เมนู">
       <span></span><span></span><span></span>
     </button>
@@ -1029,46 +1029,81 @@ html{scroll-padding-top:64px;}
   </div>
 </section>
 
-<!-- SPONSORS -->
-<section class="sponsors-sec dark" id="sponsors">
-  <p class="eyebrow reveal">Support the Camp</p>
-  <h2 class="sec-title reveal reveal-delay-1">สนับสนุนค่ายธรรม</h2>
+<!-- LAYOUT -->
+<section class="map-sec dark" id="layout">
+  <p class="eyebrow reveal">Camp Grounds</p>
+  <h2 class="sec-title reveal reveal-delay-1">ผังบริเวณค่ายธรรม</h2>
   <div class="gold-rule reveal reveal-delay-2"></div>
-  <p class="sec-sub reveal reveal-delay-2">ขอบคุณทุกกำลังใจและการสนับสนุนที่ทำให้ค่ายธรรมเกิดขึ้นได้</p>
-  <div class="sp-grid">
-    <div class="sp-card reveal reveal-delay-1">
-      <div class="sp-icon"><svg width="18" height="18" viewBox="0 0 18 18" fill="none"><rect x="2" y="5" width="14" height="11" rx="1" stroke="rgba(212,168,85,0.55)" stroke-width="1"/><path d="M6 5V4a3 3 0 016 0v1" stroke="rgba(212,168,85,0.55)" stroke-width="1"/></svg></div>
-      <p class="sp-cat">Accommodation</p>
-      <h3 class="sp-title">สนับสนุนค่าที่พัก</h3>
-      <p class="sp-desc">ช่วยดูแลที่พักสำหรับผู้เข้าร่วมค่าย 3 วัน 2 คืน ณ วัดป่าศรีอุทุมพร</p>
-      <a href="https://lin.ee/O6AtN2gj" target="_blank" class="line-btn"><img src="https://scdn.line-apps.com/n/line_add_friends/btn/en.png" alt="Add Friend on LINE" height="44" loading="lazy"></a>
+  <p class="sec-sub reveal reveal-delay-2">แผนผังพื้นที่ภายในวัดป่าศรีอุทุมพร สำหรับผู้เข้าร่วมค่าย</p>
+  <div class="map-grid reveal">
+    <div class="map-embed">
+      <!-- TODO: replace with the real camp layout / floor-plan image -->
+      <img src="Dhammaphoto/PLACEHOLDER-layout.jpg" alt="ผังบริเวณวัดป่าศรีอุทุมพร" loading="lazy" style="width:100%;height:100%;object-fit:cover;">
     </div>
-    <div class="sp-card reveal reveal-delay-2">
-      <div class="sp-icon"><svg width="18" height="18" viewBox="0 0 18 18" fill="none"><circle cx="9" cy="9" r="6.5" stroke="rgba(212,168,85,0.55)" stroke-width="1"/><path d="M6 9h6M9 6v6" stroke="rgba(212,168,85,0.55)" stroke-width="1" stroke-linecap="round"/></svg></div>
-      <p class="sp-cat">Snacks</p>
-      <h3 class="sp-title">สนับสนุนอาหารว่าง</h3>
-      <p class="sp-desc">สนับสนุนอาหารว่างและเครื่องดื่มสำหรับผู้เข้าร่วมและทีมงานตลอดค่าย</p>
-      <a href="https://lin.ee/O6AtN2gj" target="_blank" class="line-btn"><img src="https://scdn.line-apps.com/n/line_add_friends/btn/en.png" alt="Add Friend on LINE" height="44" loading="lazy"></a>
-    </div>
-    <div class="sp-card reveal reveal-delay-3">
-      <div class="sp-icon"><svg width="18" height="18" viewBox="0 0 18 18" fill="none"><path d="M3 6h12M3 10h12M3 14h7" stroke="rgba(212,168,85,0.55)" stroke-width="1" stroke-linecap="round"/></svg></div>
-      <p class="sp-cat">Meals</p>
-      <h3 class="sp-title">สนับสนุนค่าอาหาร</h3>
-      <p class="sp-desc">ช่วยสนับสนุนภัตตาหารถวายพระสงฆ์และอาหารสำหรับผู้เข้าร่วมค่าย</p>
-      <a href="https://lin.ee/O6AtN2gj" target="_blank" class="line-btn"><img src="https://scdn.line-apps.com/n/line_add_friends/btn/en.png" alt="Add Friend on LINE" height="44" loading="lazy"></a>
-    </div>
-    <div class="sp-card reveal reveal-delay-1">
-      <div class="sp-icon"><svg width="18" height="18" viewBox="0 0 18 18" fill="none"><circle cx="9" cy="9" r="6.5" stroke="rgba(212,168,85,0.55)" stroke-width="1"/><path d="M9 5v4l2.5 2.5" stroke="rgba(212,168,85,0.55)" stroke-width="1" stroke-linecap="round"/></svg></div>
-      <p class="sp-cat">General</p>
-      <h3 class="sp-title">สนับสนุนอื่นๆ</h3>
-      <p class="sp-desc">ค่าเดินทาง อุปกรณ์ค่าย สื่อการเรียนรู้ หรือสนับสนุนในรูปแบบอื่นๆ</p>
-      <a href="https://lin.ee/O6AtN2gj" target="_blank" class="line-btn"><img src="https://scdn.line-apps.com/n/line_add_friends/btn/en.png" alt="Add Friend on LINE" height="44" loading="lazy"></a>
+    <div class="map-info">
+      <div class="map-info-row">
+        <div class="map-info-icon"><svg width="14" height="14" viewBox="0 0 14 14" fill="none"><rect x="2" y="2" width="10" height="10" rx="1" stroke="rgba(212,168,85,0.6)" stroke-width="0.9"/><path d="M2 5h10M5 2v10M9 2v10" stroke="rgba(212,168,85,0.6)" stroke-width="0.9" opacity="0.5"/></svg></div>
+        <div>
+          <p class="map-info-lbl">ศาลาปฏิบัติธรรม</p>
+          <p class="map-info-val">จุดรวมตัวหลักสำหรับฟังธรรม นั่งสมาธิ และกิจกรรมส่วนกลาง</p>
+        </div>
+      </div>
+      <div class="map-info-row">
+        <div class="map-info-icon"><svg width="14" height="14" viewBox="0 0 14 14" fill="none"><rect x="2" y="5" width="10" height="8" rx="1" stroke="rgba(212,168,85,0.6)" stroke-width="0.9"/><path d="M4.5 5V3.5a2.5 2.5 0 015 0V5" stroke="rgba(212,168,85,0.6)" stroke-width="0.9"/></svg></div>
+        <div>
+          <p class="map-info-lbl">ที่พัก</p>
+          <p class="map-info-val">โซนที่พักแยกชาย-หญิง ใกล้ศาลาปฏิบัติธรรม เดินถึงได้สะดวก</p>
+        </div>
+      </div>
+      <div class="map-info-row">
+        <div class="map-info-icon"><svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M3 6h8M3 9h8M3 12h5" stroke="rgba(212,168,85,0.6)" stroke-width="0.9" stroke-linecap="round"/><rect x="2" y="2" width="10" height="3" rx="1" stroke="rgba(212,168,85,0.6)" stroke-width="0.9"/></svg></div>
+        <div>
+          <p class="map-info-lbl">โรงครัว / โรงอาหาร</p>
+          <p class="map-info-val">จุดรับประทานอาหารและรับน้ำดื่มตลอดค่าย</p>
+        </div>
+      </div>
+      <div class="map-info-row">
+        <div class="map-info-icon"><svg width="14" height="14" viewBox="0 0 14 14" fill="none"><circle cx="7" cy="7" r="5.5" stroke="rgba(212,168,85,0.6)" stroke-width="0.9"/><path d="M7 4v3l2 1.5" stroke="rgba(212,168,85,0.6)" stroke-width="0.9" stroke-linecap="round"/></svg></div>
+        <div>
+          <p class="map-info-lbl">ห้องน้ำ / จุดบริการ</p>
+          <p class="map-info-val">กระจายอยู่รอบบริเวณค่าย มีป้ายบอกทางชัดเจน</p>
+        </div>
+      </div>
     </div>
   </div>
-  <div class="sp-cta reveal">
-    <h3>สนใจสนับสนุนค่ายธรรม?</h3>
-    <p>ทุกการสนับสนุนถือเป็นการร่วมทำบุญ<br>ช่วยให้วัยรุ่นได้เข้าถึงธรรมะและปฏิบัติจริง</p>
-    <a href="https://lin.ee/O6AtN2gj" target="_blank" class="line-btn" style="margin:0 auto;"><img src="https://scdn.line-apps.com/n/line_add_friends/btn/en.png" alt="Add Friend on LINE" height="44" loading="lazy"></a>
+</section>
+
+<!-- STAFF -->
+<section class="staff-sec dark" id="staff">
+  <p class="eyebrow reveal">Camp Team</p>
+  <h2 class="sec-title reveal reveal-delay-1">ทีมงานค่ายธรรม</h2>
+  <div class="gold-rule reveal reveal-delay-2"></div>
+  <p class="sec-sub reveal reveal-delay-2">ทีมงานผู้ดูแลและจัดกิจกรรมตลอดค่ายธรรมตามมรรค</p>
+  <div class="staff-grid">
+    <div class="staff-card reveal reveal-delay-1">
+      <div class="staff-avatar"><svg width="32" height="32" viewBox="0 0 32 32" fill="none"><circle cx="16" cy="11" r="6" stroke="currentColor" stroke-width="1.4"/><path d="M5 27c0-6 5-9 11-9s11 3 11 9" stroke="currentColor" stroke-width="1.4"/></svg></div>
+      <p class="staff-role">หัวหน้าค่าย</p>
+      <h3 class="staff-name">ชื่อ-นามสกุล</h3>
+      <p class="staff-bio">ดูแลภาพรวมค่าย ประสานงานทีมงานและกิจกรรมตลอดทั้ง 3 วัน</p>
+    </div>
+    <div class="staff-card reveal reveal-delay-2">
+      <div class="staff-avatar"><svg width="32" height="32" viewBox="0 0 32 32" fill="none"><circle cx="16" cy="11" r="6" stroke="currentColor" stroke-width="1.4"/><path d="M5 27c0-6 5-9 11-9s11 3 11 9" stroke="currentColor" stroke-width="1.4"/></svg></div>
+      <p class="staff-role">ฝ่ายกิจกรรม</p>
+      <h3 class="staff-name">ชื่อ-นามสกุล</h3>
+      <p class="staff-bio">ออกแบบและนำกิจกรรมกลุ่ม เกม และฐานเรียนรู้ตลอดค่าย</p>
+    </div>
+    <div class="staff-card reveal reveal-delay-3">
+      <div class="staff-avatar"><svg width="32" height="32" viewBox="0 0 32 32" fill="none"><circle cx="16" cy="11" r="6" stroke="currentColor" stroke-width="1.4"/><path d="M5 27c0-6 5-9 11-9s11 3 11 9" stroke="currentColor" stroke-width="1.4"/></svg></div>
+      <p class="staff-role">ฝ่ายดูแลผู้เข้าร่วม</p>
+      <h3 class="staff-name">ชื่อ-นามสกุล</h3>
+      <p class="staff-bio">ดูแลความเป็นอยู่ ที่พัก และความปลอดภัยของผู้เข้าร่วมค่าย</p>
+    </div>
+    <div class="staff-card reveal reveal-delay-1">
+      <div class="staff-avatar"><svg width="32" height="32" viewBox="0 0 32 32" fill="none"><circle cx="16" cy="11" r="6" stroke="currentColor" stroke-width="1.4"/><path d="M5 27c0-6 5-9 11-9s11 3 11 9" stroke="currentColor" stroke-width="1.4"/></svg></div>
+      <p class="staff-role">ฝ่ายลงทะเบียน &amp; ประสานงาน</p>
+      <h3 class="staff-name">ชื่อ-นามสกุล</h3>
+      <p class="staff-bio">ดูแลการรับสมัคร คัดเลือก และติดต่อผู้เข้าร่วมก่อน-ระหว่างค่าย</p>
+    </div>
   </div>
 </section>
 

@@ -29,30 +29,36 @@ body{font-family:'Ekkamai',sans-serif;background:var(--parchment);color:var(--br
 /* ─── SCROLL PROGRESS ─── */
 #progress-bar{position:fixed;top:0;left:0;height:2px;background:linear-gradient(90deg,var(--saffron),var(--gold-light));z-index:999;width:0%;transition:width 0.1s linear;}
 
-/* ─── NAV ─── */
-nav{
-  position:fixed;top:0;left:0;right:0;z-index:200;
-  display:flex;align-items:center;justify-content:space-between;
-  padding:0 3rem;height:64px;
-  background:rgba(20,10,4,0.92);
-  backdrop-filter:blur(20px);
-  border-bottom:0.5px solid rgba(255,255,255,0.07);
-  transition:all 0.3s var(--ease-out);
+/* ─── NAV (floating glass pill) ─── */
+#mainNav{
+  position:fixed;top:1.1rem;left:50%;transform:translateX(-50%);z-index:200;
+  display:flex;align-items:center;justify-content:space-between;gap:1.5rem;
+  padding:0.5rem 0.6rem 0.5rem 1.35rem;
+  width:calc(100% - 2.5rem);max-width:1180px;
+  background:rgba(42,21,8,0.52);
+  backdrop-filter:blur(18px);
+  border:0.5px solid rgba(255,255,255,0.12);
+  border-radius:999px;
+  transition:background 0.3s var(--ease-out),top 0.3s var(--ease-out),padding 0.3s var(--ease-out);
 }
-nav.scrolled{height:54px;background:rgba(14,6,2,0.97);}
-.nav-logo{display:flex;align-items:center;gap:10px;text-decoration:none;}
-.nav-logo-img{width:38px;height:38px;border-radius:4px;object-fit:cover;}
-.nav-brand{font-family:'Ekkamai',sans-serif;font-size:14px;font-weight:600;color:var(--white);}
-.nav-links{display:flex;align-items:center;gap:2rem;list-style:none;}
-.nav-links a{font-size:13px;color:rgba(255,255,255,0.45);text-decoration:none;transition:color 0.2s;position:relative;}
-.nav-links a::after{content:'';position:absolute;bottom:-4px;left:0;right:0;height:1px;background:var(--gold);transform:scaleX(0);transition:transform 0.25s var(--ease-out);}
-.nav-links a:hover{color:var(--white);}
-.nav-links a:hover::after{transform:scaleX(1);}
-.nav-contact-btn{padding:9px 18px;font-size:12px;white-space:nowrap;}
-.nav-seat-btn{background:transparent;border:1px solid rgba(255,255,255,0.18);color:var(--white);padding:6px 16px;border-radius:99px;font-family:'Ekkamai',sans-serif;font-size:13px;cursor:pointer;transition:all 0.2s;display:flex;align-items:center;gap:6px;}
-.nav-seat-btn:hover{background:rgba(255,255,255,0.07);border-color:var(--gold);}
+#mainNav.scrolled{background:rgba(26,13,4,0.8);top:0.8rem;}
+.nav-logo{display:flex;align-items:center;gap:10px;text-decoration:none;flex-shrink:0;}
+.nav-logo-img{width:36px;height:36px;border-radius:50%;object-fit:cover;}
+.nav-brand{font-family:'Ekkamai',sans-serif;font-size:14px;font-weight:600;color:var(--white);white-space:nowrap;}
+.nav-links{display:flex;align-items:center;gap:1.5rem;list-style:none;}
+.nav-link{position:relative;display:inline-block;overflow:hidden;height:18px;text-decoration:none;font-size:13px;}
+.nav-link-track{display:flex;flex-direction:column;line-height:18px;transition:transform 0.4s var(--ease-out);}
+.nav-link-track span:first-child{color:rgba(255,255,255,0.45);}
+.nav-link-track span:last-child{color:var(--white);}
+.nav-link:hover .nav-link-track{transform:translateY(-50%);}
+.nav-seat-btn{background:rgba(255,255,255,0.04);border:0.5px solid rgba(255,255,255,0.16);color:rgba(255,255,255,0.8);padding:8px 16px;border-radius:999px;font-family:'Ekkamai',sans-serif;font-size:12px;cursor:pointer;transition:all 0.2s var(--ease-out);display:flex;align-items:center;gap:6px;white-space:nowrap;}
+.nav-seat-btn:hover{border-color:rgba(255,255,255,0.4);background:rgba(255,255,255,0.07);}
 .seat-dot{width:7px;height:7px;border-radius:50%;background:#4caf50;flex-shrink:0;animation:pulse-dot 2s infinite;}
 @keyframes pulse-dot{0%,100%{box-shadow:0 0 0 0 rgba(76,175,80,0.5);}50%{box-shadow:0 0 0 5px rgba(76,175,80,0);}}
+.nav-contact-btn{position:relative;display:inline-flex;align-items:center;padding:9px 20px;border-radius:999px;font-family:'Ekkamai',sans-serif;font-size:12px;font-weight:600;color:var(--brown-deep);text-decoration:none;white-space:nowrap;background:linear-gradient(135deg,var(--gold-light),var(--gold));transition:all 0.2s var(--ease-out);}
+.nav-contact-btn::before{content:'';position:absolute;inset:-6px;z-index:-1;border-radius:999px;background:var(--gold);opacity:0.35;filter:blur(14px);transition:opacity 0.3s,filter 0.3s;}
+.nav-contact-btn:hover{background:linear-gradient(135deg,var(--gold),var(--gold-light));transform:translateY(-1px);}
+.nav-contact-btn:hover::before{opacity:0.55;filter:blur(20px);}
 
 /* hamburger */
 .hamburger{display:none;flex-direction:column;gap:5px;cursor:pointer;padding:6px;background:none;border:none;}
@@ -235,30 +241,6 @@ section{padding:5rem;}
 .success-icon{width:52px;height:52px;border-radius:50%;background:rgba(75,160,80,0.12);border:1px solid rgba(75,160,80,0.28);display:flex;align-items:center;justify-content:center;margin:0 auto 1.25rem;}
 .success-ref{font-family:'Ekkamai',sans-serif;font-size:13px;color:rgba(122,62,26,0.45);margin-top:0.5rem;}
 
-/* ─── GALLERY ─── */
-.gallery-sec{background:#f0e8d8;}
-.gallery-grid{display:grid;grid-template-columns:repeat(4,1fr);grid-template-rows:280px 280px 320px;gap:8px;margin-top:2.5rem;}
-.gallery-item{background:rgba(122,62,26,0.08);border-radius:4px;overflow:hidden;position:relative;cursor:pointer;border:0.5px solid rgba(122,62,26,0.1);}
-.gallery-item:nth-child(1){grid-column:1/3;grid-row:1/3;}
-.gallery-item:nth-child(3){grid-column:4;grid-row:1/3;}
-.gallery-item:nth-child(5){grid-column:1/3;grid-row:3;}
-.gallery-item:nth-child(6){grid-column:3/5;grid-row:3;}
-.gallery-item img{width:100%;height:100%;object-fit:cover;transition:transform 0.4s var(--ease-out);}
-.gallery-item:hover img{transform:scale(1.06);}
-.gallery-overlay{position:absolute;inset:0;background:rgba(30,13,4,0);transition:background 0.3s;}
-.gallery-item:hover .gallery-overlay{background:rgba(30,13,4,0.25);}
-
-/* lightbox */
-.lightbox{display:none;position:fixed;inset:0;z-index:500;background:rgba(10,4,1,0.95);backdrop-filter:blur(12px);align-items:center;justify-content:center;}
-.lightbox.open{display:flex;}
-.lightbox img{max-width:90vw;max-height:85vh;object-fit:contain;border-radius:4px;}
-.lb-close{position:absolute;top:1.5rem;right:1.5rem;background:none;border:none;color:rgba(255,255,255,0.5);font-size:28px;cursor:pointer;width:40px;height:40px;display:flex;align-items:center;justify-content:center;border-radius:50%;transition:all 0.2s;}
-.lb-close:hover{background:rgba(255,255,255,0.1);color:white;}
-.lb-nav{position:absolute;top:50%;transform:translateY(-50%);background:rgba(255,255,255,0.08);border:none;color:white;width:44px;height:44px;border-radius:50%;font-size:18px;cursor:pointer;transition:all 0.2s;display:flex;align-items:center;justify-content:center;}
-.lb-nav:hover{background:rgba(255,255,255,0.15);}
-.lb-prev{left:1.5rem;}
-.lb-next{right:1.5rem;}
-
 /* ─── FAQ ─── */
 .faq-sec{background:var(--parchment);}
 .faq-list{margin-top:2.5rem;max-width:720px;}
@@ -310,11 +292,6 @@ footer{background:#080400;padding:3rem 5rem;display:flex;align-items:center;just
 .foot-links a{font-size:12px;color:rgba(255,255,255,0.22);text-decoration:none;transition:color 0.2s;}
 .foot-links a:hover{color:rgba(255,255,255,0.5);}
 
-/* ─── SOCIAL ICONS ─── */
-.social-links{display:flex;align-items:center;gap:8px;}
-.social-link{width:32px;height:32px;border-radius:50%;border:0.5px solid rgba(255,255,255,0.14);display:flex;align-items:center;justify-content:center;transition:all 0.25s var(--ease-out);color:rgba(255,255,255,0.4);text-decoration:none;flex-shrink:0;}
-.social-link:hover{border-color:var(--gold);background:rgba(212,168,85,0.1);color:var(--gold);transform:translateY(-2px);}
-.social-link svg{width:14px;height:14px;fill:currentColor;}
 .foot-social{display:flex;align-items:center;gap:10px;margin-top:1rem;}
 .foot-social-link{width:38px;height:38px;border-radius:50%;border:0.5px solid rgba(255,255,255,0.1);display:flex;align-items:center;justify-content:center;transition:all 0.25s var(--ease-out);color:rgba(255,255,255,0.35);text-decoration:none;}
 .foot-social-link:hover{border-color:var(--gold);background:rgba(212,168,85,0.1);color:var(--gold);}
@@ -329,7 +306,7 @@ footer{background:#080400;padding:3rem 5rem;display:flex;align-items:center;just
 
 /* ─── RESPONSIVE: TABLET (≤900px) ─── */
 @media(max-width:900px){
-  nav{padding:0 1.25rem;}
+  #mainNav{width:calc(100% - 1.5rem);padding:0.45rem 0.55rem 0.45rem 1.1rem;}
   .nav-links{display:none;}
   .nav-contact-btn{display:none;}
   .hamburger{display:flex;}
@@ -341,13 +318,9 @@ footer{background:#080400;padding:3rem 5rem;display:flex;align-items:center;just
   .hero-photo-fade{display:none;}
   .countdown-strip{padding:1rem 1.5rem;gap:1.5rem;}
   .batches-grid,.reg-wrap,.map-grid{grid-template-columns:1fr;}
-  .gallery-grid{grid-template-columns:repeat(2,1fr);grid-template-rows:auto;}
-  .gallery-item:nth-child(n){grid-column:auto;grid-row:auto;aspect-ratio:1;}
-  .gallery-item:nth-child(1){grid-column:span 2;aspect-ratio:16/9;}
   .f-row2,.f-row3{grid-template-columns:1fr;}
   footer{flex-direction:column;padding:2rem 1.5rem;}
   .foot-right{text-align:left;}
-  .social-links{display:none;}
   .cand-cta-card{flex-wrap:wrap;gap:1.5rem;padding:1.75rem;}
   .map-grid{border-radius:4px;}
 }
@@ -355,8 +328,7 @@ footer{background:#080400;padding:3rem 5rem;display:flex;align-items:center;just
 /* ─── RESPONSIVE: MOBILE (≤480px) ─── */
 @media(max-width:480px){
   /* nav */
-  nav{height:56px;padding:0 1rem;}
-  nav.scrolled{height:50px;}
+  #mainNav{padding:0.4rem 0.45rem 0.4rem 0.9rem;}
   .nav-brand{font-size:13px;}
   .nav-seat-btn{padding:5px 12px;font-size:12px;}
   .seat-dot{width:6px;height:6px;}
@@ -400,11 +372,6 @@ footer{background:#080400;padding:3rem 5rem;display:flex;align-items:center;just
   .sch-time{font-size:13px;min-width:62px;}
   .sch-name{font-size:14px;}
   .sch-item{gap:1rem;padding:1rem 0;}
-
-  /* gallery */
-  .gallery-grid{grid-template-columns:repeat(2,1fr);gap:6px;grid-template-rows:auto;}
-  .gallery-item:nth-child(n){grid-column:auto;grid-row:auto;aspect-ratio:1;}
-  .gallery-item:nth-child(1){grid-column:span 2;aspect-ratio:16/9;}
 
   /* candidates cta */
   .cand-cta-card{flex-direction:column;padding:1.5rem 1.25rem;gap:1rem;}
@@ -452,7 +419,7 @@ footer{background:#080400;padding:3rem 5rem;display:flex;align-items:center;just
   #progress-bar{height:1.5px;}
 
   /* safe-area insets for notched phones */
-  nav{padding-top:max(0px,env(safe-area-inset-top));}
+  #mainNav{top:max(0.7rem,env(safe-area-inset-top));}
   .mobile-menu{padding-top:max(6rem,calc(5rem + env(safe-area-inset-top)));padding-bottom:max(3rem,calc(2rem + env(safe-area-inset-bottom)));}
   footer{padding-bottom:max(1.25rem,env(safe-area-inset-bottom));}
 }
@@ -464,7 +431,7 @@ footer{background:#080400;padding:3rem 5rem;display:flex;align-items:center;just
   .hero-quote{font-size:clamp(19px,5.5vw,25px);}
 
   /* Reduce gap between section heading and content */
-  .batches-grid,.gallery-grid,.staff-grid{margin-top:1.5rem;}
+  .batches-grid,.staff-grid{margin-top:1.5rem;}
   .faq-list,.map-grid{margin-top:1.5rem;}
   .sch-tabs{margin-top:1.5rem;}
   .sch-day{padding:1.25rem 0 0;}
@@ -490,16 +457,11 @@ footer{background:#080400;padding:3rem 5rem;display:flex;align-items:center;just
 
   /* Mobile menu social links — larger tap targets */
   .mobile-menu .foot-social-link{width:48px!important;height:48px!important;}
-
-  /* Gallery — all photos full width, single column */
-  .gallery-grid{grid-template-columns:1fr;gap:8px;}
-  .gallery-item:nth-child(n){grid-column:auto;grid-row:auto;aspect-ratio:4/3;}
-  .gallery-item:nth-child(1){grid-column:auto;aspect-ratio:16/9;}
 }
 
 /* ─── TOUCH / BUTTON FEEDBACK (all breakpoints) ─── */
 .btn-primary,.btn-ghost,.seat-btn,.nav-seat-btn,.f-submit,.map-btn,.line-btn,
-.f-tab,.sch-tab,.faq-q,.hamburger,.social-link,.foot-social-link,.lb-nav,.lb-close{
+.f-tab,.sch-tab,.faq-q,.hamburger,.foot-social-link{
   touch-action:manipulation;
   -webkit-tap-highlight-color:transparent;
 }
@@ -517,11 +479,10 @@ footer{background:#080400;padding:3rem 5rem;display:flex;align-items:center;just
   .sch-tab:active{color:rgba(255,255,255,0.85);}
   .faq-q:active{color:var(--saffron);}
   .hamburger:active{opacity:0.7;}
-  .gallery-item:active img{transform:scale(1.03);}
 }
 
 /* ─── SCROLL OFFSET FOR FIXED NAV ─── */
-html{scroll-padding-top:64px;}
+html{scroll-padding-top:88px;}
 
 /* ─── REDUCED MOTION ─── */
 @media(prefers-reduced-motion:reduce){
@@ -540,14 +501,6 @@ html{scroll-padding-top:64px;}
 <!-- SCROLL PROGRESS -->
 <div id="progress-bar"></div>
 
-<!-- LIGHTBOX -->
-<div class="lightbox" id="lightbox" onclick="closeLightbox(event)">
-  <button class="lb-close" onclick="closeLightbox()">&times;</button>
-  <button class="lb-nav lb-prev" onclick="lbNav(-1,event)">&#8249;</button>
-  <img id="lb-img" src="" alt="">
-  <button class="lb-nav lb-next" onclick="lbNav(1,event)">&#8250;</button>
-</div>
-
 <!-- TOAST -->
 <div class="toast" id="toast">
   <div class="toast-icon">
@@ -563,7 +516,6 @@ html{scroll-padding-top:64px;}
 <div class="mobile-menu" id="mobileMenu">
   <a href="#batches" onclick="closeMobileMenu()">กำหนดการ</a>
   <a href="#schedule" onclick="closeMobileMenu()">ตารางกิจกรรม</a>
-  <a href="#gallery" onclick="closeMobileMenu()">ภาพบรรยากาศ</a>
   <a href="#candidates" onclick="closeMobileMenu()">รายชื่อ</a>
   <a href="#register" onclick="closeMobileMenu()">ลงทะเบียน</a>
   <a href="#faq" onclick="closeMobileMenu()">คำถามที่พบบ่อย</a>
@@ -591,27 +543,18 @@ html{scroll-padding-top:64px;}
     <span class="nav-brand">ธรรม ตามมรรค</span>
   </a>
   <ul class="nav-links">
-    <li><a href="#batches">กำหนดการ</a></li>
-    <li><a href="#schedule">ตารางกิจกรรม</a></li>
-    <li><a href="#gallery">ภาพบรรยากาศ</a></li>
-    <li><a href="#candidates">รายชื่อ</a></li>
-    <li><a href="#register">ลงทะเบียน</a></li>
-    <li><a href="#faq">FAQ</a></li>
-    <li><a href="#map">การเดินทาง</a></li>
+    <li><a class="nav-link" href="#batches"><span class="nav-link-track"><span>กำหนดการ</span><span aria-hidden="true">กำหนดการ</span></span></a></li>
+    <li><a class="nav-link" href="#schedule"><span class="nav-link-track"><span>ตารางกิจกรรม</span><span aria-hidden="true">ตารางกิจกรรม</span></span></a></li>
+    <li><a class="nav-link" href="#candidates"><span class="nav-link-track"><span>รายชื่อ</span><span aria-hidden="true">รายชื่อ</span></span></a></li>
+    <li><a class="nav-link" href="#register"><span class="nav-link-track"><span>ลงทะเบียน</span><span aria-hidden="true">ลงทะเบียน</span></span></a></li>
+    <li><a class="nav-link" href="#faq"><span class="nav-link-track"><span>FAQ</span><span aria-hidden="true">FAQ</span></span></a></li>
+    <li><a class="nav-link" href="#map"><span class="nav-link-track"><span>การเดินทาง</span><span aria-hidden="true">การเดินทาง</span></span></a></li>
   </ul>
-  <div style="display:flex;align-items:center;gap:12px;">
-    <div class="social-links">
-      <a class="social-link" href="https://www.facebook.com/profile.php?id=61571826655992" target="_blank" aria-label="Facebook">
-        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
-      </a>
-      <a class="social-link" href="https://www.instagram.com/dhammapath.th/" target="_blank" aria-label="Instagram">
-        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg>
-      </a>
-    </div>
+  <div style="display:flex;align-items:center;gap:10px;">
     <button class="nav-seat-btn" onclick="document.getElementById('register').scrollIntoView({behavior:'smooth'})">
       <span class="seat-dot"></span><span id="nav-seat-count">กำลังโหลด...</span>
     </button>
-    <a class="btn-ghost nav-contact-btn" href="https://lin.ee/O6AtN2gj" target="_blank">ติดต่อข้อมูลเพิ่มเติม</a>
+    <a class="nav-contact-btn" href="https://lin.ee/O6AtN2gj" target="_blank">ติดต่อข้อมูลเพิ่มเติม</a>
     <button class="hamburger" id="hamburger" onclick="toggleMobileMenu()" aria-label="เมนู">
       <span></span><span></span><span></span>
     </button>
@@ -759,40 +702,6 @@ html{scroll-padding-top:64px;}
       <span class="sch-time" style="color:var(--gold-light);">16.30 น.</span>
       <div class="sch-dot-wrap"><div class="sch-dot" style="background:var(--gold);width:10px;height:10px;"></div></div>
       <div class="sch-name" style="color:var(--gold-light);">จบค่าย<small style="color:rgba(255,255,255,0.32);">พิธีปิดค่าย กล่าวอำลา เดินทางกลับ</small></div>
-    </div>
-  </div>
-</section>
-
-<!-- GALLERY -->
-<section class="gallery-sec" id="gallery">
-  <p class="eyebrow reveal">Camp Atmosphere</p>
-  <h2 class="sec-title reveal reveal-delay-1">ภาพบรรยากาศค่าย</h2>
-  <div class="gold-rule reveal reveal-delay-2"></div>
-  <p class="sec-sub reveal reveal-delay-2">บรรยากาศจากค่ายธรรมที่ผ่านมา</p>
-  <div class="gallery-grid reveal">
-    <div class="gallery-item" onclick="openLightbox(this)">
-      <img src="Dhammaphoto/623063207_122153873456727555_1990845992319108569_n.jpg" alt="รูปกลุ่มในศาลา" loading="lazy">
-      <div class="gallery-overlay"></div>
-    </div>
-    <div class="gallery-item" onclick="openLightbox(this)">
-      <img src="Dhammaphoto/671962881_122161037936727555_2589895176403007259_n.jpg" alt="รูปกิจกรรมกลางแจ้ง" loading="lazy">
-      <div class="gallery-overlay"></div>
-    </div>
-    <div class="gallery-item" onclick="openLightbox(this)">
-      <img src="Dhammaphoto/672676300_122160801068727555_4939551580627206800_n.jpg" alt="พระอาจารย์ที่พระอาทิตย์ตก" loading="lazy" style="object-position:center top;">
-      <div class="gallery-overlay"></div>
-    </div>
-    <div class="gallery-item" onclick="openLightbox(this)">
-      <img src="Dhammaphoto/555631088_122141762534727555_783271377250065164_n.jpg" alt="กิจกรรมกลุ่ม" loading="lazy">
-      <div class="gallery-overlay"></div>
-    </div>
-    <div class="gallery-item" onclick="openLightbox(this)">
-      <img src="Dhammaphoto/651726455_122157982172727555_4752241488402550145_n.jpg" alt="บรรยากาศยามค่ำ" loading="lazy" style="object-position:center bottom;">
-      <div class="gallery-overlay"></div>
-    </div>
-    <div class="gallery-item" onclick="openLightbox(this)">
-      <img src="Dhammaphoto/make it center.jpg" alt="พระมหาธัญพิสิษฐ์ โชติโก" loading="lazy" style="object-position:center center;">
-      <div class="gallery-overlay"></div>
     </div>
   </div>
 </section>
@@ -1392,34 +1301,6 @@ function toggleFaq(btn){
   document.querySelectorAll('.faq-item.open').forEach(i=>i.classList.remove('open'));
   if(!wasOpen) item.classList.add('open');
 }
-
-/* ─── GALLERY LIGHTBOX ─── */
-let lbImages=[],lbIdx=0;
-function openLightbox(el){
-  const img=el.querySelector('img');
-  if(!img) return; // placeholder, no image yet
-  lbImages=Array.from(document.querySelectorAll('.gallery-item img'));
-  lbIdx=lbImages.indexOf(img);
-  document.getElementById('lb-img').src=img.src;
-  document.getElementById('lightbox').classList.add('open');
-  document.body.style.overflow='hidden';
-}
-function closeLightbox(e){
-  if(e&&e.target!==document.getElementById('lightbox')&&!e.target.classList.contains('lb-close')) return;
-  document.getElementById('lightbox').classList.remove('open');
-  document.body.style.overflow='';
-}
-function lbNav(dir,e){
-  if(e) e.stopPropagation();
-  if(!lbImages.length) return;
-  lbIdx=(lbIdx+dir+lbImages.length)%lbImages.length;
-  document.getElementById('lb-img').src=lbImages[lbIdx].src;
-}
-document.addEventListener('keydown',e=>{
-  if(e.key==='Escape') closeLightbox({target:document.getElementById('lightbox')});
-  if(e.key==='ArrowLeft') lbNav(-1,null);
-  if(e.key==='ArrowRight') lbNav(1,null);
-});
 
 /* ─── VIDEO AUTOPLAY — aggressive mobile fix ─── */
 (function(){

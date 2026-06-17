@@ -1450,7 +1450,7 @@ function openChant(src){ openChantMulti([src]); }
 function openChantMulti(srcs){
   const lb = document.getElementById('chant-lightbox');
   const container = document.getElementById('chant-imgs');
-  container.innerHTML = srcs.map(s=>`<img src="${s}" alt="" style="width:100%;border-radius:12px;display:block;">`).join('');
+  container.innerHTML = srcs.map(s=>`<img src="${encodeURI(s)}" alt="" style="width:100%;border-radius:12px;display:block;">`).join('');
   lb.classList.add('active');
   lb.scrollTop = 0;
   document.body.style.overflow = 'hidden';

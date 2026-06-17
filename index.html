@@ -1750,7 +1750,7 @@ function toggleFaq(btn){
   function dc(){morph=0;T2.style.filter='';T2.style.opacity='100%';T1.style.filter='';T1.style.opacity='0%';}
   function dm(){
     morph-=cool;cool=0;var f=morph/MT;
-    if(f>1){cool=HT;f=1;}
+    if(f>1){cool=HT;f=1;if(tc>=maxT)stopped=true;}
     sm(f);
   }
 
@@ -1763,9 +1763,9 @@ function toggleFaq(btn){
         ti=(ti+1)%texts.length;
         T1.textContent=texts[ti%texts.length];
         T2.textContent=texts[(ti+1)%texts.length];
-        tc++;if(tc>=maxT)stopped=true;
+        tc++;
       }
-      dm();
+      if(stopped&&morph===0){cool=HT;dc();}else{dm();}
     }else{dc();}
     txRaf=requestAnimationFrame(loop);
   })();

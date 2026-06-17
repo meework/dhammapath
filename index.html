@@ -1602,5 +1602,174 @@ function toggleFaq(btn){
 .chant-link{background:none;border:none;padding:0;color:var(--gold);font-family:'Ekkamai',sans-serif;font-size:13px;cursor:pointer;text-align:left;opacity:0.9;transition:opacity 0.2s;}
 .chant-link:hover,.chant-link:active{opacity:1;text-decoration:underline;}
 </style>
+
+<!-- ===== INTRO OVERLAY ===== -->
+<style>
+#intro-ov{position:fixed;inset:0;z-index:99999;background:#1a0a04;display:flex;align-items:center;justify-content:center;overflow:hidden;will-change:transform,opacity;transition:transform 1.1s cubic-bezier(0.76,0,0.24,1),opacity 0.7s ease;}
+#intro-ov.intro-exit{transform:translateY(105%);opacity:0;pointer-events:none;}
+#intro-cv{position:absolute;inset:0;width:100%;height:100%;}
+.i-rings{display:none;}
+.i-tw{position:relative;z-index:2;width:100vw;display:flex;align-items:center;justify-content:center;}
+.i-gooey{position:relative;width:100vw;height:110px;display:flex;align-items:center;justify-content:center;filter:url(#igf);}
+#it1,#it2{position:absolute;font-family:'Ekkamai',sans-serif;font-size:clamp(28px,8vw,56px);font-weight:700;color:#ffffff;text-align:center;white-space:nowrap;letter-spacing:.04em;}
+.i-skip{position:absolute;bottom:2.5rem;color:rgba(255,255,255,0.22);font-family:'Ekkamai',sans-serif;font-size:11px;letter-spacing:.12em;cursor:pointer;z-index:3;user-select:none;}
+</style>
+<script>
+(function(){
+  var ov=document.createElement('div');ov.id='intro-ov';
+  document.body.insertBefore(ov,document.body.firstChild);
+  document.body.style.overflow='hidden';
+
+  var cv=document.createElement('canvas');cv.id='intro-cv';ov.appendChild(cv);
+
+  /* Energy rings */
+  var rd=document.createElement('div');rd.className='i-rings';
+  ['i-r1','i-r2','i-r3'].forEach(function(c){var r=document.createElement('div');r.className='i-ring '+c;rd.appendChild(r);});
+  ov.appendChild(rd);
+
+  var tw=document.createElement('div');tw.className='i-tw';
+  tw.innerHTML='<svg style="position:absolute;width:0;height:0;overflow:hidden" aria-hidden="true"><defs><filter id="igf"><feColorMatrix in="SourceGraphic" type="matrix" values="1 0 0 0 0 0 1 0 0 0 0 0 1 0 0 0 0 0 255 -140"/></filter></defs></svg><div class="i-gooey"><span id="it1"></span><span id="it2"></span></div>';
+  ov.appendChild(tw);
+
+  var sk=document.createElement('div');sk.className='i-skip';sk.textContent='แตะเพื่อข้าม';ov.appendChild(sk);
+
+  var glRaf,txRaf,gone=false;
+  function dismiss(){
+    if(gone)return;gone=true;
+    cancelAnimationFrame(glRaf);cancelAnimationFrame(txRaf);
+    ov.classList.add('intro-exit');
+    setTimeout(function(){ov.style.display='none';document.body.style.overflow='';},1300);
+  }
+  ov.addEventListener('click',dismiss);
+
+  /* Animate rings via JS to match EnergyRing component exactly */
+  var rings=rd.querySelectorAll('.i-ring');
+  var ringDirs=[1,-1,1];
+  (function animRings(){
+    var t=(Date.now()-Date.now())/1000; // reset per frame below
+    var t0r=Date.now();
+    (function loopR(){
+      var t=(Date.now()-t0r)/1000;
+      rings[0].style.transform='rotate('+t+'rad)';
+      rings[0].style.borderColor='rgba(255,87,34,'+(0.5+Math.sin(t*3)*0.3)+')';
+      rings[1].style.transform='rotate('+(-t)+'rad)';
+      rings[1].style.borderColor='rgba(255,87,34,'+(0.5+Math.sin(t*3+1)*0.3)*0.6+')';
+      rings[2].style.transform='rotate('+(t*0.7)+'rad)';
+      rings[2].style.borderColor='rgba(255,87,34,'+(0.5+Math.sin(t*3+2)*0.3)*0.3+')';
+      requestAnimationFrame(loopR);
+    })();
+  })();
+
+  /* WebGL — exact ShaderPlane port (32×32 subdivided plane) */
+  var gl=cv.getContext('webgl',{alpha:true})||cv.getContext('experimental-webgl',{alpha:true});
+  function rsz(){cv.width=innerWidth;cv.height=innerHeight;if(gl)gl.viewport(0,0,cv.width,cv.height);}
+  rsz();window.addEventListener('resize',rsz);
+  if(gl){
+    /* Build 32×32 subdivided plane */
+    var SEG=32,pos=[],uvArr=[],idx=[];
+    for(var j=0;j<=SEG;j++){for(var i=0;i<=SEG;i++){pos.push((i/SEG)*2-1,(j/SEG)*2-1);uvArr.push(i/SEG,j/SEG);}}
+    for(var j=0;j<SEG;j++){for(var i=0;i<SEG;i++){var a=j*(SEG+1)+i,b=a+1,c=a+(SEG+1),d=c+1;idx.push(a,b,c,b,d,c);}}
+
+    /* Exact vertex shader from ShaderPlane */
+    var vs=[
+      'precision mediump float;',
+      'attribute vec2 a_pos;attribute vec2 a_uv;',
+      'uniform float u_time;uniform float u_intensity;',
+      'varying vec2 vUv;',
+      'void main(){',
+      '  vUv=a_uv;',
+      '  vec2 pos=a_pos;',
+      '  pos.y+=sin(pos.x*10.0+u_time)*0.1*u_intensity;',
+      '  pos.x+=cos(pos.y*8.0+u_time*1.5)*0.05*u_intensity;',
+      '  gl_Position=vec4(pos,0.0,1.0);',
+      '}'
+    ].join('\n');
+
+    /* Exact fragment shader from ShaderPlane */
+    var fs=[
+      'precision mediump float;',
+      'uniform float u_time;uniform float u_intensity;',
+      'uniform vec3 u_c1;uniform vec3 u_c2;',
+      'varying vec2 vUv;',
+      'void main(){',
+      '  vec2 uv=vUv;',
+      '  float noise=sin(uv.x*20.0+u_time)*cos(uv.y*15.0+u_time*0.8);',
+      '  noise+=sin(uv.x*35.0-u_time*2.0)*cos(uv.y*25.0+u_time*1.2)*0.5;',
+      '  vec3 color=mix(u_c1,u_c2,noise*0.5+0.5);',
+      '  color=mix(color,vec3(1.0),pow(abs(noise),2.0)*u_intensity);',
+      '  float glow=1.0-length(uv-0.5)*2.0;',
+      '  glow=pow(glow,2.0);',
+      '  gl_FragColor=vec4(color*glow,glow*0.8);',
+      '}'
+    ].join('\n');
+
+    function mk(s,tp){var sh=gl.createShader(tp);gl.shaderSource(sh,s);gl.compileShader(sh);return sh;}
+    var pr=gl.createProgram();
+    gl.attachShader(pr,mk(vs,gl.VERTEX_SHADER));gl.attachShader(pr,mk(fs,gl.FRAGMENT_SHADER));
+    gl.linkProgram(pr);gl.useProgram(pr);
+
+    var pb=gl.createBuffer();gl.bindBuffer(gl.ARRAY_BUFFER,pb);gl.bufferData(gl.ARRAY_BUFFER,new Float32Array(pos),gl.STATIC_DRAW);
+    var aP=gl.getAttribLocation(pr,'a_pos');gl.enableVertexAttribArray(aP);gl.vertexAttribPointer(aP,2,gl.FLOAT,false,0,0);
+
+    var ub=gl.createBuffer();gl.bindBuffer(gl.ARRAY_BUFFER,ub);gl.bufferData(gl.ARRAY_BUFFER,new Float32Array(uvArr),gl.STATIC_DRAW);
+    var aU=gl.getAttribLocation(pr,'a_uv');gl.enableVertexAttribArray(aU);gl.vertexAttribPointer(aU,2,gl.FLOAT,false,0,0);
+
+    var ib=gl.createBuffer();gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER,ib);gl.bufferData(gl.ELEMENT_ARRAY_BUFFER,new Uint16Array(idx),gl.STATIC_DRAW);
+
+    var ut=gl.getUniformLocation(pr,'u_time'),uk=gl.getUniformLocation(pr,'u_intensity');
+    var uc1=gl.getUniformLocation(pr,'u_c1'),uc2=gl.getUniformLocation(pr,'u_c2');
+
+    /* color1=#ff5722, color2=#ffffff — exact defaults from ShaderPlane */
+    gl.uniform3f(uc1,1.0,0.341,0.133);
+    gl.uniform3f(uc2,1.0,1.0,1.0);
+
+    gl.enable(gl.BLEND);gl.blendFunc(gl.SRC_ALPHA,gl.ONE_MINUS_SRC_ALPHA);
+    gl.clearColor(0,0,0,0);
+
+    var t0=Date.now();
+    (function loop(){
+      var t=(Date.now()-t0)/1000;
+      gl.clear(gl.COLOR_BUFFER_BIT);
+      gl.uniform1f(ut,t);
+      gl.uniform1f(uk,1.0+Math.sin(t*2)*0.3);
+      gl.drawElements(gl.TRIANGLES,idx.length,gl.UNSIGNED_SHORT,0);
+      glRaf=requestAnimationFrame(loop);
+    })();
+  }
+
+  /* Gooey text morph */
+  var T1=document.getElementById('it1'),T2=document.getElementById('it2');
+  var texts=['ปฏิบัติธรรม','สมควรแก่ธรรม','ธรรมตามมรรค','พระอาจารย์มหาต้น'];
+  var MT=0.85,HT=1.8,ti=texts.length-1,morph=0,cool=HT,pm=Date.now(),tc=0,maxT=texts.length-1,stopped=false;
+  T1.textContent=texts[texts.length-1];T2.textContent=texts[0];
+
+  function sm(f){
+    T2.style.filter='blur('+Math.min(8/f-8,100)+'px)';T2.style.opacity=(Math.pow(f,.4)*100)+'%';
+    var g=1-f;T1.style.filter='blur('+Math.min(8/g-8,100)+'px)';T1.style.opacity=(Math.pow(g,.4)*100)+'%';
+  }
+  function dc(){morph=0;T2.style.filter='';T2.style.opacity='100%';T1.style.filter='';T1.style.opacity='0%';}
+  function dm(){
+    morph-=cool;cool=0;var f=morph/MT;
+    if(f>1){cool=HT;f=1;}
+    sm(f);
+  }
+
+  setTimeout(dismiss,(HT+(MT+HT)*(texts.length-1)+0.6)*1000);
+
+  (function loop(){
+    var now=Date.now(),si=cool>0,dt=(now-pm)/1000;pm=now;cool-=dt;
+    if(cool<=0){
+      if(si&&!stopped){
+        ti=(ti+1)%texts.length;
+        T1.textContent=texts[ti%texts.length];
+        T2.textContent=texts[(ti+1)%texts.length];
+        tc++;if(tc>=maxT)stopped=true;
+      }
+      dm();
+    }else{dc();}
+    txRaf=requestAnimationFrame(loop);
+  })();
+})();
+</script>
 </body>
 </html>

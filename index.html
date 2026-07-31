@@ -145,8 +145,13 @@ section{padding:5rem;}
 .b-dates{font-family:'Ekkamai',sans-serif;font-size:16px;font-weight:600;color:var(--brown-dark);margin-bottom:1rem;line-height:1.5;}
 .b-status{display:inline-flex;align-items:center;gap:6px;padding:4px 12px;border-radius:99px;font-size:12px;margin-bottom:1.25rem;}
 .s-open{background:rgba(75,160,80,0.1);color:#2d7a30;border:1px solid rgba(75,160,80,0.28);}
+.s-closed{background:rgba(210,50,50,0.1);color:#c0392b;border:1px solid rgba(210,50,50,0.28);}
 .s-soon{background:rgba(199,94,38,0.1);color:#a8501e;border:1px solid rgba(199,94,38,0.28);}
 .s-up{background:rgba(138,94,68,0.07);color:var(--brown-mid);border:1px solid rgba(138,94,68,0.18);}
+.s-notyet{background:rgba(120,80,180,0.1);color:#7b5bb8;border:1px solid rgba(120,80,180,0.28);}
+.s-dot-red{background:#e53935;}
+.s-dot-green{background:#4caf50;}
+.s-dot-purple{background:#9c6fd6;}
 .seat-btn{display:inline-flex;align-items:center;gap:6px;background:var(--brown-deep);color:var(--white);border:none;padding:7px 16px;border-radius:2px;font-size:12px;font-family:'Ekkamai',sans-serif;cursor:pointer;transition:all 0.2s;}
 .seat-btn:hover{background:var(--brown-mid);}
 .s-dot{width:6px;height:6px;border-radius:50%;background:#4caf50;}
@@ -155,12 +160,24 @@ section{padding:5rem;}
 .b-seats-fill{height:100%;background:var(--gold);border-radius:2px;}
 .b-seats-txt{font-size:11px;color:rgba(138,94,68,0.45);display:flex;justify-content:space-between;}
 
-/* future (low-attention) batches */
-.batches-future{display:flex;gap:12px;}
-.batch-row{flex:1;display:flex;flex-direction:column;align-items:flex-start;gap:6px;background:rgba(138,94,68,0.04);border:0.5px solid rgba(138,94,68,0.10);border-radius:8px;padding:0.9rem 1.1rem;}
-.batch-row .b-row-tag{font-size:11px;color:rgba(138,94,68,0.55);letter-spacing:0.1em;text-transform:uppercase;font-family:'Ekkamai',sans-serif;font-style:italic;}
-.batch-row .b-row-dates{font-size:13px;color:var(--brown-mid);font-family:'Ekkamai',sans-serif;}
-.batch-row .b-status{margin-bottom:0;font-size:11px;padding:3px 10px;}
+/* calendar-style batch cards */
+.batches-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:2.5rem;}
+.batch-cal{border-radius:12px;overflow:hidden;border:0.5px solid rgba(138,94,68,0.14);background:var(--parchment);display:flex;flex-direction:column;transition:box-shadow 0.25s,border-color 0.25s;}
+.batch-cal:hover{border-color:rgba(138,94,68,0.32);box-shadow:0 8px 32px rgba(85,55,39,0.1);}
+.batch-cal.cal-active{border-color:rgba(75,160,80,0.35);box-shadow:0 8px 32px rgba(75,160,80,0.1);}
+.batch-cal-header{padding:1rem 1.25rem 0.75rem;background:rgba(85,55,39,0.06);border-bottom:0.5px solid rgba(138,94,68,0.1);display:flex;align-items:center;justify-content:space-between;}
+.batch-cal-run{font-family:'Ekkamai',sans-serif;font-size:22px;font-weight:700;color:var(--brown-deep);letter-spacing:-0.01em;}
+.batch-cal-body{padding:1.1rem 1.25rem;flex:1;display:flex;flex-direction:column;gap:0.65rem;}
+.batch-cal-dates{font-family:'Ekkamai',sans-serif;font-size:17px;font-weight:600;color:var(--brown-deep);line-height:1.4;}
+.batch-cal-row{display:flex;gap:6px;align-items:baseline;}
+.batch-cal-lbl{font-size:10px;color:rgba(85,55,39,0.38);letter-spacing:0.1em;text-transform:uppercase;font-family:'Ekkamai',sans-serif;min-width:72px;flex-shrink:0;}
+.batch-cal-val{font-family:'Ekkamai',sans-serif;font-size:13px;color:rgba(85,55,39,0.65);}
+.batch-cal-footer{padding:0.85rem 1.25rem;border-top:0.5px solid rgba(138,94,68,0.08);display:flex;align-items:center;justify-content:space-between;}
+.batch-cal-counter{font-family:'Ekkamai',sans-serif;font-size:12px;color:rgba(85,55,39,0.4);}
+.batch-cal-counter strong{color:var(--brown-dark);}
+/* fallback hide old grid layout rules */
+.batches-future{display:none;}
+.batch-row{display:none;}
 
 /* ─── SCHEDULE ─── */
 .schedule-sec{background:var(--olive);}
@@ -579,12 +596,11 @@ html{scroll-padding-top:88px;}
     <span class="nav-brand">ธรรม ตามมรรค</span>
   </a>
   <ul class="nav-links">
-    <li><a class="nav-link" href="#batches"><span class="nav-link-track"><span>กำหนดการ</span><span aria-hidden="true">กำหนดการ</span></span></a></li>
-    <li><a class="nav-link" href="#schedule"><span class="nav-link-track"><span>ตารางกิจกรรม</span><span aria-hidden="true">ตารางกิจกรรม</span></span></a></li>
-    <li><a class="nav-link" href="#candidates"><span class="nav-link-track"><span>รายชื่อ</span><span aria-hidden="true">รายชื่อ</span></span></a></li>
-    <li><a class="nav-link" href="#register"><span class="nav-link-track"><span>ลงทะเบียน</span><span aria-hidden="true">ลงทะเบียน</span></span></a></li>
-    <li><a class="nav-link" href="#faq"><span class="nav-link-track"><span>FAQ</span><span aria-hidden="true">FAQ</span></span></a></li>
-    <li><a class="nav-link" href="#map"><span class="nav-link-track"><span>การเดินทาง</span><span aria-hidden="true">การเดินทาง</span></span></a></li>
+    <li><a class="nav-link" href="#batches"><span class="nav-link-track"><span>กำหนดการค่าย</span><span aria-hidden="true">กำหนดการค่าย</span></span></a></li>
+    <li><a class="nav-link" href="#schedule"><span class="nav-link-track"><span>ตารางกิจกรรมค่าย</span><span aria-hidden="true">ตารางกิจกรรมค่าย</span></span></a></li>
+    <li><a class="nav-link" href="#candidates"><span class="nav-link-track"><span>รายชื่อผู้ผ่านเข้าร่วม</span><span aria-hidden="true">รายชื่อผู้ผ่านเข้าร่วม</span></span></a></li>
+    <li><a class="nav-link" href="#faq"><span class="nav-link-track"><span>คำถามที่พบบ่อย</span><span aria-hidden="true">คำถามที่พบบ่อย</span></span></a></li>
+    <li><a class="nav-link" href="#map"><span class="nav-link-track"><span>ติดต่อเรา</span><span aria-hidden="true">ติดต่อเรา</span></span></a></li>
   </ul>
   <div style="display:flex;align-items:center;gap:10px;">
     <button class="nav-seat-btn" onclick="document.getElementById('register').scrollIntoView({behavior:'smooth'})">
@@ -607,14 +623,14 @@ html{scroll-padding-top:88px;}
   <div class="hero-overlay"></div>
   <div class="hero-photo-fade"></div>
   <div class="hero-content">
-    <p class="hero-brand-title" style="font-family:'Ekkamai',sans-serif;font-size:clamp(32px,5vw,56px);font-weight:600;color:var(--white);letter-spacing:0.04em;margin-bottom:0.75rem;opacity:0;animation:fadeUp 1s 0s var(--ease-out) forwards;">ธรรมตามมรรค</p>
-    <p class="hero-eyebrow">ค่ายธรรมะสำหรับวัยรุ่น · ปี ๒๕๖๙</p>
+    <p class="hero-brand-title" style="font-family:'Ekkamai',sans-serif;font-size:clamp(32px,5vw,56px);font-weight:600;color:var(--white);letter-spacing:0.04em;margin-bottom:0.75rem;opacity:0;animation:fadeUp 1s 0s var(--ease-out) forwards;">โครงการวัยรุ่น "ธรรม" ตามมรรค</p>
+    <p class="hero-eyebrow">ค่ายธรรมะวัยรุ่น ช่วงอายุ 20-35 ปี</p>
     <h1 class="hero-quote">
       สิ่งที่ทำให้อาตมา<em>อยากอยู่</em>บนโลก<br>
       คือ<em>การได้สอนธรรม</em>
     </h1>
     <p class="hero-source">ธรรมตามมรรค</p>
-    <p class="hero-monk">พระมหาธัญพิสิษฐ์ โชติโก (พระอาจารย์มหาต้น)</p>
+    <p class="hero-monk">ณ วัดป่าศรีอุทุมพร จังหวัดสระบุรี จัดและบรรยายโดย พระมหาธัญพิสิษฐ์ โชติโก (พระอาจาร์ยมหาต้น)</p>
     <div class="hero-ctas">
       <a href="#register" class="btn-primary">สมัครเข้าร่วมค่าย →</a>
       <a href="#schedule" class="btn-ghost">ดูตารางกิจกรรม</a>
@@ -637,76 +653,101 @@ html{scroll-padding-top:88px;}
   <p class="eyebrow reveal">Camp Schedule 2026</p>
   <h2 class="sec-title reveal reveal-delay-1">กำหนดการค่าย ปี 2569</h2>
   <div class="gold-rule reveal reveal-delay-2"></div>
-  <p class="sec-sub reveal reveal-delay-2">เปิดรับสมัครปีละ 3 รุ่น · อายุ 20–35 ปีเท่านั้น · ไม่มีค่าใช้จ่าย</p>
+  <p class="sec-sub reveal reveal-delay-2">จำกัดช่วงอายุ 20-35 ปีเท่านั้น · ไม่มีค่าใช้จ่ายในการเข้าร่วม</p>
   <div class="batches-grid">
-    <div class="batch-card batch-card-featured reveal reveal-delay-1">
-      <div class="batch-bg-num">10</div>
-      <p class="b-tag">รุ่น 10</p>
-      <p class="b-dates">30 พฤษภาคม – 1 มิถุนายน 2569</p>
-      <span class="b-status s-open"><span class="s-dot"></span>เปิดรับสมัคร</span>
-      <br>
-      <button class="seat-btn" onclick="document.getElementById('register').scrollIntoView({behavior:'smooth'})">
-        <span class="s-dot"></span> <span id="batch10-seats">12/15 ที่นั่ง</span>
-      </button>
-      <div class="b-seats-bar">
-        <div class="b-seats-track"><div class="b-seats-fill" id="batch10-fill" style="width:80%"></div></div>
-        <div class="b-seats-txt"><span>ที่นั่งคงเหลือ</span><span id="batch10-remaining">3 ที่</span></div>
+
+    <!-- รุ่น 12 — เปิดลงทะเบียน -->
+    <div class="batch-cal cal-active reveal reveal-delay-1">
+      <div class="batch-cal-header">
+        <span class="batch-cal-run">รุ่น 12</span>
+        <span class="b-status s-open" style="margin-bottom:0;"><span class="s-dot s-dot-green"></span>เปิดลงทะเบียน</span>
+      </div>
+      <div class="batch-cal-body">
+        <p class="batch-cal-dates">14–16 สิงหาคม 2569</p>
+        <div class="batch-cal-row"><span class="batch-cal-lbl">ลงทะเบียน</span><span class="batch-cal-val">27 ก.ค. – 7 ส.ค. 2569</span></div>
+        <div class="batch-cal-row"><span class="batch-cal-lbl">ประกาศผล</span><span class="batch-cal-val">9 สิงหาคม 2569</span></div>
+      </div>
+      <div class="batch-cal-footer">
+        <span class="batch-cal-counter">ผู้สมัคร <strong id="batch12-seats">—/15</strong></span>
+        <button class="seat-btn" onclick="document.getElementById('register').scrollIntoView({behavior:'smooth'})">สมัครเลย →</button>
       </div>
     </div>
-    <div class="batches-future">
-      <div class="batch-row reveal reveal-delay-2">
-        <span class="b-row-tag">รุ่น 11</span>
-        <span class="b-row-dates">12–14 มิถุนายน 2569</span>
-        <span class="b-status s-soon">เปิดรับเร็วๆ นี้</span>
+
+    <!-- รุ่น 13 — ยังไม่เปิดลงทะเบียน -->
+    <div class="batch-cal reveal reveal-delay-2">
+      <div class="batch-cal-header">
+        <span class="batch-cal-run">รุ่น 13</span>
+        <span class="b-status s-notyet" style="margin-bottom:0;"><span class="s-dot s-dot-purple"></span>ยังไม่เปิดลงทะเบียน</span>
       </div>
-      <div class="batch-row reveal reveal-delay-3">
-        <span class="b-row-tag">รุ่น 12</span>
-        <span class="b-row-dates">10–12 กรกฎาคม 2569</span>
-        <span class="b-status s-up">กำลังจะมา</span>
+      <div class="batch-cal-body">
+        <p class="batch-cal-dates">11–13 กันยายน 2569</p>
+        <div class="batch-cal-row"><span class="batch-cal-lbl">ลงทะเบียน</span><span class="batch-cal-val">24 ส.ค. – 4 ก.ย. 2569</span></div>
+        <div class="batch-cal-row"><span class="batch-cal-lbl">ประกาศผล</span><span class="batch-cal-val">6 กันยายน 2569</span></div>
+      </div>
+      <div class="batch-cal-footer">
+        <span class="batch-cal-counter" style="color:rgba(85,55,39,0.3);">เปิดรับเร็วๆ นี้</span>
       </div>
     </div>
+
+    <!-- รุ่น 14 — ยังไม่เปิดลงทะเบียน -->
+    <div class="batch-cal reveal reveal-delay-3">
+      <div class="batch-cal-header">
+        <span class="batch-cal-run">รุ่น 14</span>
+        <span class="b-status s-notyet" style="margin-bottom:0;"><span class="s-dot s-dot-purple"></span>ยังไม่เปิดลงทะเบียน</span>
+      </div>
+      <div class="batch-cal-body">
+        <p class="batch-cal-dates">16–18 ตุลาคม 2569</p>
+        <div class="batch-cal-row"><span class="batch-cal-lbl">ลงทะเบียน</span><span class="batch-cal-val">28 ก.ย. – 9 ต.ค. 2569</span></div>
+        <div class="batch-cal-row"><span class="batch-cal-lbl">ประกาศผล</span><span class="batch-cal-val">11 ตุลาคม 2569</span></div>
+      </div>
+      <div class="batch-cal-footer">
+        <span class="batch-cal-counter" style="color:rgba(85,55,39,0.3);">เปิดรับเร็วๆ นี้</span>
+      </div>
+    </div>
+
   </div>
 </section>
 
 <!-- SCHEDULE -->
 <section class="schedule-sec dark" id="schedule">
   <p class="eyebrow reveal">Daily Schedule</p>
-  <h2 class="sec-title reveal reveal-delay-1">ตารางกิจกรรมประจำวัน</h2>
+  <h2 class="sec-title reveal reveal-delay-1">ตารางกิจกรรม</h2>
   <div class="gold-rule reveal reveal-delay-2"></div>
-  <p class="sec-sub reveal reveal-delay-2">ค่าย 3 วัน 2 คืน ณ วัดป่าศรีอุทุมพร จ.สระบุรี</p>
+  <p class="sec-sub reveal reveal-delay-2">ช่วงเวลาจัดกิจกรรม: 3 วัน 2 คืน · สถานที่: <em style="color:var(--gold);font-style:normal;">วัดป่าศรีอุทุมพร</em></p>
+  <p class="sec-sub reveal reveal-delay-2" style="margin-top:0.4rem;font-size:12px;opacity:0.5;">หมายเหตุ: กำหนดการอาจมีการเปลี่ยนแปลงหน้างานตามความเหมาะสม ทีมงานจะแจ้งผู้เข้าร่วมให้ทราบอีกครั้ง</p>
   <div class="sch-tabs reveal">
     <button class="sch-tab active" onclick="showDay('d1',this)">วันที่ 1</button>
     <button class="sch-tab" onclick="showDay('d2',this)">วันที่ 2</button>
     <button class="sch-tab" onclick="showDay('d3',this)">วันที่ 3</button>
   </div>
   <div class="sch-day active" id="d1">
-    <div class="sch-item"><span class="sch-time">11.30 น.</span><div class="sch-dot-wrap"><div class="sch-dot"></div><div class="sch-vline"></div></div><div class="sch-name">ลงทะเบียน · จัดแจงห้องพัก<small>ตรวจสอบรายชื่อ</small></div></div>
-    <div class="sch-item"><span class="sch-time">13.00 น.</span><div class="sch-dot-wrap"><div class="sch-dot"></div><div class="sch-vline"></div></div><div class="sch-name">ปฐมนิเทศ<small>แนะนำค่าย กฎกติกา และทีมงานค่าย</small></div></div>
-    <div class="sch-item"><span class="sch-time">13.30 น.</span><div class="sch-dot-wrap"><div class="sch-dot"></div><div class="sch-vline"></div></div><div class="sch-name">ธรรมบรรยาย ยาเม็ดที่ 1 "พระรัตนตรัย"<small>บรรยายโดยพระอาจารย์มหาต้น</small></div></div>
-    <div class="sch-item"><span class="sch-time">15.30 น.</span><div class="sch-dot-wrap"><div class="sch-dot"></div><div class="sch-vline"></div></div><div class="sch-name">กิจกรรมกลุ่ม<small>สังกะลีดูแลบ้าน</small></div></div>
-    <div class="sch-item"><span class="sch-time">17.00 น.</span><div class="sch-dot-wrap"><div class="sch-dot"></div><div class="sch-vline"></div></div><div class="sch-name">ทานอาหารเย็น<small>ร่วมกันทำอาหารเย็นทานเอง</small></div></div>
-    <div class="sch-item"><span class="sch-time">18.00 น.</span><div class="sch-dot-wrap"><div class="sch-dot"></div><div class="sch-vline"></div></div><div class="sch-name">ทำวัตรเย็น<small>สวดมนต์ทำวัตรเย็น นั่งสมาธิ</small></div></div>
-    <div class="sch-item"><span class="sch-time">19.00 น.</span><div class="sch-dot-wrap"><div class="sch-dot"></div><div class="sch-vline"></div></div><div class="sch-name">ธรรมบรรยาย ยาเม็ดที่ 2 "ทักอารมณ์"<small>บรรยายโดยพระอาจารย์มหาต้น</small></div></div>
-    <div class="sch-item"><span class="sch-time">21.00 น.</span><div class="sch-dot-wrap"><div class="sch-dot"></div></div><div class="sch-name">เข้านอน<small>พักผ่อนเตรียมพร้อมสำหรับวันรุ่งขึ้น</small></div></div>
+    <div class="sch-item"><span class="sch-time">11.30 น.</span><div class="sch-dot-wrap"><div class="sch-dot"></div><div class="sch-vline"></div></div><div class="sch-name">ลงทะเบียน เก็บของ จัดแจงที่พัก<small>ตรวจสอบรายชื่อ</small></div></div>
+    <div class="sch-item"><span class="sch-time">13.00 น.</span><div class="sch-dot-wrap"><div class="sch-dot"></div><div class="sch-vline"></div></div><div class="sch-name">กิจกรรมเปิดค่าย<small>พูดคุยกฎกติการ่วมกัน และแนะนำตัวทีมงาน ลูกค่าย</small></div></div>
+    <div class="sch-item"><span class="sch-time">13.30 น.</span><div class="sch-dot-wrap"><div class="sch-dot"></div><div class="sch-vline"></div></div><div class="sch-name">ฟังธรรมยาเม็ดที่ 1 "พระรัตนตรัย"<small>บรรยายโดยพระอาจารย์มหาต้น</small></div></div>
+    <div class="sch-item"><span class="sch-time">15.30 น.</span><div class="sch-dot-wrap"><div class="sch-dot"></div><div class="sch-vline"></div></div><div class="sch-name">กิจกรรมสังกะลีดูแลบ้าน<small>แยกย้ายทำ Mission งานวัดที่ตัวเองได้รับ</small></div></div>
+    <div class="sch-item"><span class="sch-time">17.00 น.</span><div class="sch-dot-wrap"><div class="sch-dot"></div><div class="sch-vline"></div></div><div class="sch-name">รับประทานอาหารเย็น<small>ปล่อยของเชฟแต่ละคนที่โรงครัว</small></div></div>
+    <div class="sch-item"><span class="sch-time">18.00 น.</span><div class="sch-dot-wrap"><div class="sch-dot"></div><div class="sch-vline"></div></div><div class="sch-name">ทำวัตรเย็น<small>สถานที่แจ้งให้ทราบหน้างานอีกครั้ง</small></div></div>
+    <div class="sch-item"><span class="sch-time">19.00 น.</span><div class="sch-dot-wrap"><div class="sch-dot"></div><div class="sch-vline"></div></div><div class="sch-name">ฟังธรรมยาเม็ดที่ 2 "ทักอารมณ์"<small>บรรยายโดยพระอาจารย์มหาต้น</small></div></div>
+    <div class="sch-item"><span class="sch-time">20.00 น.</span><div class="sch-dot-wrap"><div class="sch-dot"></div></div><div class="sch-name">ภาคปฏิบัติ<small>กิจกรรมแจ้งให้ทราบหน้างานอีกครั้ง</small></div></div>
   </div>
   <div class="sch-day" id="d2">
-    <div class="sch-item"><span class="sch-time">05.00 น.</span><div class="sch-dot-wrap"><div class="sch-dot"></div><div class="sch-vline"></div></div><div class="sch-name">ทำครัว · เดินจงกรม<small>เตรียมวัตถุดิบในครัว หรือ ปฏิบัติธรรม</small></div></div>
-    <div class="sch-item"><span class="sch-time">05.40 น.</span><div class="sch-dot-wrap"><div class="sch-dot"></div><div class="sch-vline"></div></div><div class="sch-name">บิณฑบาตร<small>ร่วมออกบิณฑบาตรกับพระภิกษุ</small></div></div>
-    <div class="sch-item"><span class="sch-time">07.00 น.</span><div class="sch-dot-wrap"><div class="sch-dot"></div><div class="sch-vline"></div></div><div class="sch-name">เตรียมอาหารเช้า<small>ร่วมกันทำอาหารถวายเช้า</small></div></div>
-    <div class="sch-item"><span class="sch-time">07.30 น.</span><div class="sch-dot-wrap"><div class="sch-dot"></div><div class="sch-vline"></div></div><div class="sch-name">ถวายอาหารเช้า<small>ร่วมถวายภัตตาหารเช้าแก่พระสงฆ์</small></div></div>
-    <div class="sch-item"><span class="sch-time">08.00 น.</span><div class="sch-dot-wrap"><div class="sch-dot"></div><div class="sch-vline"></div></div><div class="sch-name">ทานอาหารเช้า<small>ทานอาหารเช้ากับเพื่อนร่วมค่ายและทีมงาน</small></div></div>
-    <div class="sch-item"><span class="sch-time">09.30 น.</span><div class="sch-dot-wrap"><div class="sch-dot"></div><div class="sch-vline"></div></div><div class="sch-name">ธรรมบรรยาย ยาเม็ดที่ 3–4 "ธาตุ 4 · พิจารณากาย"<small>บรรยายโดยพระอาจารย์มหาต้น</small></div></div>
-    <div class="sch-item"><span class="sch-time">11.00 น.</span><div class="sch-dot-wrap"><div class="sch-dot"></div><div class="sch-vline"></div></div><div class="sch-name">ทานอาหารกลางวัน<small>ร่วมกันทำอาหารทานด้วยกัน</small></div></div>
-    <div class="sch-item"><span class="sch-time">12.00 น.</span><div class="sch-dot-wrap"><div class="sch-dot"></div></div><div class="sch-name">กิจกรรมและสถานที่<small>แจ้งรายละเอียด ณ ค่าย (12:00 น. เป็นต้นไป)</small></div></div>
+    <div class="sch-item"><span class="sch-time">05.00 น.</span><div class="sch-dot-wrap"><div class="sch-dot"></div><div class="sch-vline"></div></div><div class="sch-name">กิจกรรมเด็กวัดตื่นเช้า<small>ทำครัว, เดินจงกรม</small></div></div>
+    <div class="sch-item"><span class="sch-time">05.40 น.</span><div class="sch-dot-wrap"><div class="sch-dot"></div><div class="sch-vline"></div></div><div class="sch-name">เดินบิณฑบาตร<small>กับพระอาจารย์และครูบาทุกรูป แบ่งกลุ่มเดินตามสายการบิณของตัวเอง</small></div></div>
+    <div class="sch-item"><span class="sch-time">07.00 น.</span><div class="sch-dot-wrap"><div class="sch-dot"></div><div class="sch-vline"></div></div><div class="sch-name">ร่วมตักบาตรตอนเช้า<small>เตรียมอาหารแห้งหรือของถวายสังฆทานมาได้เลย</small></div></div>
+    <div class="sch-item"><span class="sch-time">07.30 น.</span><div class="sch-dot-wrap"><div class="sch-dot"></div><div class="sch-vline"></div></div><div class="sch-name">ถวายอาหารเช้า<small>สถานที่: หอฉัน</small></div></div>
+    <div class="sch-item"><span class="sch-time">08.00 น.</span><div class="sch-dot-wrap"><div class="sch-dot"></div><div class="sch-vline"></div></div><div class="sch-name">รับประทานอาหารเช้า<small>สถานที่: บริเวณหอฉัน</small></div></div>
+    <div class="sch-item"><span class="sch-time">09.30 น.</span><div class="sch-dot-wrap"><div class="sch-dot"></div><div class="sch-vline"></div></div><div class="sch-name">ฟังธรรมยาเม็ดที่ 3-4 "ธาตุกัมมัฏฐาน, พิจารณากาย"<small>บรรยายโดยพระอาจารย์มหาต้น</small></div></div>
+    <div class="sch-item"><span class="sch-time">11.00 น.</span><div class="sch-dot-wrap"><div class="sch-dot"></div><div class="sch-vline"></div></div><div class="sch-name">รับประทานอาหารกลางวัน<small>ปล่อยของเชฟแต่ละคนที่โรงครัว</small></div></div>
+    <div class="sch-item"><span class="sch-time">12.00 น.</span><div class="sch-dot-wrap"><div class="sch-dot"></div></div><div class="sch-name">กิจกรรมและสถานที่<small>ทีมงานแจ้งรายละเอียดที่หน้างานอีกครั้ง</small></div></div>
   </div>
   <div class="sch-day" id="d3">
-    <div class="sch-item"><span class="sch-time">05.00 น.</span><div class="sch-dot-wrap"><div class="sch-dot"></div><div class="sch-vline"></div></div><div class="sch-name">ทำวัตรเช้า<small>สวดมนต์ทำวัตรเช้า นั่งสมาธิ</small></div></div>
-    <div class="sch-item"><span class="sch-time">06.00 น.</span><div class="sch-dot-wrap"><div class="sch-dot"></div><div class="sch-vline"></div></div><div class="sch-name">กิจกรรมและสถานที่<small>แจ้งรายละเอียด ณ ค่าย (06:00 น. เป็นต้นไป)</small></div></div>
-    <div class="sch-item"><span class="sch-time">10.30 น.</span><div class="sch-dot-wrap"><div class="sch-dot"></div><div class="sch-vline"></div></div><div class="sch-name">กราบขอขมาสงฆ์<small>กราบขอขมาพร้อมกราบลาพระอาจารย์</small></div></div>
+    <div class="sch-item"><span class="sch-time">05.00 น.</span><div class="sch-dot-wrap"><div class="sch-dot"></div><div class="sch-vline"></div></div><div class="sch-name">ตื่นเช้า รับอรุณแสงแรก<small>พระอาจารย์พาทำวัตรเช้า</small></div></div>
+    <div class="sch-item"><span class="sch-time">06.00 น.</span><div class="sch-dot-wrap"><div class="sch-dot"></div><div class="sch-vline"></div></div><div class="sch-name">กิจกรรมและสถานที่<small>ทีมงานแจ้งรายละเอียดที่หน้างานอีกครั้ง</small></div></div>
+    <div class="sch-item"><span class="sch-time">10.30 น.</span><div class="sch-dot-wrap"><div class="sch-dot"></div><div class="sch-vline"></div></div><div class="sch-name">กิจกรรมก่อนลากลับบ้าน<small>สรุปทั้งหมด, ขอขมาสงฆ์, กราบลาพระอาจารย์</small></div></div>
     <div class="sch-item">
       <span class="sch-time" style="color:var(--gold-light);">11.00 น.</span>
       <div class="sch-dot-wrap"><div class="sch-dot" style="background:var(--gold);width:10px;height:10px;"></div></div>
-      <div class="sch-name" style="color:var(--gold-light);">จบค่าย<small style="color:rgba(255,255,255,0.32);">กล่าวอำลา แจ้งข่าวสาร ทำความสะอาดก่อนเดินทางกลับ</small></div>
+      <div class="sch-name" style="color:var(--gold-light);">แจ้งข่าวสารกิจกรรมหลังจบค่าย<small style="color:rgba(255,255,255,0.32);">ช่องทางกิจกรรมอื่นๆ, ทำความสะอาดสถานที่ก่อนกลับ</small></div>
     </div>
   </div>
 </section>
@@ -714,17 +755,17 @@ html{scroll-padding-top:88px;}
 <!-- CANDIDATES CTA -->
 <section class="candidates-sec dark" id="candidates">
   <p class="eyebrow reveal">Selected Participants</p>
-  <h2 class="sec-title reveal reveal-delay-1">รายชื่อผู้เข้าร่วมค่าย</h2>
+  <h2 class="sec-title reveal reveal-delay-1">รายชื่อผู้ยืนยันสิทธิ์เข้าร่วมค่าย</h2>
   <div class="gold-rule reveal reveal-delay-2"></div>
-  <p class="sec-sub reveal reveal-delay-2">รุ่น 10 · 30 พฤษภาคม – 1 มิถุนายน 2569 · ประกาศผล 5 เม.ย. 2569</p>
+  <p class="sec-sub reveal reveal-delay-2">ค่ายรุ่น 12 · วันที่จัด: 14-16/8/26 · วันที่ประกาศผล: 9/08/26</p>
   <div class="cand-card reveal reveal-delay-3">
     <div class="cand-body">
       <div class="cand-stat">
         <span class="cand-num" id="cand-approved-count">—</span>
-        <span class="cand-stat-lbl">คนยืนยันแล้ว<br>เข้าร่วมค่าย</span>
+        <span class="cand-stat-lbl">คนยืนยันสิทธิ์<br>เข้าร่วม</span>
       </div>
-      <p class="cand-desc">รายชื่อผู้ผ่านการคัดเลือกจะอัปเดตทันทีเมื่อทีมงานยืนยันผู้เข้าร่วมค่าย</p>
-      <a href="participants.html" class="btn-primary cand-btn">ดูรายชื่อผู้ผ่านการคัดเลือก →</a>
+      <p class="cand-desc">รายชื่อผู้ผ่านการคัดเลือกจะแสดงที่นี้เมื่อผู้ลงทะเบียนยืนยันสิทธิ์กับทีมงานแล้วเท่านั้น</p>
+      <a href="participants.html" class="btn-primary cand-btn">ตรวจสอบรายชื่อผู้ผ่านการคัดเลือกที่นี้ →</a>
     </div>
   </div>
 </section>
@@ -733,7 +774,7 @@ html{scroll-padding-top:88px;}
 <div class="reg-wrap" id="register">
   <div class="reg-left">
     <p style="font-size:11px;color:rgba(255,255,255,0.2);letter-spacing:0.14em;text-transform:uppercase;font-style:italic;margin-bottom:0.5rem;font-family:'Ekkamai',sans-serif;">Registration</p>
-    <h2 class="reg-title">สมัครเข้าร่วม<br>ค่ายธรรม</h2>
+    <h2 class="reg-title">แบบฟอร์มสมัครเข้าร่วมค่าย<br>"ธรรม" ตามมรรค</h2>
     <div class="gold-rule"></div>
     <div class="reg-row">
       <div class="reg-icon"><svg width="14" height="14" viewBox="0 0 14 14" fill="none"><rect x="1" y="2.5" width="12" height="10" rx="1" stroke="rgba(255,255,255,0.35)" stroke-width="0.8"/><line x1="5" y1="1" x2="5" y2="4" stroke="rgba(255,255,255,0.35)" stroke-width="0.8"/><line x1="9" y1="1" x2="9" y2="4" stroke="rgba(255,255,255,0.35)" stroke-width="0.8"/><line x1="1" y1="6" x2="13" y2="6" stroke="rgba(255,255,255,0.35)" stroke-width="0.8"/></svg></div>
@@ -741,11 +782,11 @@ html{scroll-padding-top:88px;}
     </div>
     <div class="reg-row">
       <div class="reg-icon"><svg width="14" height="14" viewBox="0 0 14 14" fill="none"><circle cx="7" cy="7" r="5.5" stroke="rgba(255,255,255,0.35)" stroke-width="0.8"/><polyline points="7,4 7,7.5 9.5,7.5" stroke="rgba(255,255,255,0.35)" stroke-width="0.8" stroke-linecap="round"/></svg></div>
-      <div><p class="reg-lbl">เปิดรับสมัคร</p><p class="reg-val">2 สัปดาห์ก่อนวันค่าย รับจำนวนจำกัด</p></div>
+      <div><p class="reg-lbl">เปิดรับสมัคร</p><p class="reg-val">27 กรกฎาคม – 7 สิงหาคม 2569</p></div>
     </div>
     <div class="reg-row">
       <div class="reg-icon"><svg width="14" height="14" viewBox="0 0 14 14" fill="none"><circle cx="7" cy="5" r="3" stroke="rgba(255,255,255,0.35)" stroke-width="0.8"/><path d="M2 12c0-2.8 2.2-5 5-5s5 2.2 5 5" stroke="rgba(255,255,255,0.35)" stroke-width="0.8"/></svg></div>
-      <div><p class="reg-lbl">ช่วงอายุ</p><p class="reg-val">20–35 ปีเท่านั้น</p></div>
+      <div><p class="reg-lbl">ช่วงอายุ</p><p class="reg-val">จำกัดอายุ 20–35 ปีเท่านั้น</p></div>
     </div>
     <div class="reg-accordion">
       <!-- สิ่งของที่ควรเตรียมมา -->
@@ -756,16 +797,8 @@ html{scroll-padding-top:88px;}
           <svg class="reg-acc-chevron" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><polyline points="6,4 10,8 6,12"/></svg>
         </button>
         <div class="reg-acc-body">
-          <ul class="reg-acc-list">
-            <li>เสื้อผ้าสุภาพ สีใดก็ได้ (ไม่โป๊ ไม่สั้น)</li>
-            <li>เสื้อกันหนาว / กันลม (สถานที่มีอากาศเย็น)</li>
-            <li>เครื่องนอนพกพา เช่น หมอน, ผ้าห่ม, เบาะรองนอน (หากไม่มีสามารถยืมทางวัดได้)</li>
-            <li>ไฟฉาย</li>
-            <li>ยากันยุง</li>
-            <li>ยาประจำตัว</li>
-            <li>ของใช้ส่วนตัวที่จำเป็น</li>
-            <li>เครื่องอาบน้ำ, ผ้าเช็ดตัว (ห้องอาบน้ำรวม)</li>
-            <li>เต็นท์ส่วนตัว, ผ้าใบรองเต็นท์, สมอบกเต็นท์ (หากไม่มีสามารถยืมทางวัดได้)</li>
+          <ul class="reg-acc-list" style="list-style:none;padding:0;margin:0;">
+            <li style="padding:0.4rem 0;"><button class="chant-link" onclick="openChant('Dhammaphoto/เตรียมมาค่าย.png')">ดูรายการสิ่งของที่ควรเตรียม →</button></li>
           </ul>
         </div>
       </div>
@@ -777,31 +810,15 @@ html{scroll-padding-top:88px;}
           <svg class="reg-acc-chevron" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><polyline points="6,4 10,8 6,12"/></svg>
         </button>
         <div class="reg-acc-body">
-          <p class="reg-acc-group-lbl">กลุ่มของใช้</p>
-          <ul class="reg-acc-list">
-            <li>มีดโกน · ไฟแช็ก · ไฟฉาย · เทียนไข · ยากันยุง</li>
-            <li>กรรไกร · ไม้จิ้มฟัน · ยาสีฟัน · แปรงสีฟัน · สบู่</li>
-            <li>ทิชชู่ · ถังเก็บของ · ปลั๊กพ่วง 2 หัว</li>
-          </ul>
-          <p class="reg-acc-group-lbl">กลุ่มอุปกรณ์ทำความสะอาด</p>
-          <p class="reg-acc-note">★ สิ่งของที่ทางวัดใช้ประจำและขาดจำนวนมาก</p>
-          <ul class="reg-acc-list">
-            <li>น้ำยาซักผ้า · น้ำยาปรับผ้านุ่ม · น้ำยาถูพื้น</li>
-            <li>แปรงขัดพื้นห้องน้ำด้ามยาว</li>
-          </ul>
-          <p class="reg-acc-group-lbl">กลุ่มอาหาร</p>
-          <ul class="reg-acc-list">
-            <li>น้ำดื่ม · ข้าวสาร · ไข่ไก่ · น้ำมัน · เครื่องปรุงรส</li>
-            <li>น้ำตาลทราย · น้ำตาลมะพร้าว · ถุงขยะ · น้ำปานะ</li>
-            <li>เครื่องดื่มซองชง (ไม่มีนมหรือเนย) เช่น ไมโล ชา กาแฟ น้ำขิง</li>
-            <li>ปืนไฟแช็กสำหรับทำครัว</li>
+          <ul class="reg-acc-list" style="list-style:none;padding:0;margin:0;">
+            <li style="padding:0.4rem 0;"><button class="chant-link" onclick="openChant('Dhammaphoto/ถวายสังฆทาน.png')">ดูรายการของถวายสังฆทาน →</button></li>
           </ul>
         </div>
       </div>
       <div class="reg-acc-item" id="acc-chants">
         <button class="reg-acc-btn reg-acc-row" onclick="toggleAcc('acc-chants')">
           <div class="reg-icon"><svg width="14" height="14" viewBox="0 0 14 14" fill="none"><rect x="2" y="1.5" width="10" height="11" rx="1" stroke="rgba(255,255,255,0.35)" stroke-width="0.8"/><line x1="4.5" y1="5" x2="9.5" y2="5" stroke="rgba(255,255,255,0.35)" stroke-width="0.8"/><line x1="4.5" y1="7.5" x2="9.5" y2="7.5" stroke="rgba(255,255,255,0.35)" stroke-width="0.8"/><line x1="4.5" y1="10" x2="7.5" y2="10" stroke="rgba(255,255,255,0.35)" stroke-width="0.8"/></svg></div>
-          <div style="flex:1"><p class="reg-lbl">บทประกาศในค่าย</p><p class="reg-val">บทสวดและคำประกาศที่ใช้ในค่าย</p></div>
+          <div style="flex:1"><p class="reg-lbl">บทประกาศในค่าย</p><p class="reg-val">บทสวดและคำประกาศที่ใช้ในค่าย<br><span style="font-size:11px;color:rgba(255,255,255,0.3);">(แนะนำให้เซฟลงมือถือก่อนมาค่ายทุกคน)</span></p></div>
           <svg class="reg-acc-chevron" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><polyline points="6,4 10,8 6,12"/></svg>
         </button>
         <div class="reg-acc-body">
@@ -814,13 +831,12 @@ html{scroll-padding-top:88px;}
       </div>
     </div>
     <div class="reg-seats-box">
-      <p class="reg-seats-lbl">ค่าย รุ่น 10 — ที่นั่งคงเหลือ</p>
+      <p class="reg-seats-lbl">ค่ายรุ่น 10 – จำนวนผู้สมัครเข้าร่วมค่าย</p>
       <div class="reg-seats-bar">
         <div class="reg-seats-track"><div class="reg-seats-fill" id="reg-fill" style="width:80%"></div></div>
         <span class="reg-seats-num" id="reg-seats-num">12/15</span>
       </div>
-      <p class="reg-seats-note" id="reg-seats-note">เหลือ 3 ที่นั่ง</p>
-      <div class="reg-live-indicator"><span class="reg-live-dot"></span> ข้อมูลเรียลไทม์</div>
+      <div class="reg-live-indicator"><span class="reg-live-dot"></span> อัพเดทข้อมูลเรียลไทม์</div>
     </div>
   </div>
   <div class="reg-right">
@@ -875,7 +891,7 @@ html{scroll-padding-top:88px;}
         <label class="f-label" for="fmot">แรงบันดาลใจ — ทำไมถึงอยากเข้าร่วมค่าย?</label>
         <textarea class="f-textarea" id="fmot" name="motivation" placeholder="เล่าให้ฟังสั้นๆ ค่ะ/ครับ..."></textarea>
       </div>
-      <input type="hidden" id="fb-batch" name="batch" value="รุ่น 10 · 30 พ.ค. – 1 มิ.ย. 2569">
+      <input type="hidden" id="fb-batch" name="batch" value="รุ่น 12 · 14–16 ส.ค. 2569">
       <input type="hidden" name="ref" id="f-ref" value="">
       <button type="submit" class="f-submit" id="submitBtn">
         <div class="f-spinner" id="f-spinner"></div>
@@ -958,6 +974,13 @@ html{scroll-padding-top:88px;}
         <div class="faq-icon"></div>
       </button>
       <div class="faq-a"><p>กิจกรรมเปิดรับผู้เข้าร่วมอายุระหว่าง 20–35 ปี</p></div>
+    </div>
+    <div class="faq-item">
+      <button class="faq-q" onclick="toggleFaq(this)">
+        หากอายุไม่อยู่ในเกณฑ์ที่กำหนด สามารถเข้าร่วมกิจกรรมใดได้บ้าง?
+        <div class="faq-icon"></div>
+      </button>
+      <div class="faq-a"><p>หากท่านมีอายุต่ำกว่า 20 ปี หรือมากกว่า 35 ปี ขอเชิญร่วมกิจกรรมฟังธรรมกับพระอาจารย์มหาต้นในค่าย "เดินตามมรรค" โดยสามารถติดตามข่าวสารและรายละเอียดการเปิดรับสมัครได้ที่เพจ <strong>ทริช่า จากฝันสู่โสดาบัน</strong></p></div>
     </div>
     <div class="faq-item">
       <button class="faq-q" onclick="toggleFaq(this)">
@@ -1306,16 +1329,16 @@ html{scroll-padding-top:88px;}
 const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbzdoKLuXpM__WnjhV0fiA0Gtr3T5ZDa_aMGH8VgDY5_sXE55jKBa09nZ6l8Rxe22EnuIw/exec';
 
 const bData = {
-  '10':{ dates:'30 พฤษภาคม – 1 มิถุนายน 2569', val:'รุ่น 10 · 30 พ.ค. – 1 มิ.ย. 2569', open:true },
-  '11':{ dates:'12–14 มิถุนายน 2569', val:'รุ่น 11 · 12–14 มิ.ย. 2569', open:false },
-  '12':{ dates:'10–12 กรกฎาคม 2569', val:'รุ่น 12 · 10–12 ก.ค. 2569', open:false }
+  '12':{ dates:'14–16 สิงหาคม 2569', val:'รุ่น 12 · 14–16 ส.ค. 2569', open:true },
+  '13':{ dates:'11–13 กันยายน 2569', val:'รุ่น 13 · 11–13 ก.ย. 2569', open:false },
+  '14':{ dates:'16–18 ตุลาคม 2569', val:'รุ่น 14 · 16–18 ต.ค. 2569', open:false }
 };
-let currentBatch = '10';
+let currentBatch = '12';
 
 /* ─── REGISTRATION COUNTDOWN ───
    ตั้งวันที่เปิดรับสมัครที่นี่ — ระบบจะเปิดรับสมัคร 3 วันจากวันนี้ */
-const REG_OPEN_DATE = new Date('2026-06-20T09:00:00+07:00');
-const REG_DURATION_DAYS = 3;
+const REG_OPEN_DATE = new Date('2026-07-27T09:00:00+07:00');
+const REG_DURATION_DAYS = 12;
 
 function updateRegCountdown(){
   const el = document.getElementById('reg-countdown');
@@ -1411,29 +1434,24 @@ async function loadSeatCount(){
     const res = await fetch(APPS_SCRIPT_URL);
     const data = await res.json();
     const counts = data.counts||{};
-    const totals = data.totals||{'10':15,'11':15,'12':15};
+    const totals = data.totals||{'12':15,'13':15,'14':15};
 
-    const used10 = counts['10']||0;
-    const total10 = totals['10']||15;
-    const remaining10 = Math.max(total10-used10,0);
-    const pct10 = (used10/total10)*100;
+    const used12 = counts['12']||0;
+    const total12 = totals['12']||15;
+    const remaining12 = Math.max(total12-used12,0);
+    const pct12 = (used12/total12)*100;
 
-    document.getElementById('nav-seat-count').textContent = remaining10+' ที่นั่งเหลือ';
-    const b10seats = document.getElementById('batch10-seats');
-    if(b10seats) b10seats.textContent = used10+'/'+total10+' ที่นั่ง';
-    const b10fill = document.getElementById('batch10-fill');
-    if(b10fill) b10fill.style.width = pct10+'%';
-    const b10rem = document.getElementById('batch10-remaining');
-    if(b10rem) b10rem.textContent = remaining10+' ที่';
-    document.getElementById('reg-fill').style.width = pct10+'%';
-    document.getElementById('reg-seats-num').textContent = used10+'/'+total10;
-    document.getElementById('reg-seats-note').textContent = 'เหลือ '+remaining10+' ที่นั่ง';
-    document.getElementById('fb-seats').textContent = used10+'/'+total10;
+    document.getElementById('nav-seat-count').textContent = remaining12+' ที่นั่งเหลือ';
+    const b12seats = document.getElementById('batch12-seats');
+    if(b12seats) b12seats.textContent = used12+'/'+total12;
+    document.getElementById('reg-fill').style.width = pct12+'%';
+    document.getElementById('reg-seats-num').textContent = used12+'/'+total12;
+    document.getElementById('fb-seats').textContent = used12+'/'+total12;
 
     // อัปเดตจำนวนผู้ยืนยัน (แสดงที่ CTA หน้าหลัก)
-    const approved10 = data.approved_batch10||[];
+    const approved12 = data.approved_batch12||[];
     const countEl = document.getElementById('cand-approved-count');
-    if(countEl) countEl.textContent = approved10.length;
+    if(countEl) countEl.textContent = approved12.length;
   } catch(err){
     document.getElementById('nav-seat-count').textContent = '— ที่นั่งเหลือ';
   }

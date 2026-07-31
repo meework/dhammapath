@@ -128,7 +128,7 @@ section{padding:5rem;}
 
 /* ─── BATCHES ─── */
 .batches-section{background:#f1e3d2;}
-.batches-grid{display:flex;flex-direction:column;gap:16px;margin-top:2.5rem;max-width:720px;margin-left:auto;margin-right:auto;}
+.batches-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:2.5rem;}
 .batch-card{
   background:var(--parchment);
   padding:2rem;
@@ -1059,50 +1059,6 @@ html{scroll-padding-top:88px;}
         <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M7 1C4.8 1 3 2.8 3 5c0 3 4 8 4 8s4-5 4-8c0-2.2-1.8-4-4-4z" stroke="var(--brown-deep)" stroke-width="1"/><circle cx="7" cy="5" r="1.5" stroke="var(--brown-deep)" stroke-width="1"/></svg>
         เปิด Google Maps
       </a>
-    </div>
-  </div>
-</section>
-
-<!-- LAYOUT -->
-<section class="map-sec dark" id="layout">
-  <p class="eyebrow reveal">Camp Grounds</p>
-  <h2 class="sec-title reveal reveal-delay-1">แผนผังวัด</h2>
-  <div class="gold-rule reveal reveal-delay-2"></div>
-  <p class="sec-sub reveal reveal-delay-2">แผนผังพื้นที่ภายในวัดป่าศรีอุทุมพร สำหรับผู้เข้าร่วมค่าย</p>
-  <div class="map-grid reveal">
-    <div class="map-embed">
-      <!-- TODO: replace with the real camp layout / floor-plan image -->
-      <img src="Dhammaphoto/PLACEHOLDER-layout.jpg" alt="ผังบริเวณวัดป่าศรีอุทุมพร" loading="lazy" style="width:100%;height:100%;object-fit:cover;">
-    </div>
-    <div class="map-info">
-      <div class="map-info-row">
-        <div class="map-info-icon"><svg width="14" height="14" viewBox="0 0 14 14" fill="none"><rect x="2" y="2" width="10" height="10" rx="1" stroke="rgba(229,181,119,0.6)" stroke-width="0.9"/><path d="M2 5h10M5 2v10M9 2v10" stroke="rgba(229,181,119,0.6)" stroke-width="0.9" opacity="0.5"/></svg></div>
-        <div>
-          <p class="map-info-lbl">ศาลาปฏิบัติธรรม</p>
-          <p class="map-info-val">จุดรวมตัวหลักสำหรับฟังธรรม นั่งสมาธิ และกิจกรรมส่วนกลาง</p>
-        </div>
-      </div>
-      <div class="map-info-row">
-        <div class="map-info-icon"><svg width="14" height="14" viewBox="0 0 14 14" fill="none"><rect x="2" y="5" width="10" height="8" rx="1" stroke="rgba(229,181,119,0.6)" stroke-width="0.9"/><path d="M4.5 5V3.5a2.5 2.5 0 015 0V5" stroke="rgba(229,181,119,0.6)" stroke-width="0.9"/></svg></div>
-        <div>
-          <p class="map-info-lbl">ที่พัก</p>
-          <p class="map-info-val">โซนที่พักแยกชาย-หญิง ใกล้ศาลาปฏิบัติธรรม เดินถึงได้สะดวก</p>
-        </div>
-      </div>
-      <div class="map-info-row">
-        <div class="map-info-icon"><svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M3 6h8M3 9h8M3 12h5" stroke="rgba(229,181,119,0.6)" stroke-width="0.9" stroke-linecap="round"/><rect x="2" y="2" width="10" height="3" rx="1" stroke="rgba(229,181,119,0.6)" stroke-width="0.9"/></svg></div>
-        <div>
-          <p class="map-info-lbl">โรงครัว / โรงอาหาร</p>
-          <p class="map-info-val">จุดรับประทานอาหารและรับน้ำดื่มตลอดค่าย</p>
-        </div>
-      </div>
-      <div class="map-info-row">
-        <div class="map-info-icon"><svg width="14" height="14" viewBox="0 0 14 14" fill="none"><circle cx="7" cy="7" r="5.5" stroke="rgba(229,181,119,0.6)" stroke-width="0.9"/><path d="M7 4v3l2 1.5" stroke="rgba(229,181,119,0.6)" stroke-width="0.9" stroke-linecap="round"/></svg></div>
-        <div>
-          <p class="map-info-lbl">ห้องน้ำ / จุดบริการ</p>
-          <p class="map-info-val">กระจายอยู่รอบบริเวณค่าย มีป้ายบอกทางชัดเจน</p>
-        </div>
-      </div>
     </div>
   </div>
 </section>
